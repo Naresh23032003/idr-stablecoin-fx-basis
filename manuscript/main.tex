@@ -1,0 +1,62 @@
+\documentclass[pdflatex,sn-basic]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage[title]{appendix}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{adjustbox}
+
+\raggedbottom
+
+\begin{document}
+
+\title[Indonesian cryptocurrency premium]{Where does the Indonesian cryptocurrency premium come from? Currency conversion, the stablecoin--FX basis, and transaction costs}
+
+\author*[1]{\fnm{Naresh} \sur{R}}\email{rnaresh23032003r@gmail.com}
+\affil*[1]{\orgname{Birla Institute of Technology and Science, Pilani (BITS Pilani)}, \orgaddress{\city{Pilani}, \state{Rajasthan}, \country{India}}}
+
+\abstract{Indonesian bitcoin on Indodax trades about 30 basis points above the global USDT price converted at Bank Indonesia's official JISDOR rate. Using 1,414 JISDOR business days from January 2021 to November 2026 and 616,683 five-minute bars from Indodax and Binance, we split this gap into a cross-exchange crypto leg (BTC/IDR converted at local USDT/IDR against global BTC/USDT) and a domestic stablecoin--FX leg (USDT/IDR against JISDOR). The crypto leg averages -0.83 bps (indistinguishable from zero), and 98.4\% of daily observations sit inside a reconstructed schedule of Indonesian taxes, CFX/KKI levies, and exchange taker fees. By accounting identity, the stablecoin--FX leg accounts for 83.1\% of total basis variance, the crypto leg 11.5\%, and their covariance 5.4\%. Averaging USDT/IDR over JISDOR's full 08:00--16:00 WIB monitoring window leaves the stablecoin--FX share at 82.4\%. In a five-minute VECM using synchronous Indodax USDT/IDR conversion, local BTC/IDR performs most error correction (half-life 11 bars). Across ten regulatory milestones after Holm adjustment, only PMK 50/2025 shifts the crypto leg (+21.2 bps). Evidence for 2021--2024 rests on Indodax alone.}
+
+\keywords{Cryptocurrency arbitrage, stablecoin--FX basis, Bank Indonesia JISDOR, market integration, cointegration}
+
+\pacs[JEL Classification]{F31, G12, G14, G15}
+
+\maketitle
+
+\input{sec1_introduction}
+\input{sec2_institutional_setting}
+\input{sec3_data_and_synchronization}
+\input{sec4_econometric_methodology}
+\input{sec5_empirical_results}
+\input{sec6_robustness_and_falsification}
+\input{sec7_discussion_and_limitations}
+\input{sec8_conclusion}
+
+\begin{appendices}
+\input{app_provenance}
+\input{app_bootstrap_and_fees}
+\end{appendices}
+
+\section*{Declarations}
+
+\begin{itemize}
+\item \textbf{Funding:} This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
+\item \textbf{Competing interests:} The author declares that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+\item \textbf{Data availability:} All data come from public sources (Bank Indonesia JISDOR, Indodax, Binance Public Data Vision, Coinbase, Kraken, Yahoo Finance, and Frankfurter/ECB). Raw-file hashes, cleaned panels, and replication scripts are publicly available at \texttt{https://github.com/Naresh23032003/idr-stablecoin-fx-basis}.
+\item \textbf{Code availability:} All analysis code, unit tests, and table/figure generation scripts are publicly available at \texttt{https://github.com/Naresh23032003/idr-stablecoin-fx-basis}.
+\item \textbf{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process:} During the preparation of this work the author used Claude (Anthropic) and Gemini (Google) for language polishing, \LaTeX{} formatting, and code debugging. After using these tools, the author reviewed and edited the content as needed and takes full responsibility for the content of the publication.
+\item \textbf{Author contributions (CRediT):} Naresh R: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
+\item \textbf{Author ORCID:} Naresh R: \texttt{0009-0000-0735-2066} (\texttt{https://orcid.org/0009-0000-0735-2066}).
+\end{itemize}
+
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,49 @@
+econometrics:
+  seed: 20261113
+  assets_hierarchy: ["BTC", "ETH", "XRP"]
+  unit_root:
+    max_lags_daily: 12
+    lag_criterion: "AIC"
+    kpss_nlags: "auto"
+  cointegration:
+    johansen_det_order: 0
+    johansen_k_ar_diff_daily: 1
+    johansen_k_ar_diff_5m: 5
+    apply_reinsel_ahn: true
+    apply_cheung_lai: true
+  bootstrap:
+    method: "null_imposed_vecm_iid_residual_bootstrap"
+    n_replications: 9999
+    n_replications_power_eval: 1000
+    dgp_validation_T: [25, 100, 500]
+  ecm:
+    hac_maxlags_daily: 5
+    hac_maxlags_5m: 12
+    report_daily_in_days_only: true
+  nonlinear_tar:
+    trim_fraction: 0.15
+    grid_points: 60
+    bootstrap_replications: 999
+    min_obs_required: 200
+  structural_breaks:
+    events:
+      - date: "2022-05-01"
+        label: "PMK 68/PMK.03/2022 Crypto Tax"
+      - date: "2024-05-17"
+        label: "Binance BIDR Delisting"
+      - date: "2024-09-11"
+        label: "Indodax Security Incident"
+      - date: "2024-11-01"
+        label: "CFX Fee Introduction (PERBA 9/2024)"
+      - date: "2025-01-10"
+        label: "OJK Regulatory Transfer (POJK 27/2024)"
+      - date: "2025-08-01"
+        label: "PMK 50/2025 Tax Overhaul"
+      - date: "2026-03-01"
+        label: "CFX First 50% Fee Reduction"
+      - date: "2026-04-01"
+        label: "JISDOR Schedule Shift (PADG 7/2026)"
+      - date: "2026-10-01"
+        label: "CFX Second 50% Fee Reduction"
+      - date: "2026-10-31"
+        label: "Indodax Wallet Maintenance"

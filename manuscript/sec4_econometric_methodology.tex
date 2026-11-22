@@ -1,0 +1,43 @@
+\section{Econometric methodology}
+\label{sec:method}
+
+\subsection{Three-leg basis and variance decomposition}
+For cryptocurrency $X \in \{\mathrm{BTC}, \mathrm{ETH}, \mathrm{XRP}\}$ at synchronized time $t$, denote the domestic rupiah price on Indodax by $P_{X,t}^{IDR}$, the global Tether-quoted price on Binance by $P_{X,t}^{USDT}$, the domestic stablecoin exchange rate on Indodax by $U_t^{IDR/USDT}$, and the Bank Indonesia JISDOR USD/IDR fixing by $S_t^{IDR/USD}$. Defining log deviations in basis points ($\times 10^4$), we decompose the total basis relative to official USD/IDR into two economic legs:
+\begin{align}
+  B_t^{total} &= 10^4 \left( \ln P_{X,t}^{IDR} - \ln P_{X,t}^{USDT} - \ln S_t^{IDR/USD} \right), \label{eq:btot} \\
+  B_t^{crypto} &= 10^4 \left( \ln P_{X,t}^{IDR} - \ln P_{X,t}^{USDT} - \ln U_t^{IDR/USDT} \right), \label{eq:bcry} \\
+  B_t^{stablecoin\text{-}FX} &= 10^4 \left( \ln U_t^{IDR/USDT} - \ln S_t^{IDR/USD} \right), \label{eq:bsf}
+\end{align}
+so that $B_t^{total} \equiv B_t^{crypto} + B_t^{stablecoin\text{-}FX}$ holds identically at every date. Because USD and USDT can trade at a small spread, we separately track the USD/USDT peg wedge $W_t^{USD/USDT} = 10^4 \ln P_t^{USDT/USD}$ from Coinbase \texttt{USDT-USD} so that dollar-denominated pricing deviations are measured rather than assumed away. By bilinearity of covariance, total basis variance decomposes exactly as
+\begin{equation}
+  \mathrm{Var}(B_t^{total}) = \mathrm{Var}(B_t^{crypto}) + \mathrm{Var}(B_t^{stablecoin\text{-}FX}) + 2\,\mathrm{Cov}(B_t^{crypto}, B_t^{stablecoin\text{-}FX}).
+  \label{eq:vardecomp}
+\end{equation}
+We verify numerically that discrepancy across the identity is below $10^{-10}\text{ bps}^2$. Because Equation~\eqref{eq:vardecomp} is an accounting identity, the variance shares describe which leg moves and do not identify a causal shock.
+
+\subsection{Unit roots, cointegration tests, and residual bootstrap}
+Because the rupiah exchange rate is $I(1)$, pairing rupiah-quoted bitcoin with unconverted USDT quotes inherits the exchange-rate unit root by construction; currency conversion is therefore necessary before testing cross-venue cointegration. After checking integration order with Augmented Dickey--Fuller (ADF), Phillips--Perron (PP) \citep{phillips1988testing}, KPSS \citep{kwiatkowski1992testing}, and single-break Zivot--Andrews \citep{zivot1992further} tests, we estimate three cointegration procedures (bootstrap $p$-values use $B = 9{,}999$ draws, so the smallest reportable value is $1/(B+1) = 0.0001$):
+\begin{enumerate}
+  \item \textbf{Engle--Granger (1987) two-step test:} Regresses $\ln P_{X,t}^{IDR} = a + \beta \ln P_{X,t}^{*} + e_t$ with OLS, testing $\hat{e}_t$ using MacKinnon (1996) residual response-surface critical values \citep{engle1987cointegration,mackinnon1996numerical}.
+  \item \textbf{Fixed-$(1,-1)$ spread stationarity test:} Evaluates ADF and KPSS statistics directly on the imposed log spread $\ln P_{X,t}^{IDR} - \ln P_{X,t}^{*}$ without estimating $\beta$.
+  \item \textbf{Johansen maximum likelihood with finite-sample corrections:} Evaluates Trace and Max-Eigenvalue statistics with a restricted constant in the cointegrating relation ($H_1^*(r)$, \texttt{det\_order=0}, $k_{ar\_diff}=1$ in daily baseline). Both Reinsel--Ahn (1992) statistic scaling $\frac{T - kp}{T}\lambda_{LR}$ and Cheung--Lai (1993) critical-value scaling $\frac{T}{T - kp} c_{\infty}$ are reported \citep{johansen1991estimation,reinsel1992vector,cheung1993finite}.
+  \item \textbf{Null-imposed restricted VECM i.i.d.\ residual bootstrap ($B = 9,999$):} Following \citet{swensen2006bootstrap} and \citet{cavaliere2012bootstrap}, we estimate the restricted VAR in first differences under $H_0: \mathrm{rank}(\Pi) = 0$, center residuals, resample i.i.d.\ residual vectors recursively, and compute finite-sample $p$-values with Monte Carlo standard errors below $0.005$ at $p=0.5$. We validate empirical size and power in controlled Monte Carlo DGPs for $T \in \{25, 100, 500\}$.
+\end{enumerate}
+
+\subsection{VECM adjustment, price discovery, threshold models, and event windows}
+For cointegrated pairs $Y_t = [\ln P_{X,t}^{IDR},\, \ln P_{X,t}^{*}]'$, we estimate the bivariate VECM:
+\begin{equation}
+  \Delta Y_t = \alpha \beta' Y_{t-1} + c + \sum_{j=1}^{p-1} \Gamma_j \Delta Y_{t-j} + u_t,
+  \label{eq:vecm}
+\end{equation}
+reporting both ML standard errors and Newey--West HAC standard errors ($L=5$ daily, $L=12$ five-minute) for $\alpha_{local}$ and $\alpha_{global}$ \citep{newey1987simple}. Because JISDOR publishes only once per business day, the continuous 24/7 five-minute VECM converts global Binance \texttt{BTC/USDT} into rupiah using synchronous five-minute Indodax \texttt{USDT/IDR} candles ($\ln P_{BTC,t}^{*} = \ln P_{BTC,t}^{USDT} + \ln U_t^{IDR/USDT}$); both local prices therefore come from Indodax. Implied half-lives $-\ln(2)/\ln|1+\alpha_{local}|$ are reported in native sampling units (business days for daily panels, five-minute bars for intraday panels). Daily return pass-through regressions test whether global crypto returns, JISDOR changes, and \texttt{USDT/IDR}--JISDOR wedge changes transmit within-day or with a one-day lag.
+
+Following \citet{hasbrouck1995one} and \citet{gonzalo1995estimation}, permanent-factor price discovery shares use Gonzalo--Granger weights $w_{global}^{GG} = |\alpha_{local}|/(|\alpha_{local}|+|\alpha_{global}|)$ and Cholesky-ordered Hasbrouck Information Share bounds $[IS_{low}, IS_{high}]$. Because daily contemporaneous residual correlation exceeds $0.99$, daily Hasbrouck bounds span nearly $[0,1]$ and are unidentifiable; we therefore examine Cholesky bounds only on the five-minute panel ($\rho_u = 0.671$).
+
+To test transaction-cost band nonlinearity, we estimate a symmetric three-regime Band-TAR model on basis $B_t$ that nests the linear $\mathrm{AR}(p+1)$ model under $H_0$:
+\begin{multline}
+  \Delta B_t = c_{in}\mathbb{I}_{|B_{t-1}|\le\tau} + \rho_{in}(B_{t-1}\mathbb{I}_{|B_{t-1}|\le\tau}) + c_+\mathbb{I}_{B_{t-1}>\tau} + c_-\mathbb{I}_{B_{t-1}<-\tau} \\
+  + \rho_{out}z_{out,t-1} + \sum_{j=1}^{p}\phi_j\Delta B_{t-j} + \varepsilon_t,
+  \label{eq:tar}
+\end{multline}
+where $z_{out,t-1} = (B_{t-1} - \mathrm{sign}(B_{t-1})\tau)\mathbb{I}_{|B_{t-1}|>\tau}$. Grid search across the middle $70\%$ of $|B_t|$ yields the $\sup W(\tau)$ statistic, evaluated by linear-AR residual bootstrap \citep{hansen2002testing}. Regulatory event windows compare $\pm 30$ calendar days around ten documented institutional shocks using Welch $t$-tests and Mann--Whitney $U$ tests, with Holm adjustment across all 20 event $\times$ leg tests. As a robustness check against confounding market moves, we also estimate $\pm 30$-day OLS regressions with Newey--West HAC standard errors ($L=5$) controlling for daily global BTC log returns and daily JISDOR log returns.

@@ -1,0 +1,38 @@
+\begin{table}[htbp]
+\centering
+\caption{Indonesian Statutory Crypto Tax, CFX, Platform Commission, and Route Execution Costs (bps)}
+\label{tab:fees}
+\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
+\begingroup
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{2.5cm}rrrrrr@{}}
+\toprule
+\multicolumn{8}{@{}l}{\textbf{Panel A: Chronological Fee \& Tax Regimes (2021--2026)}} \\
+Window & Regime ID & M/T & VAT & PPh22 & CFX & Rte A (M/T) & Rte B (M/T) \\
+\midrule
+2021-01--2022-04 & R1 PRE TAX 2021 & 0/30 & 0 & 0 & 0 & 0.0/60.0 & 7.5/70.0 \\
+2022-05--2023-08 & R2A PMK68 0 30 & 0/30 & 11 & 10 & 0 & 21.0/81.0 & 28.5/91.0 \\
+2023-08--2024-10 & R2B INDODAX PRO CUT & 10/20 & 11 & 10 & 0 & 41.0/61.0 & 48.5/71.0 \\
+2024-11--2024-12 & R3 CFX LAUNCH PMK68 & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2025-01--2025-07 & R3B PMK81 VAT12 ADJ & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2025-08--2026-02 & R4 PMK50 2025 & 10/20 & 0 & 21 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2026-03--2026-09 & R5 CFX CUT MAR2026 & 10/20 & 0 & 21 & 1.11 & 43.2/63.2 & 50.7/73.2 \\
+2026-10--2026-11 & R6 CFX CUT OCT2026 & 10/20 & 0 & 21 & 0.555 & 42.1/62.1 & 49.6/72.1 \\
+\midrule
+\multicolumn{8}{@{}l}{\textbf{Panel B: Live Order-Book Costs by Route \& Size (Nov 13, 2026, R6)}} \\
+Route & Scope & Size & \multicolumn{2}{r}{Stat. (Mkr/Tkr)} & \multicolumn{2}{r}{Depth Slip} & All-In Tkr \\
+\midrule
+Route A & Domestic 2-Leg & \$1k & \multicolumn{2}{r}{42.11/62.11} & \multicolumn{2}{r}{4.35} & 66.46 \\
+Route B & Cross-Exchange 3-Leg & \$1k & \multicolumn{2}{r}{49.61/72.11} & \multicolumn{2}{r}{4.35} & 76.46 \\
+Route C & Same-Exchange Indodax & \$1k & \multicolumn{2}{r}{67.22/90.22} & \multicolumn{2}{r}{63.14} & 153.36 \\
+Route A & Domestic 2-Leg & \$10k & \multicolumn{2}{r}{42.11/62.11} & \multicolumn{2}{r}{4.35} & 66.46 \\
+Route B & Cross-Exchange 3-Leg & \$10k & \multicolumn{2}{r}{49.61/72.11} & \multicolumn{2}{r}{4.35} & 76.46 \\
+Route C & Same-Exchange Indodax & \$10k & \multicolumn{2}{r}{67.22/90.22} & \multicolumn{2}{r}{63.14} & 153.36 \\
+Route A & Domestic 2-Leg & \$50k & \multicolumn{2}{r}{42.11/62.11} & \multicolumn{2}{r}{9.73} & 71.84 \\
+Route B & Cross-Exchange 3-Leg & \$50k & \multicolumn{2}{r}{49.61/72.11} & \multicolumn{2}{r}{9.74} & 81.85 \\
+Route C & Same-Exchange Indodax & \$50k & \multicolumn{2}{r}{67.22/90.22} & \multicolumn{2}{r}{68.53} & 158.75 \\
+\bottomrule
+\end{tabular}\endgroup
+\begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
+\emph{Notes:} Regime R2A/R2B August 2023 platform fee transition carries PARTIALLY\_VERIFIED status; R6 matches published Indodax Pro rates to the fifth decimal place (0.10555\%/0.20555\% buy; 0.31555\%/0.41555\% sell; 0.2511\%/0.2811\% USDT). Route B and Route C calculations assume pre-funded inventory and exclude on-chain withdrawal fees.
+\end{minipage}
+\end{table}

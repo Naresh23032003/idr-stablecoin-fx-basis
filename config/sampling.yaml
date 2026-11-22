@@ -1,0 +1,38 @@
+sampling:
+  primary_rule: "first_valid_at_or_after_jisdor_pub"
+  tolerance_minutes: 5
+  jisdor_schedule:
+    - regime: "R1_PRE_APRIL_2021"
+      start_date: "2021-01-01"
+      end_date: "2021-04-04"
+      monitoring_window_wib: "08:00-09:45 WIB"
+      pub_time_wib: "10:00:00"
+      pub_time_utc: "03:00:00"
+      authority: "SE BI No. 15/18/DPM"
+    - regime: "R2_COVID_ADJUSTED_1515"
+      start_date: "2021-04-05"
+      end_date: "2022-05-31"
+      monitoring_window_wib: "09:00-15:00 WIB"
+      pub_time_wib: "15:15:00"
+      pub_time_utc: "08:15:00"
+      authority: "BI Press Release No. 23/30/DKom (Pandemic Hours)"
+      notes: "Transition to normal 16:15 WIB documented as post-pandemic normalization; tested as sensitivity 15:15 vs 16:15"
+    - regime: "R3_NORMAL_1615_PADG11"
+      start_date: "2022-06-01"
+      end_date: "2026-03-31"
+      monitoring_window_wib: "08:00-16:00 WIB"
+      pub_time_wib: "16:15:00"
+      pub_time_utc: "09:15:00"
+      authority: "BI Press Release No. 23/30/DKom & PADG No. 11/2024"
+    - regime: "R4_PADG_07_2026"
+      start_date: "2026-04-01"
+      end_date: "2026-11-12"
+      monitoring_window_wib: "09:00-15:00 WIB"
+      pub_time_wib: "15:15:00"
+      pub_time_utc: "08:15:00"
+      authority: "PADG No. 7 Tahun 2026"
+  sensitivity_windows_minutes: [-15, 0, 5, 15]
+  include_close_2359_comparison: true
+  include_next_day_jisdor_lead: true
+  weekend_handling: "separate_subsample_no_carryforward_in_primary"
+  stale_bar_rule: "flag_volume_zero_and_run_active_vs_all"

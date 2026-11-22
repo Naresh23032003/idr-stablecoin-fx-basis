@@ -1,0 +1,35 @@
+{
+  "BTC": {
+    "var_total": 6529.032081245065,
+    "var_crypto": 752.9815132508506,
+    "var_stablecoin_fx": 5425.673481191792,
+    "cov_crypto_sf": 175.18854340121146,
+    "corr_crypto_sf": 0.0866735765071885,
+    "variance_identity_abs_diff": 9.094947017729282e-13,
+    "gross_share_crypto_pct": 11.532819932280983,
+    "gross_share_sf_pct": 83.10073244665594
+  },
+  "ETH": {
+    "var_total": 6975.324741453263,
+    "var_crypto": 792.9582267928785,
+    "var_stablecoin_fx": 5425.673481191792,
+    "cov_crypto_sf": 378.34651673429596,
+    "corr_crypto_sf": 0.18240542816241087,
+    "variance_identity_abs_diff": 9.094947017729282e-13,
+    "gross_share_crypto_pct": 11.36804745563245,
+    "gross_share_sf_pct": 77.78381197004154
+  },
+  "XRP": {
+    "var_total": 7354.461304576287,
+    "var_crypto": 1267.274174306196,
+    "var_stablecoin_fx": 5425.673481191792,
+    "cov_crypto_sf": 330.7568245391493,
+    "corr_crypto_sf": 0.12613821891869523,
+    "variance_identity_abs_diff": 0.0,
+    "gross_share_crypto_pct": 17.231366402290256,
+    "gross_share_sf_pct": 73.77390751672984
+  },
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_band": 98.44,
+  "BTC_pct_crypto_inside_dynamic_2leg_maker_band": 64.57,
+  "BTC_pct_crypto_inside_dynamic_3leg_taker_band": 98.94
+}

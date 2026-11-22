@@ -1,0 +1,43 @@
+generated_at_utc: '2026-11-14T03:38:02.278433+00:00'
+seed: 20261113
+experiments:
+- id: EXP-01
+  name: Basis Decomposition & Variance Identity
+  status: COMPLETED
+  output: results/tables/table1_descriptive_statistics.csv
+- id: EXP-02
+  name: Unit-Root & Stationarity Suite (ADF/PP/KPSS/ZA)
+  status: COMPLETED
+  output: results/tables/table2_unit_root_tests.csv
+- id: EXP-03
+  name: Engle-Granger, Fixed-(1,-1) & Reinsel-Ahn/Cheung-Lai Johansen
+  status: COMPLETED
+  output: results/tables/table3_cointegration_and_reconciliation.csv
+- id: EXP-04
+  name: Null-Imposed VECM i.i.d. Residual Bootstrap (B=9,999) & DGP Validation
+  status: COMPLETED
+  output: results/tables/table4_bootstrap_rank_tests.csv
+- id: EXP-05
+  name: Bivariate VECM, Weak Exogeneity & Daily Return Pass-Through
+  status: COMPLETED
+  output: results/tables/table5_vecm_error_correction.csv
+- id: EXP-06
+  name: 5-Minute Intraday VECM (All vs Active Volume) & Band-TAR
+  status: COMPLETED
+  output: results/models/intraday_and_tar_results.json
+- id: EXP-07
+  name: Historical Fee Reconstruction & Route-Specific Costs
+  status: COMPLETED
+  output: results/tables/route_specific_execution_costs.csv
+- id: EXP-08
+  name: Regulatory & Structural Break Event Windows
+  status: COMPLETED
+  output: results/tables/table7_regulatory_event_windows.csv
+- id: EXP-09
+  name: Synchronization Window, Lag & Spot-FX Robustness
+  status: COMPLETED
+  output: results/tables/table8_synchronization_sensitivity.csv
+- id: EXP-10
+  name: Falsification Suite (Omitted FX, EUR/USD Placebo, Mismatch, Placebo Break)
+  status: COMPLETED
+  output: results/tables/table9_falsification_tests.csv

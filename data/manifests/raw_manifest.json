@@ -1,0 +1,426 @@
+{
+  "generated_at_utc": "2026-11-13T16:15:10.886491+00:00",
+  "start_date": "2021-01-01",
+  "end_date": "2026-11-12",
+  "sources": {
+    "bi_jisdor": {
+      "provider": "Bank Indonesia",
+      "instrument": "JISDOR",
+      "pair": "USD/IDR",
+      "source_url": "https://www.bi.go.id/en/statistik/informasi-kurs/jisdor/Default.aspx",
+      "request_params": {
+        "from": "01/01/2021",
+        "to": "12/11/2026",
+        "action": "ButtonExport"
+      },
+      "retrieved_at_utc": "2026-11-13T16:15:19.804196+00:00",
+      "raw_file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/bi_jisdor/bi_jisdor_2021-01-01_2026-11-12.xlsx",
+      "size_bytes": 36208,
+      "sha256": "fbe6b1eea37863199209278cbe5a32f25e39b7649fb6d17952650ce7e0ad83e1",
+      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "licence_notes": "Official public Bank Indonesia statistical release; attribution required."
+    },
+    "yahoo_idrx": {
+      "provider": "Yahoo Finance",
+      "instrument": "IDR=X",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/IDR=X?period1=1609459200&period2=1794528000&interval=1d&events=history",
+      "retrieved_at_utc": "2026-11-13T16:15:20.032389+00:00",
+      "raw_file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/fx_spot/yahoo_idr_x_2021-01-01_2026-11-13.json",
+      "size_bytes": 109351,
+      "sha256": "c53729b4a951a85dec0a0af43025b13471b842f47cebb9d6db99863308cf3d39",
+      "licence_notes": "Aggregator composite indicative FX close for research cross-validation."
+    },
+    "yahoo_eurusd": {
+      "provider": "Yahoo Finance",
+      "instrument": "EURUSD=X",
+      "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/EURUSD=X?period1=1609459200&period2=1794528000&interval=1d&events=history",
+      "retrieved_at_utc": "2026-11-13T16:15:20.268373+00:00",
+      "raw_file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/fx_spot/yahoo_eurusd_x_2021-01-01_2026-11-13.json",
+      "size_bytes": 164280,
+      "sha256": "8bd4550af332f228e14b08aa44ed33049355b0d216dbb4be2fc72f1a0995705a",
+      "licence_notes": "Aggregator composite indicative FX close for research cross-validation."
+    },
+    "frankfurter_usdidr": {
+      "provider": "Frankfurter (European Central Bank Reference Rates)",
+      "instrument": "USD/IDR",
+      "source_url": "https://api.frankfurter.dev/v1/2021-01-01..2026-11-12?from=USD&to=IDR",
+      "retrieved_at_utc": "2026-11-13T16:15:21.481299+00:00",
+      "raw_file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/fx_spot/frankfurter_USD_IDR_2021-01-01_2026-11-12.json",
+      "size_bytes": 40695,
+      "sha256": "38d01ee76260a20ae5ba1c2b7ec5462e2a11e3ef177643092d7fcfe81945e7b0",
+      "licence_notes": "ECB official daily reference rate (~16:00 CET = 15:00 UTC / 14:00 UTC DST)."
+    },
+    "orderbook_snapshots": {
+      "captured_at_utc": "20261113T161521Z",
+      "indodax": {
+        "btcidr": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/indodax/orderbook_snapshots/depth_btcidr_20261113T161521Z.json",
+          "sha256": "ec49ad314800ef2a34baf48f37853dc770d02cfc4ee59dee1cacf451cb1ec5aa"
+        },
+        "usdtidr": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/indodax/orderbook_snapshots/depth_usdtidr_20261113T161521Z.json",
+          "sha256": "648e202d7a97f2cc0d8b5fb0113ce8b589e0e87efea352345a766fcdae0acf5a"
+        },
+        "ethidr": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/indodax/orderbook_snapshots/depth_ethidr_20261113T161521Z.json",
+          "sha256": "89158c19074b5d323ddd9e431087dd51aa9846390f5b2a79b074da8a3840f55f"
+        },
+        "xrpidr": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/indodax/orderbook_snapshots/depth_xrpidr_20261113T161521Z.json",
+          "sha256": "8e0579e37a5a84d78faba0c6b044ba9717778aa3a4e67832e1d7cac32f084252"
+        },
+        "btcusdt": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/indodax/orderbook_snapshots/depth_btcusdt_20261113T161521Z.json",
+          "sha256": "11c9a25e841bee0f0864aac951d31807edf3f16daeb5e2948b027ad33a2a2888"
+        }
+      },
+      "binance": {
+        "BTCUSDT": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/binance/orderbook_snapshots/depth_BTCUSDT_20261113T161521Z.json",
+          "sha256": "b0f7cc5e53b70a32798923d1c5b5e9b20617b19bad15edb4fe4d5c86a3938027"
+        },
+        "ETHUSDT": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/binance/orderbook_snapshots/depth_ETHUSDT_20261113T161521Z.json",
+          "sha256": "d6947e82cb2fbaec2116f5a539da3e20355b1e704a5dd74fbaeec34cd4009c33"
+        },
+        "XRPUSDT": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/binance/orderbook_snapshots/depth_XRPUSDT_20261113T161521Z.json",
+          "sha256": "f30eada507a4ccb8d45511b342ea8d8908106198956c872dd5e8f60c8dace232"
+        },
+        "BTCIDR": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/binance/orderbook_snapshots/depth_BTCIDR_20261113T161521Z.json",
+          "sha256": "614fb194261c1d68a8add1caf3a7f48279fc54427dc360cd232cf7369549aba9"
+        },
+        "USDTIDR": {
+          "file": "/Users/naresh/Desktop/Finance/indonesian_crypto_research_final/data/raw/binance/orderbook_snapshots/depth_USDTIDR_20261113T161521Z.json",
+          "sha256": "9ac14a49f249bc81a55248d3407d3bc14eb0313374e44410524e06280bb80100"
+        }
+      },
+      "indodax_pairs_sha256": "5ffc1d265d077254618d68b0f56a3185fcf5bf392a123f5b7d415a013982153d"
+    },
+    "coinbase": {
+      "USDT-USD_86400": {
+        "provider": "Coinbase Exchange REST API",
+        "product": "USDT-USD",
+        "granularity_sec": 86400,
+        "chunks_ok": 8,
+        "total_rows": 2027,
+        "errors": []
+      },
+      "BTC-USD_86400": {
+        "provider": "Coinbase Exchange REST API",
+        "product": "BTC-USD",
+        "granularity_sec": 86400,
+        "chunks_ok": 8,
+        "total_rows": 2150,
+        "errors": []
+      },
+      "ETH-USD_86400": {
+        "provider": "Coinbase Exchange REST API",
+        "product": "ETH-USD",
+        "granularity_sec": 86400,
+        "chunks_ok": 8,
+        "total_rows": 2150,
+        "errors": []
+      },
+      "USDT-USD_3600": {
+        "provider": "Coinbase Exchange REST API",
+        "product": "USDT-USD",
+        "granularity_sec": 3600,
+        "chunks_ok": 178,
+        "total_rows": 48608,
+        "errors": []
+      }
+    },
+    "kraken_usdtusd": {
+      "provider": "Kraken Public REST API",
+      "pair": "USDTUSD",
+      "interval_min": 1440,
+      "url": "https://api.kraken.com/0/public/OHLC?pair=USDTUSD&interval=1440&since=1609459200",
+      "sha256": "4aa6d889b9d5ff16d5c9eae7ee1dbca153cdda4e99db84f3f53cafc11f8182fa",
+      "retrieved_at_utc": "2026-11-13T16:17:56.495136+00:00"
+    },
+    "binance": {
+      "ETHUSDT_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "ETHUSDT",
+        "interval": "1d",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "BTCUSDT_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCUSDT",
+        "interval": "1d",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "BTCUSDT_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCUSDT",
+        "interval": "5m",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "ETHUSDT_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "ETHUSDT",
+        "interval": "5m",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "XRPUSDT_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "XRPUSDT",
+        "interval": "1d",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "BTCBIDR_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCBIDR",
+        "interval": "1d",
+        "files_ok": 41,
+        "files_total_attempted": 41,
+        "checksums_verified": 41,
+        "errors": []
+      },
+      "XRPUSDT_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "XRPUSDT",
+        "interval": "5m",
+        "files_ok": 82,
+        "files_total_attempted": 83,
+        "checksums_verified": 82,
+        "errors": []
+      },
+      "USDTBIDR_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDTBIDR",
+        "interval": "1d",
+        "files_ok": 41,
+        "files_total_attempted": 41,
+        "checksums_verified": 41,
+        "errors": []
+      },
+      "BTCBIDR_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCBIDR",
+        "interval": "5m",
+        "files_ok": 41,
+        "files_total_attempted": 41,
+        "checksums_verified": 41,
+        "errors": []
+      },
+      "USDCUSDT_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDCUSDT",
+        "interval": "1d",
+        "files_ok": 77,
+        "files_total_attempted": 234,
+        "checksums_verified": 77,
+        "errors": []
+      },
+      "BTCIDR_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCIDR",
+        "interval": "1d",
+        "files_ok": 24,
+        "files_total_attempted": 25,
+        "checksums_verified": 24,
+        "errors": []
+      },
+      "BTCIDR_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCIDR",
+        "interval": "5m",
+        "files_ok": 24,
+        "files_total_attempted": 25,
+        "checksums_verified": 24,
+        "errors": []
+      },
+      "USDTBIDR_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDTBIDR",
+        "interval": "5m",
+        "files_ok": 41,
+        "files_total_attempted": 41,
+        "checksums_verified": 41,
+        "errors": []
+      },
+      "USDCUSDT_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDCUSDT",
+        "interval": "5m",
+        "files_ok": 77,
+        "files_total_attempted": 234,
+        "checksums_verified": 77,
+        "errors": []
+      },
+      "USDTIDR_1d": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDTIDR",
+        "interval": "1d",
+        "files_ok": 24,
+        "files_total_attempted": 25,
+        "checksums_verified": 24,
+        "errors": []
+      },
+      "USDTIDR_5m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "USDTIDR",
+        "interval": "5m",
+        "files_ok": 24,
+        "files_total_attempted": 25,
+        "checksums_verified": 24,
+        "errors": []
+      },
+      "BTCUSDT_1m": {
+        "provider": "Binance Public Data Vision",
+        "exchange": "Binance Spot",
+        "symbol": "BTCUSDT",
+        "interval": "1m",
+        "files_ok": 22,
+        "files_total_attempted": 23,
+        "checksums_verified": 22,
+        "errors": []
+      }
+    },
+    "indodax": {
+      "BTCIDR_tf1D": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "BTCIDR",
+        "timeframe": "1D",
+        "chunks_ok": 1,
+        "total_bars_raw": 2142,
+        "errors": []
+      },
+      "USDTIDR_tf1D": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "USDTIDR",
+        "timeframe": "1D",
+        "chunks_ok": 1,
+        "total_bars_raw": 2142,
+        "errors": []
+      },
+      "BTCIDR_tf5": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "BTCIDR",
+        "timeframe": "5",
+        "chunks_ok": 268,
+        "total_bars_raw": 616896,
+        "errors": []
+      },
+      "ETHIDR_tf1D": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "ETHIDR",
+        "timeframe": "1D",
+        "chunks_ok": 1,
+        "total_bars_raw": 2142,
+        "errors": []
+      },
+      "USDTIDR_tf5": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "USDTIDR",
+        "timeframe": "5",
+        "chunks_ok": 268,
+        "total_bars_raw": 616896,
+        "errors": []
+      },
+      "XRPIDR_tf1D": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "XRPIDR",
+        "timeframe": "1D",
+        "chunks_ok": 1,
+        "total_bars_raw": 2142,
+        "errors": []
+      },
+      "XRPIDR_tf5": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "XRPIDR",
+        "timeframe": "5",
+        "chunks_ok": 268,
+        "total_bars_raw": 616896,
+        "errors": []
+      },
+      "BTCUSDT_tf1D": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "BTCUSDT",
+        "timeframe": "1D",
+        "chunks_ok": 1,
+        "total_bars_raw": 2142,
+        "errors": []
+      },
+      "ETHIDR_tf5": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "ETHIDR",
+        "timeframe": "5",
+        "chunks_ok": 268,
+        "total_bars_raw": 616896,
+        "errors": []
+      },
+      "BTCIDR_tf1": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "BTCIDR",
+        "timeframe": "1",
+        "chunks_ok": 40,
+        "total_bars_raw": 455040,
+        "errors": []
+      },
+      "USDTIDR_tf1": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "USDTIDR",
+        "timeframe": "1",
+        "chunks_ok": 40,
+        "total_bars_raw": 455040,
+        "errors": []
+      },
+      "BTCUSDT_tf5": {
+        "provider": "Indodax Official TradingView History API",
+        "exchange": "Indodax",
+        "symbol": "BTCUSDT",
+        "timeframe": "5",
+        "chunks_ok": 268,
+        "total_bars_raw": 616896,
+        "errors": []
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+route,trade_size_usd,statutory_fee_maker_bps,statutory_fee_taker_bps,snapshot_half_spread_slip_bps,all_in_taker_plus_slip_bps,notes
+Route A: Domestic 2-Leg (Sell BTC/IDR + Buy USDT/IDR on Indodax),1k,42.11,62.11,4.35,66.46,Excludes on-chain settlement; slippage from Nov 2026 live depth snapshot
+Route B: Cross-Exchange 3-Leg (Indodax BTC/IDR + USDT/IDR + Binance BTC/USDT),1k,49.61,72.11,4.35,76.46,Assumes pre-funded inventory or excludes variable network transfer fee & latency risk
+Route C: Same-Exchange Indodax (BTC/IDR + USDT/IDR + Indodax BTC/USDT),1k,67.22,90.22,63.14,153.36,"No external transfer needed, but Indodax BTC/USDT exhibits wide spread/thin depth"
+Route A: Domestic 2-Leg (Sell BTC/IDR + Buy USDT/IDR on Indodax),10k,42.11,62.11,4.35,66.46,Excludes on-chain settlement; slippage from Nov 2026 live depth snapshot
+Route B: Cross-Exchange 3-Leg (Indodax BTC/IDR + USDT/IDR + Binance BTC/USDT),10k,49.61,72.11,4.35,76.46,Assumes pre-funded inventory or excludes variable network transfer fee & latency risk
+Route C: Same-Exchange Indodax (BTC/IDR + USDT/IDR + Indodax BTC/USDT),10k,67.22,90.22,63.14,153.36,"No external transfer needed, but Indodax BTC/USDT exhibits wide spread/thin depth"
+Route A: Domestic 2-Leg (Sell BTC/IDR + Buy USDT/IDR on Indodax),50k,42.11,62.11,9.73,71.84,Excludes on-chain settlement; slippage from Nov 2026 live depth snapshot
+Route B: Cross-Exchange 3-Leg (Indodax BTC/IDR + USDT/IDR + Binance BTC/USDT),50k,49.61,72.11,9.74,81.85,Assumes pre-funded inventory or excludes variable network transfer fee & latency risk
+Route C: Same-Exchange Indodax (BTC/IDR + USDT/IDR + Indodax BTC/USDT),50k,67.22,90.22,68.53,158.75,"No external transfer needed, but Indodax BTC/USDT exhibits wide spread/thin depth"

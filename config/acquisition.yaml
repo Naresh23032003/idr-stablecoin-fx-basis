@@ -1,0 +1,38 @@
+project:
+  name: "indonesian_crypto_research_final"
+  seed: 20261113
+  start_date: "2021-01-01"
+  end_date: "2026-11-12"
+
+acquisition:
+  rate_limit_sec: 0.15
+  max_retries: 5
+  timeout_sec: 25
+  indodax:
+    symbols: ["BTCIDR", "USDTIDR", "ETHIDR", "XRPIDR", "BTCUSDT"]
+    timeframes: ["1D", "5"]
+    chunk_days: 8
+    intraday_1m_symbols: ["BTCIDR", "USDTIDR"]
+    intraday_1m_start: "2026-01-01"
+    intraday_1m_end: "2026-11-12"
+  binance:
+    symbols_full: ["BTCUSDT", "ETHUSDT", "XRPUSDT", "USDCUSDT"]
+    symbols_bidr: ["BTCBIDR", "USDTBIDR"]
+    symbols_idr: ["BTCIDR", "USDTIDR"]
+    intervals: ["1d", "5m"]
+    intraday_1m_symbols: ["BTCUSDT"]
+    intraday_1m_start: "2026-01-01"
+    intraday_1m_end: "2026-11-12"
+  coinbase:
+    products: ["USDT-USD", "BTC-USD", "ETH-USD"]
+    granularities: [86400, 3600]
+  kraken:
+    pairs: ["USDTUSD"]
+    interval_min: 1440
+  bi_jisdor:
+    start_date: "2021-01-01"
+    end_date: "2026-11-12"
+  fx_spot:
+    yahoo_symbols: ["IDR=X", "EURUSD=X"]
+    frankfurter_from: "USD"
+    frankfurter_to: "IDR"

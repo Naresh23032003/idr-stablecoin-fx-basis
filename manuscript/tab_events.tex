@@ -1,0 +1,26 @@
+\begin{table}[htbp]
+\centering
+\caption{30-Calendar-Day Pre/Post Institutional and Regulatory Event Windows (BTC Basis, bps)}
+\label{tab:events}
+\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
+\begingroup
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{2.3cm}rrrrrr@{}}
+\toprule
+Date & Event & $\Delta\bar{B}^{cry}$ & $p_W$ ($p_{\text{Holm}}$) & $p_{\text{MW}}$ & $\Delta\bar{B}^{s\text{-}FX}$ & $p_W$ ($p_{\text{Holm}}$) & $p_{\text{MW}}$ \\
+\midrule
+2022-05-01 & PMK 68/2022 Tax & 13.23 & 0.293 (1.000) & 0.222 & 7.05 & 0.419 (1.000) & 0.066 \\
+2024-05-17 & Binance BIDR Delist & 1.72 & 0.862 (1.000) & 0.502 & -0.54 & 0.951 (1.000) & 0.953 \\
+2024-09-11 & Indodax Incident & -29.61 & 0.085 (1.000) & 0.162 & -14.25 & 0.045 (0.719) & 0.078 \\
+2024-11-01 & CFX Fee Launch & -10.54 & 0.168 (1.000) & 0.232 & 14.45 & 0.018 (0.307) & 0.031 \\
+2025-01-10 & OJK Transfer & 5.11 & 0.648 (1.000) & 0.574 & -13.79 & 0.102 (1.000) & 0.076 \\
+2025-08-01 & PMK 50/2025 Tax & 21.23 & 0.0005 (0.011) & 0.002 & 14.08 & 0.014 (0.247) & 0.033 \\
+2026-03-01 & CFX 1st 50\% Cut & -2.33 & 0.533 (1.000) & 0.804 & -3.73 & 0.423 (1.000) & 0.202 \\
+2026-04-01 & JISDOR PADG 7/2026 & -1.71 & 0.615 (1.000) & 0.681 & -15.19 & 0.005 (0.090) & 0.008 \\
+2026-10-01 & CFX 2nd 50\% Cut & 8.52 & 0.239 (1.000) & 0.432 & 7.73 & 0.186 (1.000) & 0.142 \\
+2026-10-31 & Indodax Maintenance & -10.74 & 0.185 (1.000) & 0.421 & 11.68 & 0.071 (1.000) & 0.184 \\
+\bottomrule
+\end{tabular}\endgroup
+\begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
+\emph{Notes:} $p_W$ and $p_{\text{MW}}$ are raw two-sided Welch $t$-test and Mann--Whitney $U$ $p$-values; $p_{\text{Holm}}$ is Holm-adjusted across all 20 event $\times$ leg tests. Under Mann--Whitney Holm adjustment, only PMK 50/2025 on $B^{cry}$ ($p_{\text{Holm}}=0.032$) is significant at 5\%. In OLS regressions over each $\pm 30$-day window controlling for daily BTC and JISDOR log returns (HAC $L=5$), PMK 50/2025 shifts $B^{cry}$ by $+17.22$ bps (raw $p=0.016$, Holm $p=0.275$) and CFX Fee Launch shifts $B^{s\text{-}FX}$ by $+17.37$ bps (raw $p=0.0013$, Holm $p=0.026$).
+\end{minipage}
+\end{table}

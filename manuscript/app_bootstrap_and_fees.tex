@@ -1,0 +1,41 @@
+\section{Bootstrap validation, five-decimal tax arithmetic, and lag sensitivity}
+\label{app:details}
+
+\subsection{Five-decimal reconciliation of October 2026 Indodax Pro rates}
+Under PMK No.\ 50 Tahun 2025 (effective August 1, 2025) and the October 1, 2026 CFX/KKI fee halving, published Indodax Pro rates equal:
+\begin{itemize}
+  \item \textbf{Buy IDR pair:} Maker $10.0\text{ bps}$ (inclusive of $11\%$ service VAT) + Buyer Asset VAT $0\text{ bps}$ + CFX/KKI IDR fee $0.555\text{ bps} = 10.555\text{ bps}$ ($0.10555\%$); Taker $= 20.0 + 0 + 0.555 = 20.555\text{ bps}$ ($0.20555\%$).
+  \item \textbf{Sell IDR pair:} Maker $10.0\text{ bps}$ + Seller PPh 22 $21.0\text{ bps}$ + CFX/KKI $0.555\text{ bps} = 31.555\text{ bps}$ ($0.31555\%$); Taker $= 20.0 + 21.0 + 0.555 = 41.555\text{ bps}$ ($0.41555\%$).
+  \item \textbf{Route A Round-Trip (Domestic Two-Leg):} Buying or selling across \texttt{BTC/IDR} and \texttt{USDT/IDR} gives $10.555 + 31.555 = 42.110\text{ bps}$ (maker) and $20.555 + 41.555 = 62.110\text{ bps}$ (taker).
+  \item \textbf{Indodax USDT Pair:} Base $3.0/6.0\text{ bps}$ (maker/taker) + CFX USDT $1.11\text{ bps}$ + Seller PPh 22 $21.0\text{ bps} = 25.11\text{ bps}$ ($0.2511\%$) maker / $28.11\text{ bps}$ ($0.2811\%$) taker on sell orders, matching live exchange disclosures exactly.
+\end{itemize}
+
+\subsection{VAR lag order and deterministic specification sensitivity}
+Table~\ref{tab:lag_sens} reports Reinsel--Ahn Johansen trace statistics and HAC VECM error-correction speeds for the synchronized BTC vs.\ JISDOR-converted global BTC system across VAR lag orders $k \in \{2,\dots,6\}$ ($k_{ar\_diff} \in \{1,\dots,5\}$) and both restricted-constant (\texttt{det\_order=0}, $H_1^*(r)$) and unrestricted-constant (\texttt{det\_order=1}, $H_1(r)$) deterministic specifications. Cointegration rank $r=1$ holds at the $1\%$ level across all ten specifications ($\text{Trace}_{RA} = 51.53$ to $201.64$ versus $15.49$ and $18.40$ critical values), while global prices remain consistently weakly exogenous ($p_{global} \in [0.191, 0.345]$) and local error-correction speeds stay between $-0.3176$ and $-0.4166$.
+
+\begin{table}[htbp]
+\centering
+\caption{Johansen Cointegration and VECM Sensitivity Across Lag Orders and Deterministic Terms (BTC)}
+\label{tab:lag_sens}
+\fontsize{6.5}{8}\selectfont
+\begingroup\setlength{\tabcolsep}{2pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}rrrrrrrr@{}}
+\toprule
+Det. Order & $k_{ar\_diff}$ & VAR Lag $k$ & $T_{eff}$ & Trace (RA) & 5\% CV & Reject $r=0$ & $\hat{\alpha}_{local}$ & $p_{global}$ \\
+\midrule
+0 (Restr.\ Const.) & 1 & 2 & 1,412 & 151.72 & 15.49 & True & $-0.3983$ & 0.2728 \\
+0 (Restr.\ Const.) & 2 & 3 & 1,411 & 106.70 & 15.49 & True & $-0.4166$ & 0.1910 \\
+0 (Restr.\ Const.) & 3 & 4 & 1,410 & 75.74 & 15.49 & True & $-0.3176$ & 0.3446 \\
+0 (Restr.\ Const.) & 4 & 5 & 1,409 & 64.39 & 15.49 & True & $-0.3421$ & 0.2954 \\
+0 (Restr.\ Const.) & 5 & 6 & 1,408 & 51.53 & 15.49 & True & $-0.3215$ & 0.2932 \\
+1 (Unrestr.\ Const.) & 1 & 2 & 1,412 & 201.64 & 18.40 & True & $-0.3984$ & 0.2727 \\
+1 (Unrestr.\ Const.) & 2 & 3 & 1,411 & 144.35 & 18.40 & True & $-0.4166$ & 0.1910 \\
+1 (Unrestr.\ Const.) & 3 & 4 & 1,410 & 106.17 & 18.40 & True & $-0.3176$ & 0.3446 \\
+1 (Unrestr.\ Const.) & 4 & 5 & 1,409 & 91.75 & 18.40 & True & $-0.3421$ & 0.2953 \\
+1 (Unrestr.\ Const.) & 5 & 6 & 1,408 & 74.01 & 18.40 & True & $-0.3215$ & 0.2932 \\
+\bottomrule
+\end{tabular}\endgroup
+\end{table}
+
+\subsection{Direct Binance IDR spot cross-validation (November 2025--November 2026)}
+Over the 349-day overlap since Binance introduced direct rupiah pairs on November 29, 2025 ($N = 100,362$ five-minute bars through November 12, 2026), Indodax \texttt{BTC/IDR} averages $-0.19\text{ bps}$ (SD $53.54\text{ bps}$) relative to Binance \texttt{BTC/IDR}, and Indodax \texttt{USDT/IDR} averages $-2.11\text{ bps}$ (SD $25.82\text{ bps}$) relative to Binance \texttt{USDT/IDR}. Because Binance \texttt{BTC/IDR} is less liquid at $\$50\text{k}$ size ($297.38\text{ bps}$ snapshot spread vs.\ $17.99\text{ bps}$ on Indodax), domestic rupiah liquidity remains heavily concentrated on Indodax even after international venue entry.

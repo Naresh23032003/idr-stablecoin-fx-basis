@@ -1,0 +1,36 @@
+\begin{table}[htbp]
+\centering
+\caption{Synchronization Sensitivity, FX Benchmark Robustness, and Falsification Suite (BTC)}
+\label{tab:robustness}
+\fontsize{6.8}{8}\selectfont\setlength{\tabcolsep}{2pt}
+\begingroup
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}rrrrrrr@{}}
+\toprule
+\multicolumn{8}{@{}l}{\textbf{Panel A: Timestamp Offset \& FX Benchmark Sensitivity}} \\
+Specification & $N$ & Mean $B^{tot}$ & SD $B^{tot}$ & Mean $B^{cry}$ & SD $B^{cry}$ & EG $t$ & Trace (RA) \\
+\midrule
+Primary 0m JISDOR & 1,414 & 29.94 & 80.80 & -0.83 & 27.44 & -4.424 & 151.72 \\
+ExAnte Minus15m JISDOR & 1,414 & 29.48 & 80.14 & -1.10 & 27.13 & -4.320 & 153.96 \\
+Post Plus5m JISDOR & 1,414 & 29.96 & 80.43 & -0.95 & 26.69 & -4.419 & 150.13 \\
+Post Plus15m JISDOR & 1,414 & 29.85 & 79.48 & -1.39 & 26.86 & -4.197 & 150.57 \\
+NextDay JISDOR Lead & 1,084 & 29.40 & 84.75 & -0.23 & 27.22 & -4.023 & 148.50 \\
+Mismatched 2359UTC Close & 1,414 & 31.65 & 92.03 & 2.37 & 35.97 & -4.124 & 225.32 \\
+SpotFX Yahoo 0m & 1,251 & 40.21 & 91.20 & -0.16 & 27.01 & -4.806 & 151.09 \\
+ECBFX Frankfurter 0m & 1,407 & 30.53 & 81.93 & -0.86 & 27.49 & -4.481 & 158.49 \\
+JISDOR-Win VWAP USDT & 1,414 & 27.06 & 82.87 & -0.83 & 27.44 & -- & 82.4\%$^\dagger$ \\
+JISDOR-Win Full VWAP & 1,414 & 29.64 & 82.65 & 1.75 & 26.65 & -- & 82.8\%$^\dagger$ \\
+\midrule
+\multicolumn{8}{@{}l}{\textbf{Panel B: Negative Controls \& Falsification Tests}} \\
+Falsification Test & $N$ & SD (bps) & EG $t$/$F$ & $p$-val & Trace & Rej. 5\% & Expected Outcome \\
+\midrule
+Omitted FX Unadjusted BTC IDR vs USDT & 1,251 & 669.0 & -1.439 & 0.7839 & 5.81 & False & Fail cointegration \\
+Placebo Wrong FX EURUSD & 1,251 & 828.3 & -1.859 & 0.6006 & 6.74 & False & Fail cointegration \\
+Placebo CrossAsset BTCIDR vs XRP JISDOR & 1,251 & 3563.3 & -2.467 & 0.2938 & 15.77 & True & Fail cointegration \\
+Deliberate 30d Time Mismatch BTC & 1,221 & 2221.1 & -6.451 & $<$0.0001 & 41.87 & True & Destroy tight parity \\
+Placebo Break 2023 06 15 CalmSubsample & 211 & 23.9 & 0.764 & 0.4671 & -- & False & No spurious Chow break \\
+\bottomrule
+\end{tabular}\endgroup
+\begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
+\emph{Notes:} $^\dagger$For the JISDOR monitoring-window VWAP rows (averaging Indodax 5-minute bars over each day's exact Bank Indonesia monitoring window: 08:00--16:00, 09:00--15:00, or 08:00--09:45 WIB), the final column reports the resulting $\mathrm{Var}(B^{s\text{-}FX})/\mathrm{Var}(B^{tot})$ share (baseline snapshot share: 83.1\%).
+\end{minipage}
+\end{table}

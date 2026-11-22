@@ -1,0 +1,9 @@
+{
+  "n_5m_bars": 100362,
+  "start": "2025-11-29 12:30:00+00:00",
+  "end": "2026-11-12 23:55:00+00:00",
+  "btcidr_indo_minus_bin_mean_bps": -0.19,
+  "btcidr_indo_minus_bin_sd_bps": 53.54,
+  "usdtidr_indo_minus_bin_mean_bps": -2.11,
+  "usdtidr_indo_minus_bin_sd_bps": 25.82
+}

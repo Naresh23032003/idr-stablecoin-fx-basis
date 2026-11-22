@@ -1,0 +1,11 @@
+\section{Data provenance and source exclusions}
+\label{app:provenance}
+
+\subsection{Tested venues excluded from historical time-series panels}
+Alongside Bank Indonesia JISDOR, Indodax, Binance Public Data Vision, Coinbase, Kraken, Yahoo Finance, and Frankfurter (ECB), we probed public historical endpoints on three additional Indonesian-licensed trading platforms on November 13, 2026:
+\begin{itemize}
+  \item \textbf{Tokocrypto (\texttt{tokocrypto.com/open/v1/market/klines}):} Returned empty candle arrays (\texttt{list: []}), precluding independent multi-year series construction without third-party aggregators.
+  \item \textbf{Pintu (\texttt{api.pintu.co.id/v2/trade/price-changes}):} Exposes live current-snapshot price summaries without multi-year historical candle endpoints.
+  \item \textbf{Reku (\texttt{api.reku.id/v2/ticker}):} Exposes live snapshot tickers without open multi-year OHLCV pagination.
+\end{itemize}
+Rather than interpolating missing venues or substituting multi-venue composite prices, these three domestic exchanges are logged as tested-and-excluded. Primary empirical claims therefore characterize Indodax, Indonesia's longest-running high-volume rupiah spot exchange, relative to Binance global USDT benchmarks and Bank Indonesia JISDOR.

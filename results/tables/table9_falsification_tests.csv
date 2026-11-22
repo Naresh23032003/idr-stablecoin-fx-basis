@@ -1,0 +1,6 @@
+test,expected_outcome,n_obs,spread_sd_bps,eg_t_stat,eg_pval,joh_trace_ra,joh_cv95_inf,rejected_no_coint_5pct
+Omitted_FX_Unadjusted_BTC_IDR_vs_USDT,Fail cointegration (spurious segmentation),1251,668.99,-1.439,0.78391,5.81,15.49,False
+Placebo_Wrong_FX_EURUSD,Fail cointegration (still omits IDR trend),1251,828.32,-1.859,0.60058,6.74,15.49,False
+Placebo_CrossAsset_BTCIDR_vs_XRP_JISDOR,Fail cointegration (different underlying assets),1251,3563.32,-2.467,0.29382,15.77,15.49,True
+Deliberate_30d_Time_Mismatch_BTC,"Destroy tight parity (SD blows up >1,500 bps vs 80.8 bps)",1221,2221.11,-6.451,0.0,41.87,15.49,True
+Placebo_Break_2023_06_15_CalmSubsample,No spurious Chow break (p > 0.05),211,23.88,0.764,0.46714,,,False

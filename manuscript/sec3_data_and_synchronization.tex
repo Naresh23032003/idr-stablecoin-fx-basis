@@ -1,0 +1,33 @@
+\section{Data provenance and fixing synchronization}
+\label{sec:data}
+
+\subsection{Primary market and central bank sources}
+Every series in this study comes directly from official exchange archives, public exchange APIs, or central-bank releases retrieved on November 13, 2026 with raw SHA-256 verification manifests stored alongside raw payloads. No simulated prices, synthetic interpolation, or multi-venue composite price substitutes enter the primary dataset. Table~\ref{tab:coverage} summarizes coverage and quality diagnostics across all instruments.
+
+\begin{enumerate}
+  \item \textbf{Bank Indonesia JISDOR:} Official statistical Excel downloads provide $1,415$ daily business-day fixings from January 4, 2021 to November 12, 2026, with zero duplicate dates and zero missing values.
+  \item \textbf{Indodax Spot OHLCV:} Direct queries to Indodax's TradingView historical endpoint return complete, gap-free five-minute candles from January 1, 2021 to November 12, 2026 ($616,896$ bars per pair) for \texttt{BTCIDR}, \texttt{USDTIDR}, \texttt{ETHIDR}, \texttt{XRPIDR}, and \texttt{BTCUSDT}, plus $455,040$ one-minute bars across January--November 2026 for \texttt{BTCIDR} and \texttt{USDTIDR}. Zero-volume carry-forward bars constitute only $1.73\%$ of \texttt{BTCIDR} five-minute bars and $0.61\%$ of \texttt{USDTIDR} five-minute bars, versus $5.97\%$ for \texttt{ETHIDR}, $6.64\%$ for \texttt{XRPIDR}, and $78.57\%$ for \texttt{BTCUSDT}. This microstructure contrast confirms that domestic \texttt{BTC/USDT} lacks continuous depth compared with \texttt{BTC/IDR} and \texttt{USDT/IDR}.
+  \item \textbf{Binance Spot Archives:} Monthly compressed kline archives with upstream SHA-256 checksums cover \texttt{BTCUSDT}, \texttt{ETHUSDT}, and \texttt{XRPUSDT} across January 2021--November 2026 ($616,683$ five-minute bars, $0.005\%$ zero-volume rate). Historical \texttt{BTCBIDR} and \texttt{USDTBIDR} pairs run cleanly until their May 17, 2024 delisting ($354,645$ five-minute bars), while Binance's direct \texttt{BTCIDR} and \texttt{USDTIDR} pairs launch on November 29, 2025 ($100,362$ five-minute bars through November 12, 2026). Live Tokocrypto kline APIs returned empty payloads, and Pintu/Reku public endpoints provide current snapshots without historical candle depth, so those venues are excluded rather than extrapolated.
+  \item \textbf{USD/USDT Peg Wedge and Auxiliary FX Benchmarks:} Coinbase Exchange provides \texttt{USDT-USD} hourly ($n = 48,441$) and daily ($n = 2,020$) series back to its May 4, 2021 listing, paired with Kraken \texttt{USDTUSD} daily bars (capped at $720$ recent bars, November 2024--November 2026) for cross-venue validation. Continuous indicative FX spot (\texttt{IDR=X}), ECB reference rates (Frankfurter API), and \texttt{EURUSD=X} placebo benchmarks supplement sensitivity and falsification analyses.
+\end{enumerate}
+
+\input{tab_coverage}
+
+\subsection{Timestamp synchronization protocol}
+To avoid look-ahead bias and artificial timing premia, primary daily observations anchor each JISDOR business day $t$ at its exact historical UTC publication timestamp $\tau_t$: 03:00 UTC through April 1, 2021, 09:15 UTC from April 5, 2021 through March 31, 2026, and 08:15 UTC from April 1, 2026 onward. For each JISDOR date, we match the first closed five-minute candle on Indodax (\texttt{BTCIDR}, \texttt{ETHIDR}, \texttt{XRPIDR}, \texttt{USDTIDR}) and Binance (\texttt{BTCUSDT}, \texttt{ETHUSDT}, \texttt{XRPUSDT}) at or strictly within $+300$ seconds of $\tau_t$, while matching Coinbase \texttt{USDT-USD} within $[-60, +60]$ minutes. This yields $n = 1,414$ synchronized business days across all three primary assets (maximum timestamp lag $0$--$300$ seconds; $0.50\%$ stale zero-volume incidence on Indodax \texttt{BTC/IDR}, $3.89\%$ on \texttt{ETH/IDR}, and $2.97\%$ on \texttt{XRP/IDR}). One JISDOR release out of $1,415$ lacks a synchronous crypto bar within the $+300$-second window at the sample boundary, leaving $1,414$ complete business days starting January 4, 2021.
+
+Figure~\ref{fig:coverage} displays raw coverage spans alongside key regulatory milestones, and Figure~\ref{fig:prices} plots the resulting synchronized BTC/IDR, JISDOR-converted global BTC/USDT, and \texttt{USDT/IDR}--JISDOR series.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{fig1_coverage_and_regimes.pdf}
+  \caption{Historical Instrument Coverage Matrix and Indonesian Regulatory Timeline (2021--2026)}
+  \label{fig:coverage}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{fig2_synchronized_prices.pdf}
+  \caption{Synchronized Domestic Prices, JISDOR-Converted Global Reference, and USDT/IDR vs.\ JISDOR (2021--2026)}
+  \label{fig:prices}
+\end{figure}

@@ -1,0 +1,12 @@
+project:
+  name: "indonesian_crypto_research_final"
+  seed: 20261113
+  start_date: "2021-01-01"
+  end_date: "2026-11-12"
+
+acquisition_config: "config/acquisition.yaml"
+sampling_config: "config/sampling.yaml"
+econometrics_config: "config/econometrics.yaml"
+latex_binary: "/Users/naresh/Library/TinyTeX/bin/universal-darwin/pdflatex"
+bibtex_binary: "/Users/naresh/Library/TinyTeX/bin/universal-darwin/bibtex"
+run_acquisition: false  # set true when forcing fresh downloads; pipeline validates existing raw files when false
