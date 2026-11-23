@@ -1,4 +1,4 @@
-generated_at_utc: '2026-11-14T03:38:02.278433+00:00'
+generated_at_utc: '2026-11-22T11:41:36.243387+00:00'
 seed: 20261113
 experiments:
 - id: EXP-01
@@ -14,15 +14,16 @@ experiments:
   status: COMPLETED
   output: results/tables/table3_cointegration_and_reconciliation.csv
 - id: EXP-04
-  name: Null-Imposed VECM i.i.d. Residual Bootstrap (B=9,999) & DGP Validation
+  name: Null-Imposed VECM Block-Wild Bootstrap (B=9,999) & GARCH+AR(1) DGP Validation
   status: COMPLETED
   output: results/tables/table4_bootstrap_rank_tests.csv
 - id: EXP-05
-  name: Bivariate VECM, Weak Exogeneity & Daily Return Pass-Through
+  name: Bivariate VECM, Weak Exogeneity, Full-System Half-Life & Daily Return Pass-Through
   status: COMPLETED
   output: results/tables/table5_vecm_error_correction.csv
 - id: EXP-06
-  name: 5-Minute Intraday VECM (All vs Active Volume) & Band-TAR
+  name: 5-Minute 3-Variable Intraday VECM (All vs Active + Indep-FX Robustness) &
+    Band-TAR
   status: COMPLETED
   output: results/models/intraday_and_tar_results.json
 - id: EXP-07

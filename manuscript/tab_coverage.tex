@@ -4,11 +4,11 @@
 \label{tab:coverage}
 \fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
 \begingroup
-\begin{tabular}{@{}llccrr>{\raggedright\arraybackslash}p{3.4cm}@{}}
+\begin{tabular}{@{}llccrr>{\raggedright\arraybackslash}p{3.0cm}@{}}
 \toprule
 Provider / Venue & Instrument & Freq. & Start--End (UTC) & Rows & Zero-Vol & Role / Limitations \\
 \midrule
-Bank Indonesia & JISDOR & 1d & 2021-01-04 to 2026-11-12 & 1,415 & -- & Official FX benchmark; bus. days \\
+Bank Indonesia & JISDOR & 1d & 2021-01-04 to 2026-11-12 & 1,415 & -- & Official FX benchmark; bus.\ days \\
 Indodax & BTCIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 1.73\% & Primary local BTC; 1.73\% stale \\
 Indodax & USDTIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 0.61\% & Local stablecoin; 0.61\% stale \\
 Indodax & ETHIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 5.97\% & Secondary ETH; 5.97\% stale \\
@@ -20,10 +20,10 @@ Binance Spot & XRPUSDT & 5m & 2021-01-01 to 2026-11-12 & 616,683 & -- & Global X
 Binance Spot & BTCBIDR & 5m & 2021-01-01 to 2024-05-17 & 354,645 & -- & Delisted 2024-05-17 \\
 Binance Spot & BTCIDR & 5m & 2025-11-29 to 2026-11-12 & 100,362 & -- & Launched 2025-11-29 \\
 Coinbase & USDT-USD & 1h & 2021-05-04 to 2026-11-13 & 48,441 & -- & Listed 2021-05-04 (peg wedge) \\
-Kraken & USDTUSD & 1d & 2024-11-23 to 2026-11-13 & 721 & -- & 720-bar API cap (validation) \\
+Kraken & USDTUSD & 1d & 2024-11-23 to 2026-11-13 & 721 & -- & 720-bar cap + current day \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} All series retrieved directly from official endpoints or public historical archives with SHA-256 manifests. BI JISDOR excludes weekends and Indonesian holidays; Coinbase USDT-USD commenced trading May 4, 2021; Binance BIDR delisted May 17, 2024; Binance direct IDR pairs launched November 29, 2025.
+\emph{Notes:} All series retrieved directly from official endpoints or public historical archives with SHA-256 manifests. Inner-joining raw Indodax ($616,896$) and Binance ($616,683$) five-minute bars on UTC timestamps yields $616,683$ paired observations ($605,150$ active-volume bars). Kraken's OHLC API returns $720$ completed daily bars plus the in-progress retrieval-day bar ($721$ rows). BI JISDOR excludes weekends and Indonesian holidays; Coinbase USDT-USD commenced trading May 4, 2021; Binance BIDR delisted May 17, 2024; Binance direct IDR pairs launched November 29, 2025.
 \end{minipage}
 \end{table}

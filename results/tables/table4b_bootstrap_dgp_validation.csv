@@ -1,7 +1,7 @@
-T,true_rank,metric,n_mc,n_boot,rej_rate_asymptotic_5pct,rej_rate_reinsel_ahn_5pct,rej_rate_bootstrap_5pct
-25,0,empirical_size,150,299,0.1667,0.0667,0.0333
-25,1,empirical_power,150,299,0.3733,0.14,0.1
-100,0,empirical_size,150,299,0.1133,0.0867,0.04
-100,1,empirical_power,150,299,0.9067,0.8667,0.76
-500,0,empirical_size,150,299,0.12,0.1133,0.06
-500,1,empirical_power,150,299,1.0,1.0,1.0
+T,true_rank,dgp,metric,n_mc,n_boot,rej_rate_asymptotic_5pct,rej_rate_reinsel_ahn_5pct,rej_rate_bootstrap_5pct
+25,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.228,0.109,0.059
+25,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,0.302,0.137,0.087
+100,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.182,0.157,0.071
+100,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,0.916,0.895,0.728
+500,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.133,0.13,0.047
+500,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,1.0,1.0,1.0

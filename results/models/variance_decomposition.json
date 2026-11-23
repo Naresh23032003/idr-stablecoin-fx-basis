@@ -30,6 +30,10 @@
     "gross_share_sf_pct": 73.77390751672984
   },
   "BTC_pct_crypto_inside_dynamic_2leg_taker_band": 98.44,
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_low": 97.52,
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_high": 98.51,
+  "BTC_pct_crypto_inside_fixed_mean_2leg_taker_band": 97.81,
+  "BTC_mean_2leg_taker_band_bps": 66.45,
   "BTC_pct_crypto_inside_dynamic_2leg_maker_band": 64.57,
   "BTC_pct_crypto_inside_dynamic_3leg_taker_band": 98.94
 }

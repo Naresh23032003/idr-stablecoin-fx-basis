@@ -19,7 +19,13 @@ from src.econometrics.cointegration import (
     fixed_vector_basis_test,
     johansen_with_finite_sample,
 )
-from src.econometrics.ecm import estimate_bivariate_vecm, estimate_return_passthrough
+from src.econometrics.ecm import (
+    estimate_bivariate_vecm,
+    estimate_return_passthrough,
+    estimate_trivariate_vecm,
+)
+import statsmodels.api as sm
+from statsmodels.stats.multitest import multipletests
 from src.econometrics.nonlinear_tar import estimate_band_tar
 from src.econometrics.structural_breaks import evaluate_event_windows
 from src.econometrics.unit_root import run_unit_root_suite
@@ -75,8 +81,15 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
     fee_df = build_historical_fee_table()
     fee_df.to_csv(tables_dir / "historical_fee_reconstruction.csv", index=False)
 
-    ob_df = analyze_saved_orderbook_snapshots(root / "data" / "raw", fx_idr_per_usd=float(btc["jisdor_idr_usd"].iloc[-1]))
-    ob_df.to_csv(tables_dir / "orderbook_microstructure_snapshot.csv", index=False)
+    raw_dir = root / "data" / "raw"
+    ob_csv = tables_dir / "orderbook_microstructure_snapshot.csv"
+    if raw_dir.exists():
+        ob_df = analyze_saved_orderbook_snapshots(raw_dir, fx_idr_per_usd=float(btc["jisdor_idr_usd"].iloc[-1]))
+        ob_df.to_csv(ob_csv, index=False)
+    elif ob_csv.exists():
+        ob_df = pd.read_csv(ob_csv)
+    else:
+        ob_df = pd.DataFrame()
 
     # Route-specific execution costs across regimes + USD notional slippage
     r6 = fee_df.iloc[-1]
@@ -146,11 +159,22 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
     desc_rows.append(_basis_summary_row(wknd, "b_crypto_bps", "B_crypto (Weekends Only)", "BTC Weekends Only (FX Closed)", 42.11, 62.11))
     pd.DataFrame(desc_rows).to_csv(tables_dir / "table1_descriptive_statistics.csv", index=False)
 
+    # Sensitivity bounds for PARTIALLY_VERIFIED May 2022 - Oct 2024 (R2A/R2B)
+    mask_r2 = (btc["date"] >= "2022-05-01") & (btc["date"] <= "2024-10-31")
+    c_r2_low = btc["cost_2leg_taker_bps"].copy()
+    c_r2_low[mask_r2] = 61.0
+    c_r2_high = btc["cost_2leg_taker_bps"].copy()
+    c_r2_high[mask_r2] = 81.0
+
     var_decomp = {
         "BTC": verify_variance_identity(btc["b_total_bps"], btc["b_crypto_bps"], btc["b_stablecoin_fx_bps"]),
         "ETH": verify_variance_identity(eth["b_total_bps"], eth["b_crypto_bps"], eth["b_stablecoin_fx_bps"]),
         "XRP": verify_variance_identity(xrp["b_total_bps"], xrp["b_crypto_bps"], xrp["b_stablecoin_fx_bps"]),
         "BTC_pct_crypto_inside_dynamic_2leg_taker_band": round(100.0 * float((btc["b_crypto_bps"].abs() <= btc["cost_2leg_taker_bps"]).mean()), 2),
+        "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_low": round(100.0 * float((btc["b_crypto_bps"].abs() <= c_r2_low).mean()), 2),
+        "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_high": round(100.0 * float((btc["b_crypto_bps"].abs() <= c_r2_high).mean()), 2),
+        "BTC_pct_crypto_inside_fixed_mean_2leg_taker_band": round(100.0 * float((btc["b_crypto_bps"].abs() <= btc["cost_2leg_taker_bps"].mean()).mean()), 2),
+        "BTC_mean_2leg_taker_band_bps": round(float(btc["cost_2leg_taker_bps"].mean()), 2),
         "BTC_pct_crypto_inside_dynamic_2leg_maker_band": round(100.0 * float((btc["b_crypto_bps"].abs() <= btc["cost_2leg_maker_bps"]).mean()), 2),
         "BTC_pct_crypto_inside_dynamic_3leg_taker_band": round(100.0 * float((btc["b_crypto_bps"].abs() <= btc["cost_3leg_taker_bps"]).mean()), 2),
     }
@@ -208,8 +232,8 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
     pd.DataFrame(coint_rows).to_csv(tables_dir / "table3_cointegration_and_reconciliation.csv", index=False)
     pd.DataFrame(boot_rows).to_csv(tables_dir / "table4_bootstrap_rank_tests.csv", index=False)
 
-    # Controlled DGP size & power validation for bootstrap (H5)
-    dgp_val = evaluate_bootstrap_size_and_power(sample_sizes=[25, 100, 500], n_mc=150, n_boot=299, seed=seed)
+    # Controlled DGP size & power validation for bootstrap (H5) with n_mc=1000
+    dgp_val = evaluate_bootstrap_size_and_power(sample_sizes=[25, 100, 500], n_mc=1000, n_boot=299, seed=seed)
     pd.DataFrame(dgp_val).to_csv(tables_dir / "table4b_bootstrap_dgp_validation.csv", index=False)
 
     # 5. VECM, Weak Exogeneity & Daily Return Pass-Through (H6, H7)
@@ -239,42 +263,130 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
         pt_rows.append({"asset": name, **pt})
     pd.DataFrame(pt_rows).to_csv(tables_dir / "table6_return_passthrough.csv", index=False)
 
-    # 6. High-Frequency 5-Minute 24/7 Analysis & Threshold TAR (H6, H9)
+    # 6. High-Frequency 5-Minute 24/7 3-Variable VECM & Threshold TAR (H6, H9)
     p5_btc = pd.read_csv(proc_dir / "btc_5m_panel_2021_2026.csv.gz")
     p5_act = p5_btc[p5_btc["is_active_both_indo"]].reset_index(drop=True)
 
-    hf_vecm_all = estimate_bivariate_vecm(
+    Y3_all = np.column_stack([
         np.log(p5_btc["indodax_btcidr"].values),
-        np.log(p5_btc["binance_btcusdt"].values) + np.log(p5_btc["indodax_usdtidr"].values),
+        np.log(p5_btc["binance_btcusdt"].values),
+        np.log(p5_btc["indodax_usdtidr"].values),
+    ])
+    hf_vecm_3var_all = estimate_trivariate_vecm(
+        Y3_all[:, 0], Y3_all[:, 1], Y3_all[:, 2],
+        names=["Indodax_BTCIDR", "Binance_BTCUSDT", "Indodax_USDTIDR"],
         k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
     )
-    hf_vecm_act = estimate_bivariate_vecm(
+    # Dependence-preserving block-wild bootstrap on the primary 3-variable 5-minute system
+    hf_3var_boot = null_imposed_vecm_residual_bootstrap(
+        Y3_all, det_order=0, k_ar_diff=5, n_boot=499, seed=seed + 99, block_len=28
+    )
+    hf_vecm_3var_act = estimate_trivariate_vecm(
         np.log(p5_act["indodax_btcidr"].values),
-        np.log(p5_act["binance_btcusdt"].values) + np.log(p5_act["indodax_usdtidr"].values),
-        k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
+        np.log(p5_act["binance_btcusdt"].values),
+        np.log(p5_act["indodax_usdtidr"].values),
+        names=["Indodax_BTCIDR", "Binance_BTCUSDT", "Indodax_USDTIDR"],
+        k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="active_5m_bars",
     )
-    # Daily Band-TAR & 5-minute subsample TAR (last 6 months active vs daily full)
+    # Independent-FX 5-minute robustness (349-day Binance USDT/IDR overlap, Nov 2025 - Nov 2026)
+    bin_indo_path = proc_dir / "binance_vs_indodax_idr_5m.csv.gz"
+    hf_vecm_indep_2var = None
+    hf_vecm_indep_3var = None
+    if bin_indo_path.exists():
+        bdi_tmp = pd.read_csv(bin_indo_path)
+        m_indep = bdi_tmp.merge(p5_btc[["timestamp_utc", "binance_btcusdt"]], on="timestamp_utc", how="inner").dropna()
+        if len(m_indep) > 100:
+            hf_vecm_indep_2var = estimate_bivariate_vecm(
+                np.log(m_indep["indo_btcidr"].values),
+                np.log(m_indep["binance_btcusdt"].values) + np.log(m_indep["bin_usdtidr"].values),
+                k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
+            )
+            hf_vecm_indep_3var = estimate_trivariate_vecm(
+                np.log(m_indep["indo_btcidr"].values),
+                np.log(m_indep["binance_btcusdt"].values),
+                np.log(m_indep["bin_usdtidr"].values),
+                names=["Indodax_BTCIDR", "Binance_BTCUSDT", "Binance_USDTIDR"],
+                k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
+            )
+    # Daily Band-TAR & 5-minute subsample TAR (2022-2023 early active vs recent 25,000 active bars)
     tar_daily_crypto = estimate_band_tar(btc["b_crypto_bps"].values, p_lags=1, n_boot=499, seed=seed)
     tar_daily_total = estimate_band_tar(btc["b_total_bps"].values, p_lags=1, n_boot=499, seed=seed + 1)
-    # 5-minute TAR on full 2026 active bars (or last 50,000 bars for clean runtime)
+    p5_early = p5_act[(p5_act["timestamp_utc"] >= "2022-05-01") & (p5_act["timestamp_utc"] <= "2023-12-31")].head(25_000).reset_index(drop=True)
+    tar_5m_early = estimate_band_tar(p5_early["b_crypto_bps"].values, p_lags=2, n_boot=299, seed=seed + 3)
     p5_recent = p5_act.tail(25_000).reset_index(drop=True)
     tar_5m_recent = estimate_band_tar(p5_recent["b_crypto_bps"].values, p_lags=2, n_boot=299, seed=seed + 2)
 
     tar_summary = {
-        "hf_vecm_all_5m": hf_vecm_all,
-        "hf_vecm_active_5m": hf_vecm_act,
+        "hf_vecm_3var_all_5m": hf_vecm_3var_all,
+        "hf_vecm_3var_all_5m_bootstrap": hf_3var_boot,
+        "hf_vecm_3var_active_5m": hf_vecm_3var_act,
+        "hf_vecm_indep_fx_349d_2var": hf_vecm_indep_2var,
+        "hf_vecm_indep_fx_349d_3var": hf_vecm_indep_3var,
         "tar_daily_b_crypto": tar_daily_crypto,
         "tar_daily_b_total": tar_daily_total,
+        "tar_5m_early_25k_active": tar_5m_early,
         "tar_5m_recent_25k_active": tar_5m_recent,
     }
     (models_dir / "intraday_and_tar_results.json").write_text(json.dumps(tar_summary, indent=2))
 
-    # 7. Structural Breaks & Regulatory Events (H10)
+    # 7. Structural Breaks & Regulatory Events (H10): Controlled HAC OLS + Holm (Primary) & Unadjusted Welch/MW
     ev_crypto = evaluate_event_windows(btc, "date", "b_crypto_bps", cfg["structural_breaks"]["events"], window_days=30)
     ev_sf = evaluate_event_windows(btc, "date", "b_stablecoin_fx_bps", cfg["structural_breaks"]["events"], window_days=30)
     ev_crypto["basis_leg"] = "B_crypto"
     ev_sf["basis_leg"] = "B_stablecoin_FX"
-    pd.concat([ev_crypto, ev_sf], ignore_index=True).to_csv(tables_dir / "table7_regulatory_event_windows.csv", index=False)
+    ev_all = pd.concat([ev_crypto, ev_sf], ignore_index=True)
+
+    btc_ev = btc.copy()
+    btc_ev["_dt"] = pd.to_datetime(btc_ev["date"])
+    btc_ev["dln_btc"] = btc_ev["ln_p_usdt"].diff()
+    btc_ev["dln_fx"] = btc_ev["ln_s_fx"].diff()
+    _, ev_all["welch_p_holm"], _, _ = multipletests(ev_all["welch_pval"].values, method="holm")
+    _, ev_all["mw_p_holm"], _, _ = multipletests(ev_all["mw_u_pval"].values, method="holm")
+
+    ctrl_b, ctrl_se, ctrl_p = [], [], []
+    for row in ev_all.itertuples():
+        ev_dt = pd.Timestamp(row.event_date)
+        col = "b_crypto_bps" if row.basis_leg == "B_crypto" else "b_stablecoin_fx_bps"
+        sub = btc_ev[(btc_ev["_dt"] >= ev_dt - pd.Timedelta(days=30)) & (btc_ev["_dt"] < ev_dt + pd.Timedelta(days=30))][[col, "_dt", "dln_btc", "dln_fx"]].dropna()
+        sub["post"] = (sub["_dt"] >= ev_dt).astype(float)
+        m_ols = sm.OLS(sub[col], sm.add_constant(sub[["post", "dln_btc", "dln_fx"]])).fit(cov_type="HAC", cov_kwds={"maxlags": 5})
+        ctrl_b.append(round(float(m_ols.params["post"]), 2))
+        ctrl_se.append(round(float(m_ols.bse["post"]), 2))
+        ctrl_p.append(float(m_ols.pvalues["post"]))
+    ev_all["ctrl_diff_bps"] = ctrl_b
+    ev_all["ctrl_se_hac"] = ctrl_se
+    ev_all["ctrl_p_hac"] = [round(p, 5) for p in ctrl_p]
+    _, ev_all["ctrl_p_holm"], _, _ = multipletests(ctrl_p, method="holm")
+    ev_all["ctrl_p_holm"] = ev_all["ctrl_p_holm"].round(4)
+    ev_all["welch_p_holm"] = ev_all["welch_p_holm"].round(4)
+    ev_all["mw_p_holm"] = ev_all["mw_p_holm"].round(4)
+
+    # Joint non-overlapping +/-15-day multi-event HAC OLS across all 10 events simultaneously
+    events_cfg = cfg["structural_breaks"]["events"]
+    jcols = {"dln_btc": btc_ev["dln_btc"], "dln_fx": btc_ev["dln_fx"]}
+    for idx_e, ev_item in enumerate(events_cfg):
+        ev_dt = pd.Timestamp(ev_item["date"])
+        jcols[f"pre_{idx_e}"] = ((btc_ev["_dt"] >= ev_dt - pd.Timedelta(days=15)) & (btc_ev["_dt"] < ev_dt)).astype(float)
+        jcols[f"post_{idx_e}"] = ((btc_ev["_dt"] >= ev_dt) & (btc_ev["_dt"] < ev_dt + pd.Timedelta(days=15))).astype(float)
+    X_j = pd.DataFrame(jcols)
+    j15_diff, j15_se, j15_p = [], [], []
+    for leg_col in ("b_crypto_bps", "b_stablecoin_fx_bps"):
+        df_j = pd.concat([btc_ev[[leg_col]], X_j], axis=1).dropna()
+        m_j = sm.OLS(df_j[leg_col], sm.add_constant(df_j.drop(columns=[leg_col]))).fit(cov_type="HAC", cov_kwds={"maxlags": 5})
+        for idx_e in range(len(events_cfg)):
+            c_vec = np.zeros(len(m_j.params))
+            c_vec[m_j.params.index.get_loc(f"post_{idx_e}")] = 1.0
+            c_vec[m_j.params.index.get_loc(f"pre_{idx_e}")] = -1.0
+            wt = m_j.t_test(c_vec)
+            j15_diff.append(round(float(np.asarray(wt.effect).item()), 2))
+            j15_se.append(round(float(np.asarray(wt.sd).item()), 2))
+            j15_p.append(float(np.asarray(wt.pvalue).item()))
+    ev_all["joint15_diff_bps"] = j15_diff
+    ev_all["joint15_se_hac"] = j15_se
+    ev_all["joint15_p_hac"] = [round(p, 5) for p in j15_p]
+    _, j15_holm, _, _ = multipletests(j15_p, method="holm")
+    ev_all["joint15_p_holm"] = np.round(j15_holm, 4)
+    ev_all.to_csv(tables_dir / "table7_regulatory_event_windows.csv", index=False)
 
     # 8. Robustness & Falsification (H11, H12)
     sync_sens = run_synchronization_sensitivity(btc)
@@ -309,9 +421,9 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
             {"id": "EXP-01", "name": "Basis Decomposition & Variance Identity", "status": "COMPLETED", "output": "results/tables/table1_descriptive_statistics.csv"},
             {"id": "EXP-02", "name": "Unit-Root & Stationarity Suite (ADF/PP/KPSS/ZA)", "status": "COMPLETED", "output": "results/tables/table2_unit_root_tests.csv"},
             {"id": "EXP-03", "name": "Engle-Granger, Fixed-(1,-1) & Reinsel-Ahn/Cheung-Lai Johansen", "status": "COMPLETED", "output": "results/tables/table3_cointegration_and_reconciliation.csv"},
-            {"id": "EXP-04", "name": "Null-Imposed VECM i.i.d. Residual Bootstrap (B=9,999) & DGP Validation", "status": "COMPLETED", "output": "results/tables/table4_bootstrap_rank_tests.csv"},
-            {"id": "EXP-05", "name": "Bivariate VECM, Weak Exogeneity & Daily Return Pass-Through", "status": "COMPLETED", "output": "results/tables/table5_vecm_error_correction.csv"},
-            {"id": "EXP-06", "name": "5-Minute Intraday VECM (All vs Active Volume) & Band-TAR", "status": "COMPLETED", "output": "results/models/intraday_and_tar_results.json"},
+            {"id": "EXP-04", "name": "Null-Imposed VECM Block-Wild Bootstrap (B=9,999) & GARCH+AR(1) DGP Validation", "status": "COMPLETED", "output": "results/tables/table4_bootstrap_rank_tests.csv"},
+            {"id": "EXP-05", "name": "Bivariate VECM, Weak Exogeneity, Full-System Half-Life & Daily Return Pass-Through", "status": "COMPLETED", "output": "results/tables/table5_vecm_error_correction.csv"},
+            {"id": "EXP-06", "name": "5-Minute 3-Variable Intraday VECM (All vs Active + Indep-FX Robustness) & Band-TAR", "status": "COMPLETED", "output": "results/models/intraday_and_tar_results.json"},
             {"id": "EXP-07", "name": "Historical Fee Reconstruction & Route-Specific Costs", "status": "COMPLETED", "output": "results/tables/route_specific_execution_costs.csv"},
             {"id": "EXP-08", "name": "Regulatory & Structural Break Event Windows", "status": "COMPLETED", "output": "results/tables/table7_regulatory_event_windows.csv"},
             {"id": "EXP-09", "name": "Synchronization Window, Lag & Spot-FX Robustness", "status": "COMPLETED", "output": "results/tables/table8_synchronization_sensitivity.csv"},

@@ -48,10 +48,11 @@ def test_generated_tables_figures_and_manuscript():
     assert tar["tar_daily_b_crypto"]["sup_wald"] >= 0.0
     assert tar["tar_daily_b_total"]["sup_wald"] >= 0.0
 
-    fig_dir = ROOT / "manuscript" / "figures"
-    tab_dir = ROOT / "manuscript" / "tables"
-    assert len(list(fig_dir.glob("*.pdf"))) == 8
-    assert len(list(tab_dir.glob("*.tex"))) == 8
+    ms_dir = ROOT / "manuscript"
+    fig_dir = ms_dir / "figures" if (ms_dir / "figures").exists() else ms_dir
+    tab_dir = ms_dir / "tables" if (ms_dir / "tables").exists() else ms_dir
+    assert len(list(fig_dir.glob("fig*.pdf"))) == 8
+    assert len(list(tab_dir.glob("tab_*.tex"))) == 8
 
     pdf_path = ROOT / "manuscript" / "main.pdf"
     if pdf_path.exists():

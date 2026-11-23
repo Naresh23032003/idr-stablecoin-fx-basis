@@ -1,24 +1,24 @@
 \begin{table}[htbp]
 \centering
-\caption{Indonesian Statutory Crypto Tax, CFX, Platform Commission, and Route Execution Costs (bps)}
+\caption{Indonesian statutory crypto tax, CFX/KKI, platform commission, and route execution costs (bps)}
 \label{tab:fees}
-\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
+\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{1.8pt}
 \begingroup
-\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{2.5cm}rrrrrr@{}}
+\begin{tabular}{@{}l>{\raggedright\arraybackslash}p{2.3cm}rrrrrr@{}}
 \toprule
-\multicolumn{8}{@{}l}{\textbf{Panel A: Chronological Fee \& Tax Regimes (2021--2026)}} \\
-Window & Regime ID & M/T & VAT & PPh22 & CFX & Rte A (M/T) & Rte B (M/T) \\
+\multicolumn{8}{@{}l}{\textbf{Panel A: Chronological fee and tax regimes (2021--2026)}} \\
+Window & Regime & M/T & VAT & PPh22 & CFX & Rte A (M/T) & Rte B (M/T) \\
 \midrule
-2021-01--2022-04 & R1 PRE TAX 2021 & 0/30 & 0 & 0 & 0 & 0.0/60.0 & 7.5/70.0 \\
-2022-05--2023-08 & R2A PMK68 0 30 & 0/30 & 11 & 10 & 0 & 21.0/81.0 & 28.5/91.0 \\
-2023-08--2024-10 & R2B INDODAX PRO CUT & 10/20 & 11 & 10 & 0 & 41.0/61.0 & 48.5/71.0 \\
-2024-11--2024-12 & R3 CFX LAUNCH PMK68 & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
-2025-01--2025-07 & R3B PMK81 VAT12 ADJ & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
-2025-08--2026-02 & R4 PMK50 2025 & 10/20 & 0 & 21 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
-2026-03--2026-09 & R5 CFX CUT MAR2026 & 10/20 & 0 & 21 & 1.11 & 43.2/63.2 & 50.7/73.2 \\
-2026-10--2026-11 & R6 CFX CUT OCT2026 & 10/20 & 0 & 21 & 0.555 & 42.1/62.1 & 49.6/72.1 \\
+2021-01 to 2022-04 & R1: Pre-tax baseline & 0/30 & 0 & 0 & 0 & 0.0/60.0 & 7.5/70.0 \\
+2022-05 to 2023-08 & R2A: PMK 68 (0/30)$^\dagger$ & 0/30 & 11 & 10 & 0 & 21.0/81.0 & 28.5/91.0 \\
+2023-08 to 2024-10 & R2B: Indodax Pro cut$^\dagger$ & 10/20 & 11 & 10 & 0 & 41.0/61.0 & 48.5/71.0 \\
+2024-11 to 2024-12 & R3: CFX fee launch & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2025-01 to 2025-07 & R3B: PMK 81/131 VAT & 10/20 & 11 & 10 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2025-08 to 2026-02 & R4: PMK 50/2025 & 10/20 & 0 & 21 & 2.22 & 45.4/65.4 & 52.9/75.4 \\
+2026-03 to 2026-09 & R5: CFX cut (Mar 2026) & 10/20 & 0 & 21 & 1.11 & 43.2/63.2 & 50.7/73.2 \\
+2026-10 to 2026-11 & R6: CFX cut (Oct 2026) & 10/20 & 0 & 21 & 0.555 & 42.1/62.1 & 49.6/72.1 \\
 \midrule
-\multicolumn{8}{@{}l}{\textbf{Panel B: Live Order-Book Costs by Route \& Size (Nov 13, 2026, R6)}} \\
+\multicolumn{8}{@{}l}{\textbf{Panel B: Live order-book costs by route and trade size (Nov 13, 2026 snapshot, R6)}} \\
 Route & Scope & Size & \multicolumn{2}{r}{Stat. (Mkr/Tkr)} & \multicolumn{2}{r}{Depth Slip} & All-In Tkr \\
 \midrule
 Route A & Domestic 2-Leg & \$1k & \multicolumn{2}{r}{42.11/62.11} & \multicolumn{2}{r}{4.35} & 66.46 \\
@@ -33,6 +33,6 @@ Route C & Same-Exchange Indodax & \$50k & \multicolumn{2}{r}{67.22/90.22} & \mul
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} Regime R2A/R2B August 2023 platform fee transition carries PARTIALLY\_VERIFIED status; R6 matches published Indodax Pro rates to the fifth decimal place (0.10555\%/0.20555\% buy; 0.31555\%/0.41555\% sell; 0.2511\%/0.2811\% USDT). Route B and Route C calculations assume pre-funded inventory and exclude on-chain withdrawal fees.
+\emph{Notes:} $^\dagger$The August 2023 platform fee transition (Regimes R2A--R2B) is only partially documented in public archives and is bracketed with sensitivity bounds in the empirical containment checks. Regime R6 matches published Indodax Pro rates to the fifth decimal place (0.10555\%/0.20555\% buy; 0.31555\%/0.41555\% sell; 0.2511\%/0.2811\% USDT). Route B and Route C calculations assume pre-funded inventory and exclude on-chain withdrawal fees.
 \end{minipage}
 \end{table}

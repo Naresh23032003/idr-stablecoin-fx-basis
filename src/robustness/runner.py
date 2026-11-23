@@ -136,7 +136,7 @@ def run_falsification_tests(btc_df: pd.DataFrame, xrp_df: pd.DataFrame | None = 
     joh_mis = johansen_with_finite_sample(np.column_stack([ln_i[shift_k:], ln_b[:-shift_k] + ln_s[shift_k:]]), det_order=0, k_ar_diff=1)
     rows.append({
         "test": "Deliberate_30d_Time_Mismatch_BTC",
-        "expected_outcome": "Destroy tight parity (SD blows up >1,500 bps vs 80.8 bps)",
+        "expected_outcome": "Spread SD explodes (>2,000 bps); I(1) lag retains cointegration",
         "n_obs": eg_mis["n_obs"],
         "spread_sd_bps": round(float(np.std(10_000.0 * (ln_i[shift_k:] - (ln_b[:-shift_k] + ln_s[shift_k:])), ddof=1)), 2),
         "eg_t_stat": round(eg_mis["eg_t_stat"], 3),

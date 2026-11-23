@@ -1,35 +1,27 @@
 \begin{table}[htbp]
 \centering
-\caption{Engle--Granger, Fixed-$(1,-1)$, Johansen (Reinsel--Ahn), and Bootstrap Cointegration Tests ($B=9,999$)}
+\caption{Engle--Granger, Fixed-$(1,-1)$, Johansen (Reinsel--Ahn), and block-wild bootstrap cointegration tests ($B=9,999$)}
 \label{tab:cointegration}
-\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
+\fontsize{6.5}{7.8}\selectfont\setlength{\tabcolsep}{2pt}
 \begingroup
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}rrrrrrr@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.0cm}rrrrrrr@{}}
 \toprule
-Specification & $T_{eff}$ & EG $\hat{\beta}$ & EG $t$ & Fixed ADF & Trace (RA) & MaxEig (RA) & Boot $p$ \\
+Specification & $T_{eff}$ & EG $\hat{\beta}$ & EG $t$ & Fixed ADF & Trace (RA) & MaxEig (RA) & Wild $p$ \\
 \midrule
-BTC Unadjusted & 1,412 & 1.0702 & -1.10 & -0.40 & 6.33 & 5.75 & 0.7314 \\
-BTC JISDOR & 1,412 & 0.9993 & -4.42 & -5.37 & 151.72 & 150.32 & $\le$0.0001 \\
-BTC USDT & 1,412 & 0.9994 & -10.97 & -10.62 & 513.96 & 512.73 & $\le$0.0001 \\
-BTC SpotFX & 1,249 & 1.0003 & -4.81 & -6.73 & 151.09 & 149.66 & $\le$0.0001 \\
-USDT IDR vs JISDOR & 1,412 & 0.9673 & -4.65 & -4.89 & 102.68 & 102.55 & $\le$0.0001 \\
-ETH Unadjusted & 1,412 & 1.0161 & -0.60 & -0.44 & 11.20 & 9.11 & 0.2821 \\
-ETH JISDOR & 1,412 & 0.9998 & -4.28 & -5.27 & 141.46 & 132.40 & $\le$0.0001 \\
-ETH USDT & 1,412 & 0.9996 & -10.53 & -10.59 & 511.04 & 502.18 & $\le$0.0001 \\
-XRP Unadjusted & 1,412 & 1.0523 & -0.86 & -0.40 & 8.38 & 6.09 & 0.5280 \\
-XRP JISDOR & 1,412 & 0.9994 & -4.14 & -5.16 & 131.12 & 126.46 & $\le$0.0001 \\
-XRP USDT & 1,412 & 0.9993 & -9.94 & -9.58 & 492.91 & 488.34 & $\le$0.0001 \\
-\midrule
-\multicolumn{8}{@{}l}{\textbf{Monte Carlo Validation of Null-Imposed VECM Bootstrap Size \& Power ($n_{MC}=150$, $B=299$):}} \\
-DGP $T=25$, $r=0$ (Size) & \multicolumn{2}{r}{Asymp: 16.7\%} & \multicolumn{2}{r}{RA: 6.7\%} & \multicolumn{3}{r}{Bootstrap: 3.3\%} \\
-DGP $T=25$, $r=1$ (Power) & \multicolumn{2}{r}{Asymp: 37.3\%} & \multicolumn{2}{r}{RA: 14.0\%} & \multicolumn{3}{r}{Bootstrap: 10.0\%} \\
-DGP $T=100$, $r=0$ (Size) & \multicolumn{2}{r}{Asymp: 11.3\%} & \multicolumn{2}{r}{RA: 8.7\%} & \multicolumn{3}{r}{Bootstrap: 4.0\%} \\
-DGP $T=100$, $r=1$ (Power) & \multicolumn{2}{r}{Asymp: 90.7\%} & \multicolumn{2}{r}{RA: 86.7\%} & \multicolumn{3}{r}{Bootstrap: 76.0\%} \\
-DGP $T=500$, $r=0$ (Size) & \multicolumn{2}{r}{Asymp: 12.0\%} & \multicolumn{2}{r}{RA: 11.3\%} & \multicolumn{3}{r}{Bootstrap: 6.0\%} \\
-DGP $T=500$, $r=1$ (Power) & \multicolumn{2}{r}{Asymp: 100.0\%} & \multicolumn{2}{r}{RA: 100.0\%} & \multicolumn{3}{r}{Bootstrap: 100.0\%} \\
+BTC Unadjusted & 1,412 & 1.0702 & -1.10 & -0.40 & 6.33 & 5.75 & 0.8584 \\
+BTC JISDOR & 1,412 & 0.9993 & -4.42 & -5.37 & 151.72 & 150.32 & 0.0001 \\
+BTC USDT & 1,412 & 0.9994 & -10.97 & -10.62 & 513.96 & 512.73 & 0.0001 \\
+BTC Spot FX & 1,249 & 1.0003 & -4.81 & -6.73 & 151.09 & 149.66 & 0.0001 \\
+USDT/IDR vs.\ JISDOR & 1,412 & 0.9673 & -4.65 & -4.89 & 102.68 & 102.55 & 0.0005 \\
+ETH Unadjusted & 1,412 & 1.0161 & -0.60 & -0.44 & 11.20 & 9.11 & 0.4774 \\
+ETH JISDOR & 1,412 & 0.9998 & -4.28 & -5.27 & 141.46 & 132.40 & 0.0001 \\
+ETH USDT & 1,412 & 0.9996 & -10.53 & -10.59 & 511.04 & 502.18 & 0.0001 \\
+XRP Unadjusted & 1,412 & 1.0523 & -0.86 & -0.40 & 8.38 & 6.09 & 0.7734 \\
+XRP JISDOR & 1,412 & 0.9994 & -4.14 & -5.16 & 131.12 & 126.46 & 0.0001 \\
+XRP USDT & 1,412 & 0.9993 & -9.94 & -9.58 & 492.91 & 488.34 & 0.0001 \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} 5\% critical values: Engle--Granger $-3.340$; Fixed-$(1,-1)$ ADF $-2.864$; Johansen asymptotic Trace $15.49$, MaxEig $14.26$ (Cheung--Lai 5\% CV at $T_{eff}=1,412$: Trace $15.54$, MaxEig $14.30$). Null-imposed restricted-VECM i.i.d. residual bootstrap uses $B=9,999$ replications.
+\emph{Notes:} 5\% critical values: Engle--Granger $-3.340$; Fixed-$(1,-1)$ ADF $-2.864$; Johansen asymptotic Trace $15.49$, MaxEig $14.26$ (Cheung--Lai 5\% CV at $T_{eff}=1,412$: Trace $15.54$, MaxEig $14.30$). Final column reports $p$-values from the null-imposed restricted-VECM block-wild bootstrap ($B=9,999$ replications, block length $b = \mathrm{round}(T_{eff}^{1/4}) = 6$, Rademacher multipliers); the smallest reportable $p$-value is $1/(B+1) = 0.0001$. Controlled Monte Carlo size and power validation ($n_{MC}=1,000$) is reported in Appendix Table~\ref{tab:boot_mc}.
 \end{minipage}
 \end{table}

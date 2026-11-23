@@ -13,6 +13,7 @@
 \usepackage{array}
 \usepackage{float}
 \usepackage{adjustbox}
+\usepackage{xurl}
 
 \raggedbottom
 
@@ -20,10 +21,10 @@
 
 \title[Indonesian cryptocurrency premium]{Where does the Indonesian cryptocurrency premium come from? Currency conversion, the stablecoin--FX basis, and transaction costs}
 
-\author*[1]{\fnm{Naresh} \sur{R}}\email{rnaresh23032003r@gmail.com}
+\author*[1]{\fnm{Naresh} \sur{R}}\email{rnaresh23032003r@gmail.com; ORCID: 0009-0000-0735-2066}
 \affil*[1]{\orgname{Birla Institute of Technology and Science, Pilani (BITS Pilani)}, \orgaddress{\city{Pilani}, \state{Rajasthan}, \country{India}}}
 
-\abstract{Indonesian bitcoin on Indodax trades about 30 basis points above the global USDT price converted at Bank Indonesia's official JISDOR rate. Using 1,414 JISDOR business days from January 2021 to November 2026 and 616,683 five-minute bars from Indodax and Binance, we split this gap into a cross-exchange crypto leg (BTC/IDR converted at local USDT/IDR against global BTC/USDT) and a domestic stablecoin--FX leg (USDT/IDR against JISDOR). The crypto leg averages -0.83 bps (indistinguishable from zero), and 98.4\% of daily observations sit inside a reconstructed schedule of Indonesian taxes, CFX/KKI levies, and exchange taker fees. By accounting identity, the stablecoin--FX leg accounts for 83.1\% of total basis variance, the crypto leg 11.5\%, and their covariance 5.4\%. Averaging USDT/IDR over JISDOR's full 08:00--16:00 WIB monitoring window leaves the stablecoin--FX share at 82.4\%. In a five-minute VECM using synchronous Indodax USDT/IDR conversion, local BTC/IDR performs most error correction (half-life 11 bars). Across ten regulatory milestones after Holm adjustment, only PMK 50/2025 shifts the crypto leg (+21.2 bps). Evidence for 2021--2024 rests on Indodax alone.}
+\abstract{Indonesian bitcoin on Indodax trades at an average premium of 29.94 basis points (bps) over global Tether (USDT) quotes converted at Bank Indonesia's official JISDOR exchange rate. Using 1,414 JISDOR business days (2021--2026) and 616,683 matched five-minute bars, we decompose this spread into a cross-venue crypto leg (Indodax BTC/IDR converted via local USDT/IDR against Binance BTC/USDT) and a domestic stablecoin--FX leg (USDT/IDR against JISDOR). The crypto leg averages -0.83 bps and sits inside reconstructed statutory fee and tax bands on 98.44\% of days. By accounting identity, the stablecoin--FX leg accounts for 83.10\% of total basis variance (11.53\% crypto, 5.37\% covariance); averaging USDT/IDR over each day's intraday JISDOR monitoring window leaves this share at 82.39\%. In a three-variable five-minute VECM separating Indodax BTC/IDR, Binance BTC/USDT, and Indodax USDT/IDR, we fail to reject weak exogeneity for Binance BTC/USDT ($p = 0.418$), while Indodax BTC/IDR bears 80.0\% of short-run adjustment (full-system companion half-life 25.08 bars). Across ten institutional milestones under controlled HAC regressions with Holm adjustment, only the November 2024 CFX/KKI fee launch shows a significant post-event association on the stablecoin--FX leg (+17.37 bps, $p_{\mathrm{Holm}} = 0.026$).}
 
 \keywords{Cryptocurrency arbitrage, stablecoin--FX basis, Bank Indonesia JISDOR, market integration, cointegration}
 
@@ -45,7 +46,9 @@
 \input{app_bootstrap_and_fees}
 \end{appendices}
 
+\clearpage
 \section*{Declarations}
+\begingroup\sloppy
 
 \begin{itemize}
 \item \textbf{Funding:} This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
@@ -56,7 +59,8 @@
 \item \textbf{Author contributions (CRediT):} Naresh R: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 \item \textbf{Author ORCID:} Naresh R: \texttt{0009-0000-0735-2066} (\texttt{https://orcid.org/0009-0000-0735-2066}).
 \end{itemize}
+\endgroup
 
-\bibliography{references}
+{\sloppy\bibliography{references}}
 
 \end{document}

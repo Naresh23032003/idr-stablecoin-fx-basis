@@ -1,31 +1,31 @@
 \begin{table}[htbp]
 \centering
-\caption{Descriptive Statistics of Basis Components and Exact Variance Decomposition (bps)}
+\caption{Descriptive statistics of basis components and variance decomposition (bps)}
 \label{tab:descriptive}
-\fontsize{6.8}{8}\selectfont\setlength{\tabcolsep}{2pt}
+\fontsize{6.8}{8}\selectfont\setlength{\tabcolsep}{1.8pt}
 \begingroup
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}rrrrrrr@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.6cm}rrrrrrr@{}}
 \toprule
-Sample / Basis Series & $N$ & Mean [95\% CI] & SD & Med. & IQR & $\%>0$ & $\le$ Taker \\
+Sample / Basis Series & $N$ & Mean [95\% CI] & SD & Med. & IQR & $\%>0$ & $\le$ Fixed Tkr \\
 \midrule
-BTC Primary: B\_total & 1,414 & 29.94 [25.73, 34.15] & 80.80 & 17.09 & 57.44 & 66.3\% & 82.2\% \\
-BTC Primary: B\_crypto & 1,414 & -0.83 [-2.26, 0.60] & 27.44 & -0.79 & 27.29 & 48.6\% & 97.8\% \\
-BTC Primary: B\_stablecoin\_FX & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
-BTC Primary: W\_USD\_USDT & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
-ETH Primary: B\_total & 1,414 & 30.22 [25.87, 34.57] & 83.52 & 16.85 & 55.55 & 67.2\% & 82.7\% \\
-ETH Primary: B\_crypto & 1,414 & -0.55 [-2.02, 0.92] & 28.16 & -1.26 & 27.26 & 47.2\% & 98.0\% \\
-ETH Primary: B\_stablecoin\_FX & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
-ETH Primary: W\_USD\_USDT & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
-XRP Primary: B\_total & 1,414 & 34.96 [30.49, 39.43] & 85.76 & 21.22 & 56.65 & 70.6\% & 81.5\% \\
-XRP Primary: B\_crypto & 1,414 & 4.19 [2.34, 6.05] & 35.60 & 2.78 & 27.72 & 55.9\% & 97.0\% \\
-XRP Primary: B\_stablecoin\_FX & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
-XRP Primary: W\_USD\_USDT & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
-BTC All Calendar Days: B\_total & 2,136 & 33.11 [29.52, 36.69] & 84.62 & 20.83 & 62.25 & 67.2\% & 76.1\% \\
-BTC Weekends Only: B\_total & 608 & 34.47 [27.61, 41.33] & 86.25 & 26.35 & 71.29 & 67.3\% & 69.2\% \\
-BTC Weekends Only: B\_crypto & 608 & -1.70 [-3.92, 0.51] & 27.84 & -0.50 & 25.03 & 49.2\% & 98.4\% \\
+BTC Primary: $B^{total}$ & 1,414 & 29.94 [25.73, 34.15] & 80.80 & 17.09 & 57.44 & 66.3\% & 82.2\% \\
+BTC Primary: $B^{crypto}$ & 1,414 & -0.83 [-2.26, 0.60] & 27.44 & -0.79 & 27.29 & 48.6\% & 97.8\% \\
+BTC Primary: $B^{s\text{-}FX}$ & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
+BTC Primary: $W^{USD/USDT}$ & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
+ETH Primary: $B^{total}$ & 1,414 & 30.22 [25.87, 34.57] & 83.52 & 16.85 & 55.55 & 67.2\% & 82.7\% \\
+ETH Primary: $B^{crypto}$ & 1,414 & -0.55 [-2.02, 0.92] & 28.16 & -1.26 & 27.26 & 47.2\% & 98.0\% \\
+ETH Primary: $B^{s\text{-}FX}$ & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
+ETH Primary: $W^{USD/USDT}$ & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
+XRP Primary: $B^{total}$ & 1,414 & 34.96 [30.49, 39.43] & 85.76 & 21.22 & 56.65 & 70.6\% & 81.5\% \\
+XRP Primary: $B^{crypto}$ & 1,414 & 4.19 [2.34, 6.05] & 35.60 & 2.78 & 27.72 & 55.9\% & 97.0\% \\
+XRP Primary: $B^{s\text{-}FX}$ & 1,414 & 30.77 [26.93, 34.61] & 73.66 & 18.77 & 38.43 & 75.0\% & 88.2\% \\
+XRP Primary: $W^{USD/USDT}$ & 1,331 & -1.13 [-1.57, -0.69] & 8.17 & 0.00 & 6.60 & 48.8\% & 99.9\% \\
+BTC Calendar Days: $B^{total}$ & 2,136 & 33.11 [29.52, 36.69] & 84.62 & 20.83 & 62.25 & 67.2\% & 76.1\% \\
+BTC Weekends Only: $B^{total}$ & 608 & 34.47 [27.61, 41.33] & 86.25 & 26.35 & 71.29 & 67.3\% & 69.2\% \\
+BTC Weekends Only: $B^{crypto}$ & 608 & -1.70 [-3.92, 0.51] & 27.84 & -0.50 & 25.03 & 49.2\% & 98.4\% \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Exact Variance Identity (BTC, $n=1,414$):} $\mathrm{Var}(B^{total}) = 6529.03$ = $\mathrm{Var}(B^{crypto})\ (752.98,\ 11.53\%)$ + $\mathrm{Var}(B^{stable\text{-}FX})\ (5425.67,\ 83.10\%)$ + $2\mathrm{Cov}\,(350.38,\ 5.37\%)$. \emph{Dynamic Fee Band Containment (BTC $B^{crypto}$):} 64.57\% inside Route A maker band; 98.44\% inside Route A taker band; 98.94\% inside Route B taker band.
+\emph{Notes:} The final column ($\le$ Fixed Tkr) evaluates $|B_t|$ against a fixed benchmark: the sample-average Route A taker fee ($66.45\text{ bps}$) for primary business-day rows ($97.81\%$ for BTC $B^{crypto}$), and the Regime R6 Route A taker fee ($62.11\text{ bps}$) for calendar-day and weekend sensitivity rows ($98.36\%$ for weekend BTC $B^{crypto}$). Evaluated date-by-date against the time-varying regime Route A taker schedule ($60.0$--$81.0\text{ bps}$), BTC $B^{crypto}$ containment is $98.44\%$ (sensitivity range $[97.52\%, 98.51\%]$ across partially verified 2022--2024 fee tiers; $64.57\%$ inside dynamic Route A maker; $98.94\%$ inside dynamic Route B taker). \emph{Exact variance identity (BTC, $n=1,414$):} $\mathrm{Var}(B^{total}) = 6529.03$ = $\mathrm{Var}(B^{crypto})\ (752.98,\ 11.53\%)$ + $\mathrm{Var}(B^{s\text{-}FX})\ (5425.67,\ 83.10\%)$ + $2\mathrm{Cov}\,(350.38,\ 5.37\%)$.
 \end{minipage}
 \end{table}

@@ -1,4 +1,4 @@
-"""Null-imposed restricted VECM i.i.d. residual bootstrap for Johansen rank tests."""
+"""Null-imposed restricted VECM dependent block-wild bootstrap for Johansen rank tests."""
 from __future__ import annotations
 
 import math
@@ -19,15 +19,22 @@ def null_imposed_vecm_residual_bootstrap(
     k_ar_diff: int = 1,
     n_boot: int = 9999,
     seed: int = 20261113,
+    block_len: int | None = None,
 ) -> Dict[str, Any]:
-    """Null-imposed restricted VECM i.i.d. residual bootstrap (Cavaliere, Rahbek & Taylor 2012 style).
+    """Null-imposed restricted VECM block-wild bootstrap (Cavaliere, Rahbek & Taylor 2010/2012).
 
     Null hypothesis: H0: rank(Pi) = 0 (no cointegration, Pi = 0).
     Restricted DGP under H0:
         dY_t = mu_0 + sum_{i=1}^{k_ar_diff} Gamma_{0,i} dY_{t-i} + u_t
-    Innovations u_t are centered and resampled i.i.d. as whole T-dimensional vectors
-    with replacement, preserving exact contemporaneous cross-market covariance Sigma_u.
-    Initial differences are fixed at the observed pre-sample values.
+
+    To remain valid under conditional heteroskedasticity (ARCH/GARCH clustering),
+    non-stationary volatility, and residual serial correlation, centered residual
+    vectors u_t are multiplied by block-level Rademacher wild weights
+    w_m in {-1, +1} (constant within consecutive blocks of length b = floor(T^{1/4})
+    by default, or user-specified block_len). This preserves:
+      (1) exact contemporaneous cross-market covariance Sigma_u,
+      (2) time-varying conditional variance / ARCH clustering at each date t, and
+      (3) short-range residual autocorrelation within each block of length b.
     Every bootstrap draw is re-estimated with the exact same (det_order, k_ar_diff).
     """
     Y = np.asarray(Y, dtype=float)
@@ -43,6 +50,9 @@ def null_imposed_vecm_residual_bootstrap(
     if T_eff < 10:
         raise ValueError(f"Insufficient effective observations T_eff={T_eff} for bootstrap")
 
+    b_len = int(block_len) if block_len is not None else max(1, int(round(T_eff ** 0.25)))
+    n_blocks = int(math.ceil(T_eff / b_len))
+
     # Build restricted VAR(p) design matrix under H0: Pi = 0
     dep = dY[p:]  # (T_eff, n)
     cols = []
@@ -56,7 +66,6 @@ def null_imposed_vecm_residual_bootstrap(
     resid = dep - X @ B_hat
     resid_centered = resid - resid.mean(axis=0, keepdims=True)
 
-    # Extract fitted intercept and Gamma matrices
     col_ptr = 0
     mu_hat = np.zeros(n)
     if det_order >= 0:
@@ -72,12 +81,14 @@ def null_imposed_vecm_residual_bootstrap(
     n_failed = 0
     valid_count = 0
 
-    init_Y = Y[: k]  # first k level rows (k-1 initial differences)
-    init_dY = dY[: p]
+    init_Y = Y[:k]
+    init_dY = dY[:p]
 
-    for b in range(n_boot):
-        idx = rng.integers(0, T_eff, size=T_eff)
-        u_star = resid_centered[idx, :]
+    for _ in range(n_boot):
+        # Block-level Rademacher multipliers w_m in {-1, +1}
+        w_blocks = rng.choice(np.array([-1.0, 1.0]), size=n_blocks)
+        w = np.repeat(w_blocks, b_len)[:T_eff]
+        u_star = resid_centered * w[:, None]
 
         dY_star = np.empty((len(dY), n), dtype=float)
         if p > 0:
@@ -112,8 +123,9 @@ def null_imposed_vecm_residual_bootstrap(
     mc_se_max = math.sqrt(p_max * (1.0 - p_max) / valid_count)
 
     return {
-        "method": "null_imposed_restricted_vecm_iid_residual_bootstrap",
+        "method": "null_imposed_restricted_vecm_block_wild_bootstrap",
         "null_hypothesis": "H0: rank(Pi) = 0",
+        "block_len": int(b_len),
         "n_levels": int(N),
         "T_eff": int(T_eff),
         "n_vars": int(n),
@@ -140,16 +152,23 @@ def null_imposed_vecm_residual_bootstrap(
 
 def evaluate_bootstrap_size_and_power(
     sample_sizes: List[int] = (25, 100, 500),
-    n_mc: int = 200,
+    n_mc: int = 150,
     n_boot: int = 299,
     seed: int = 20261113,
 ) -> List[Dict[str, Any]]:
-    """Controlled DGP Monte Carlo validation of empirical size (rank=0) and power (rank=1)."""
+    """Controlled DGP Monte Carlo validation of empirical size (rank=0) and power (rank=1)
+    under GARCH(1,1) conditional heteroskedasticity and AR(1) serial correlation
+    matching the empirical residual diagnostics.
+    """
     rng = np.random.default_rng(seed)
     results = []
-    # Contemporaneous correlated innovations matching crypto cross-market correlation ~0.95
-    cov = np.array([[0.0009, 0.00085], [0.00085, 0.0009]])
-    L = np.linalg.cholesky(cov)
+    # Contemporaneous correlation ~0.94 with common GARCH(1,1) volatility & AR(1) innovation persistence
+    corr_mat = np.array([[1.0, 0.944], [0.944, 1.0]])
+    L_corr = np.linalg.cholesky(corr_mat)
+    omega_g = 0.05 * 0.0009
+    alpha_g = 0.12
+    beta_g = 0.83
+    phi_ar = 0.20  # serial correlation in innovations
 
     for T in sample_sizes:
         for true_rank in (0, 1):
@@ -157,18 +176,25 @@ def evaluate_bootstrap_size_and_power(
             rej_ra_5 = 0
             rej_boot_5 = 0
             for m in range(n_mc):
-                burn = 50
+                burn = 80
                 tot = T + burn
-                eps = rng.standard_normal((tot, 2)) @ L.T
-                Y = np.zeros((tot, 2))
+                z = rng.standard_normal((tot, 2)) @ L_corr.T
+                h = np.full(tot, 0.0009, dtype=float)
+                eps = np.zeros((tot, 2), dtype=float)
+                u = np.zeros((tot, 2), dtype=float)
+                for t in range(1, tot):
+                    h[t] = omega_g + alpha_g * (eps[t - 1, 0] ** 2) + beta_g * h[t - 1]
+                    eps[t] = math.sqrt(h[t]) * z[t]
+                    u[t] = phi_ar * u[t - 1] + eps[t]
+
+                Y = np.zeros((tot, 2), dtype=float)
                 for t in range(1, tot):
                     if true_rank == 0:
-                        Y[t] = Y[t - 1] + eps[t]
+                        Y[t] = Y[t - 1] + u[t]
                     else:
-                        # Cointegrated with beta=(1,-1) and alpha=(-0.35, 0.0)
                         ect = Y[t - 1, 0] - Y[t - 1, 1]
-                        Y[t, 0] = Y[t - 1, 0] - 0.35 * ect + eps[t, 0]
-                        Y[t, 1] = Y[t - 1, 1] + eps[t, 1]
+                        Y[t, 0] = Y[t - 1, 0] - 0.35 * ect + u[t, 0]
+                        Y[t, 1] = Y[t - 1, 1] + u[t, 1]
                 Y_samp = Y[burn:]
                 res = coint_johansen(Y_samp, det_order=0, k_ar_diff=1)
                 tr_orig = float(res.lr1[0])
@@ -189,6 +215,7 @@ def evaluate_bootstrap_size_and_power(
                 {
                     "T": int(T),
                     "true_rank": int(true_rank),
+                    "dgp": "GARCH(1,1)+AR(1)",
                     "metric": "empirical_size" if true_rank == 0 else "empirical_power",
                     "n_mc": int(n_mc),
                     "n_boot": int(n_boot),

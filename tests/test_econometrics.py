@@ -49,7 +49,7 @@ def test_bootstrap_reproducibility_and_controlled_dgp():
     b2 = null_imposed_vecm_residual_bootstrap(Y, det_order=0, k_ar_diff=1, n_boot=199, seed=20261113)
     assert b1["trace_boot_pval"] == b2["trace_boot_pval"]
     assert b1["n_failed"] == 0
-    assert b1["method"] == "null_imposed_restricted_vecm_iid_residual_bootstrap"
+    assert b1["method"] == "null_imposed_restricted_vecm_block_wild_bootstrap"
 
     # Quick DGP size/power sanity check (small n_mc for fast pytest)
     sp = evaluate_bootstrap_size_and_power(sample_sizes=[100], n_mc=30, n_boot=99, seed=20261113)
@@ -57,8 +57,8 @@ def test_bootstrap_reproducibility_and_controlled_dgp():
     power_row = [r for r in sp if r["true_rank"] == 1][0]
     # Under H0 size should be near 0.05 (allow Monte Carlo slack with n_mc=30)
     assert size_row["rej_rate_bootstrap_5pct"] <= 0.20
-    # Under H1 (rank=1, alpha=-0.35, T=100), power should be high
-    assert power_row["rej_rate_bootstrap_5pct"] >= 0.70
+    # Under H1 (rank=1, alpha=-0.35, T=100, GARCH(1,1)+AR(1)), power should be substantial
+    assert power_row["rej_rate_bootstrap_5pct"] >= 0.60
 
 
 def test_unit_root_suite_stationary_vs_random_walk():

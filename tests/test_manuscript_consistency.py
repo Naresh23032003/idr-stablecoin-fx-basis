@@ -12,7 +12,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_no_em_dashes_or_ai_buzzwords_in_manuscript():
     ms_dir = ROOT / "manuscript"
-    tex_files = list((ms_dir / "sections").glob("*.tex")) + list((ms_dir / "appendices").glob("*.tex"))
+    tex_files = (
+        list((ms_dir / "sections").glob("*.tex"))
+        + list((ms_dir / "appendices").glob("*.tex"))
+        + list(ms_dir.glob("sec*.tex"))
+        + list(ms_dir.glob("app_*.tex"))
+        + [ms_dir / "main.tex"]
+    )
+    tex_files = [p for p in tex_files if p.exists()]
     if not tex_files:
         return
     banned_buzz = ["delve", "tapestry", "testament", "pivotal moment", "game-changer", "uncharted"]
@@ -27,10 +34,10 @@ def test_no_em_dashes_or_ai_buzzwords_in_manuscript():
 
 def test_manuscript_headline_numbers_match_results():
     ms_dir = ROOT / "manuscript"
-    sec_dir = ms_dir / "sections"
+    sec_dir = ms_dir / "sections" if (ms_dir / "sections").exists() else ms_dir
     if not (sec_dir / "sec5_empirical_results.tex").exists():
         return
-    all_prose = "\n".join(p.read_text() for p in sec_dir.glob("*.tex")) + (ms_dir / "main.tex").read_text()
+    all_prose = "\n".join(p.read_text() for p in sec_dir.glob("sec*.tex")) + (ms_dir / "main.tex").read_text()
     t1 = pd.read_csv(ROOT / "results" / "tables" / "table1_descriptive_statistics.csv")
     vd = json.loads((ROOT / "results" / "models" / "variance_decomposition.json").read_text())
 

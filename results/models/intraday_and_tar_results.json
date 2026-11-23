@@ -1,77 +1,434 @@
 {
-  "hf_vecm_all_5m": {
+  "hf_vecm_3var_all_5m": {
+    "names": [
+      "Indodax_BTCIDR",
+      "Binance_BTCUSDT",
+      "Indodax_USDTIDR"
+    ],
     "n_levels": 616683,
     "T_eff": 616677,
     "k_ar_diff": 5,
     "sampling_unit": "5m_bars",
-    "beta_normalized": 0.9998275900364837,
-    "alpha_local_ml": -0.046832571716509196,
-    "alpha_local_ml_se": 0.0007409064450611018,
-    "alpha_global_ml": 0.009488336612624071,
-    "alpha_global_ml_se": 0.0009114662646170177,
-    "weak_exog_local_pval": 0.0,
-    "weak_exog_global_pval": 0.0,
-    "alpha_local_hac": -0.0468325716976135,
-    "alpha_local_hac_se": 0.0023594343246877477,
-    "alpha_local_hac_t": -19.849067722540408,
-    "alpha_local_hac_pval": 1.122645230988874e-87,
-    "alpha_local_ci95_low": -0.05145706297400148,
-    "alpha_local_ci95_high": -0.042208080421225515,
-    "alpha_global_hac": 0.009488336608791963,
-    "alpha_global_hac_se": 0.0015283412067214678,
-    "alpha_global_hac_t": 6.2082580558996625,
-    "alpha_global_hac_pval": 5.357512493810666e-10,
-    "implied_ar_root_local": 0.9531674283023865,
-    "half_life_native_units": 14.4511923327013,
-    "is_monotone_damping": true,
-    "adj_r2_local": 0.1441180948086036,
-    "adj_r2_global": 0.006362352907841151,
-    "resid_corr_cross_market": 0.6648636568551833,
-    "gg_share_global": 0.8315308311937147,
-    "gg_share_local": 0.1684691688062853,
-    "hasbrouck_is_global_low": 0.44775700881835295,
-    "hasbrouck_is_global_high": 0.9878557110130061,
-    "hasbrouck_is_global_mid": 0.7178063599156795,
-    "is_identification_status": "INFORMATIVE_CHOLESKY_BOUNDS",
-    "ljung_box_pval_local": 1.0330412673144182e-106,
-    "arch_lm_pval_local": 0.0
+    "joh_trace": [
+      9125.468289754042,
+      11.095479911108526,
+      1.3810222466586872
+    ],
+    "joh_cvt95": [
+      29.7961,
+      15.4943,
+      3.8415
+    ],
+    "beta": [
+      1.0,
+      -0.9994384802169789,
+      -1.0045171947583769
+    ],
+    "alpha_ml": [
+      -0.04451996092713975,
+      0.001126391245603569,
+      0.010041525848587867
+    ],
+    "se_ml": [
+      0.0007420293238704622,
+      0.000926873126100583,
+      0.0002460542384910327
+    ],
+    "pval_ml": [
+      0.0,
+      0.22426718532135825,
+      0.0
+    ],
+    "alpha_hac": [
+      -0.044519960920154665,
+      0.0011263912454243614,
+      0.01004152584701206
+    ],
+    "se_hac": [
+      0.0023233329793897937,
+      0.0013904072270036639,
+      0.0006810701635557059
+    ],
+    "pval_hac": [
+      7.670074625260585e-82,
+      0.4178734661765653,
+      3.375286008428822e-49
+    ],
+    "adj_share_ml_pct": [
+      79.95,
+      2.02,
+      18.03
+    ],
+    "psi1_row0": [
+      0.14645001322736223,
+      0.8196088368148811,
+      0.5573603785365675
+    ],
+    "resid_corr_matrix": [
+      [
+        1.0000000000000002,
+        0.6679405876126557,
+        -0.04456337325452913
+      ],
+      [
+        0.6679405876126557,
+        0.9999999999999999,
+        -0.17573900157096267
+      ],
+      [
+        -0.04456337325452913,
+        -0.17573900157096267,
+        0.9999999999999998
+      ]
+    ],
+    "hasbrouck_is_y1_bounds": {
+      "Indodax_BTCIDR": {
+        "low": 0.009522706366792708,
+        "high": 0.5481083434671985,
+        "mean": 0.279076738288654
+      },
+      "Binance_BTCUSDT": {
+        "low": 0.4263466816688985,
+        "high": 0.9904751546757519,
+        "mean": 0.7068964179439488
+      },
+      "Indodax_USDTIDR": {
+        "low": 2.138957455562994e-06,
+        "high": 0.030088475549032392,
+        "mean": 0.014026843767397372
+      }
+    },
+    "scalar_root_1_plus_ba": 0.9442673949417073,
+    "max_non_unit_eig": 0.9727456456532253,
+    "top3_non_unit_eigs": [
+      0.97275,
+      0.57859,
+      0.57859
+    ],
+    "half_life_companion": 25.084360159373592,
+    "half_life_scalar": 12.087128004423157,
+    "half_life_irf_local": 1.1347557718883028,
+    "half_life_irf_gen": 0.9528007794425511,
+    "ljung_box_pvals": [
+      1.2028225420933437e-99,
+      1.5479846683426855e-41,
+      2.3944887333091425e-125
+    ],
+    "arch_lm_pvals": [
+      0.0,
+      0.0,
+      0.0
+    ]
   },
-  "hf_vecm_active_5m": {
+  "hf_vecm_3var_all_5m_bootstrap": {
+    "method": "null_imposed_restricted_vecm_block_wild_bootstrap",
+    "null_hypothesis": "H0: rank(Pi) = 0",
+    "block_len": 28,
+    "n_levels": 616683,
+    "T_eff": 616677,
+    "n_vars": 3,
+    "det_order": 0,
+    "k_ar_diff": 5,
+    "n_boot_requested": 499,
+    "n_boot_valid": 499,
+    "n_failed": 0,
+    "seed": 20261212,
+    "trace_obs": 9125.468289754042,
+    "trace_boot_pval": 0.002,
+    "trace_mc_se": 0.002,
+    "trace_boot_cv90": 48.99492673360153,
+    "trace_boot_cv95": 56.19195010170477,
+    "trace_boot_cv99": 70.72988471404894,
+    "maxeig_obs": 9114.372809842933,
+    "maxeig_boot_pval": 0.002,
+    "maxeig_mc_se": 0.002,
+    "maxeig_boot_cv90": 35.40800606072153,
+    "maxeig_boot_cv95": 41.611418426852666,
+    "maxeig_boot_cv99": 49.3108929841007
+  },
+  "hf_vecm_3var_active_5m": {
+    "names": [
+      "Indodax_BTCIDR",
+      "Binance_BTCUSDT",
+      "Indodax_USDTIDR"
+    ],
     "n_levels": 605156,
     "T_eff": 605150,
     "k_ar_diff": 5,
+    "sampling_unit": "active_5m_bars",
+    "joh_trace": [
+      11464.280050305655,
+      11.146862840074284,
+      1.4325584548238173
+    ],
+    "joh_cvt95": [
+      29.7961,
+      15.4943,
+      3.8415
+    ],
+    "beta": [
+      1.0,
+      -0.999438021883332,
+      -1.0044448921577682
+    ],
+    "alpha_ml": [
+      -0.05791861654178245,
+      0.0009666191389190871,
+      0.013281699739255729
+    ],
+    "se_ml": [
+      0.0008666752350105077,
+      0.0010843386072904688,
+      0.00028789797864644
+    ],
+    "pval_ml": [
+      0.0,
+      0.37269498129965584,
+      0.0
+    ],
+    "alpha_hac": [
+      -0.057918616523266006,
+      0.0009666191386103999,
+      0.013281699735009884
+    ],
+    "se_hac": [
+      0.001895834779402819,
+      0.0017701089100275239,
+      0.0007250107283485057
+    ],
+    "pval_hac": [
+      5.57633356313849e-205,
+      0.5850116983681994,
+      5.803900524094499e-75
+    ],
+    "adj_share_ml_pct": [
+      80.26,
+      1.34,
+      18.4
+    ],
+    "psi1_row0": [
+      0.1422987694412171,
+      0.8223441493353358,
+      0.5606853350326526
+    ],
+    "resid_corr_matrix": [
+      [
+        1.0,
+        0.673318417674277,
+        -0.042335909613413235
+      ],
+      [
+        0.673318417674277,
+        1.0,
+        -0.17673956464748983
+      ],
+      [
+        -0.042335909613413235,
+        -0.17673956464748983,
+        0.9999999999999998
+      ]
+    ],
+    "hasbrouck_is_y1_bounds": {
+      "Indodax_BTCIDR": {
+        "low": 0.008822521054537708,
+        "high": 0.5523759288973277,
+        "mean": 0.28091211415852757
+      },
+      "Binance_BTCUSDT": {
+        "low": 0.42173696896203106,
+        "high": 0.991175377076502,
+        "mean": 0.704931511590094
+      },
+      "Indodax_USDTIDR": {
+        "low": 2.101868960443598e-06,
+        "high": 0.03046108642815886,
+        "mean": 0.014156374251378464
+      }
+    },
+    "scalar_root_1_plus_ba": 0.9277745720758331,
+    "max_non_unit_eig": 0.9649392399786401,
+    "top3_non_unit_eigs": [
+      0.96494,
+      0.57926,
+      0.57926
+    ],
+    "half_life_companion": 19.421249537041167,
+    "half_life_scalar": 9.246093102391244,
+    "half_life_irf_local": 0.9875717304419919,
+    "half_life_irf_gen": 0.9303155534631388,
+    "ljung_box_pvals": [
+      1.0666822721615454e-95,
+      6.340831272364066e-39,
+      2.7546316095398302e-120
+    ],
+    "arch_lm_pvals": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "hf_vecm_indep_fx_349d_2var": {
+    "n_levels": 100362,
+    "T_eff": 100356,
+    "k_ar_diff": 5,
     "sampling_unit": "5m_bars",
-    "beta_normalized": 0.9998279553840663,
-    "alpha_local_ml": -0.06084888073096803,
-    "alpha_local_ml_se": 0.0008637311679651967,
-    "alpha_global_ml": 0.011964971535066832,
-    "alpha_global_ml_se": 0.001064024603989925,
+    "beta_normalized": 1.0005640200345884,
+    "alpha_local_ml": -0.023591006293291153,
+    "alpha_local_ml_se": 0.001292282126736537,
+    "alpha_global_ml": 0.0217841574181306,
+    "alpha_global_ml_se": 0.001417921513117505,
     "weak_exog_local_pval": 0.0,
     "weak_exog_global_pval": 0.0,
-    "alpha_local_hac": -0.06084888068171223,
-    "alpha_local_hac_se": 0.0018546098227643407,
-    "alpha_local_hac_t": -32.80953219098964,
-    "alpha_local_hac_pval": 4.305715778356138e-236,
-    "alpha_local_ci95_low": -0.06448391593433034,
-    "alpha_local_ci95_high": -0.05721384542909412,
-    "alpha_global_hac": 0.011964971525388984,
-    "alpha_global_hac_se": 0.0018580892982998278,
-    "alpha_global_hac_t": 6.439395316649778,
-    "alpha_global_hac_pval": 1.1995041173353777e-10,
-    "implied_ar_root_local": 0.9391511193182878,
-    "half_life_native_units": 11.041089322008483,
+    "alpha_local_hac": -0.023591006293370485,
+    "alpha_local_hac_se": 0.009953151257238292,
+    "alpha_local_hac_t": -2.370204740555334,
+    "alpha_local_hac_pval": 0.01777823734696514,
+    "alpha_local_ci95_low": -0.04309918275755754,
+    "alpha_local_ci95_high": -0.004082829829183433,
+    "alpha_global_hac": 0.02178415741820335,
+    "alpha_global_hac_se": 0.01595280634376393,
+    "alpha_global_hac_t": 1.365537633240244,
+    "alpha_global_hac_pval": 0.17208413330056804,
+    "scalar_root_1_plus_ba": 0.9546125495873578,
+    "max_non_unit_eig": 0.9684607022304041,
+    "half_life_native_units": 21.62883002582559,
+    "half_life_scalar_units": 14.922523973581376,
+    "half_life_irf_local_units": 10.019492321131567,
+    "half_life_irf_gen_units": 9.679297934796603,
     "is_monotone_damping": true,
-    "adj_r2_local": 0.1485434001695044,
-    "adj_r2_global": 0.0064158857476726006,
-    "resid_corr_cross_market": 0.6710492776564289,
-    "gg_share_global": 0.8356772624616639,
-    "gg_share_local": 0.1643227375383362,
-    "hasbrouck_is_global_low": 0.44340671769899087,
-    "hasbrouck_is_global_high": 0.9887027104006608,
-    "hasbrouck_is_global_mid": 0.7160547140498259,
+    "adj_r2_local": 0.1037377942449329,
+    "adj_r2_global": 0.00523457370697078,
+    "resid_corr_cross_market": 0.6304982744706045,
+    "gg_share_global": 0.5199101086075613,
+    "gg_share_local": 0.48008989139243885,
+    "gg_basis": "ML_alpha",
+    "hasbrouck_is_global_low": 0.21753741694428075,
+    "hasbrouck_is_global_high": 0.8459247575962491,
+    "hasbrouck_is_global_mid": 0.531731087270265,
     "is_identification_status": "INFORMATIVE_CHOLESKY_BOUNDS",
-    "ljung_box_pval_local": 1.8908968637287738e-102,
+    "ljung_box_pval_local": 0.7702433122906163,
     "arch_lm_pval_local": 0.0
+  },
+  "hf_vecm_indep_fx_349d_3var": {
+    "names": [
+      "Indodax_BTCIDR",
+      "Binance_BTCUSDT",
+      "Binance_USDTIDR"
+    ],
+    "n_levels": 100362,
+    "T_eff": 100356,
+    "k_ar_diff": 5,
+    "sampling_unit": "5m_bars",
+    "joh_trace": [
+      1493.7825802424416,
+      7.597395997178442,
+      3.417294580346435
+    ],
+    "joh_cvt95": [
+      29.7961,
+      15.4943,
+      3.8415
+    ],
+    "beta": [
+      1.0,
+      -1.000744071052886,
+      -1.0053875210136056
+    ],
+    "alpha_ml": [
+      -0.0163805761921575,
+      0.00021138106924628832,
+      0.017503280212617624
+    ],
+    "se_ml": [
+      0.0012520433017987858,
+      0.00133149005883084,
+      0.0005252995175092957
+    ],
+    "pval_ml": [
+      0.0,
+      0.8738616879128349,
+      0.0
+    ],
+    "alpha_hac": [
+      -0.016380576192125355,
+      0.00021138106924573058,
+      0.017503280212580952
+    ],
+    "se_hac": [
+      0.004239605679376152,
+      0.0011816064712191832,
+      0.013153457255261354
+    ],
+    "pval_hac": [
+      0.00011168110592042058,
+      0.8580217573330754,
+      0.18328837761946537
+    ],
+    "adj_share_ml_pct": [
+      48.04,
+      0.62,
+      51.34
+    ],
+    "psi1_row0": [
+      0.3320261240523592,
+      0.6851182301936333,
+      0.3024552046508224
+    ],
+    "resid_corr_matrix": [
+      [
+        1.0,
+        0.7219699925067878,
+        -0.015430151029221809
+      ],
+      [
+        0.7219699925067878,
+        1.0,
+        -0.03704974942570078
+      ],
+      [
+        -0.015430151029221809,
+        -0.03704974942570078,
+        1.0
+      ]
+    ],
+    "hasbrouck_is_y1_bounds": {
+      "Indodax_BTCIDR": {
+        "low": 0.05285245434710767,
+        "high": 0.7367902610354253,
+        "mean": 0.3940884316408893
+      },
+      "Binance_BTCUSDT": {
+        "low": 0.24979253020986952,
+        "high": 0.9381496084786427,
+        "mean": 0.5927512237694036
+      },
+      "Binance_USDTIDR": {
+        "low": 0.008997937174249702,
+        "high": 0.017076745479262568,
+        "mean": 0.013160344589707032
+      }
+    },
+    "scalar_root_1_plus_ba": 0.9658103059534914,
+    "max_non_unit_eig": 0.9692232763122132,
+    "top3_non_unit_eigs": [
+      0.96922,
+      0.64012,
+      0.64012
+    ],
+    "half_life_companion": 22.173419637925036,
+    "half_life_scalar": 19.924987758196743,
+    "half_life_irf_local": 0.867137740344841,
+    "half_life_irf_gen": 6.931805540379404,
+    "ljung_box_pvals": [
+      5.790224767893303e-20,
+      0.3854034109797944,
+      3.188557021977029e-261
+    ],
+    "arch_lm_pvals": [
+      0.0,
+      0.0,
+      0.0
+    ]
   },
   "tar_daily_b_crypto": {
     "status": "ESTIMATED",
@@ -107,6 +464,24 @@
     "sup_wald": 72.91728120621616,
     "boot_replications": 499,
     "sup_wald_boot_pval": 0.002,
+    "threshold_statistically_significant_5pct": true
+  },
+  "tar_5m_early_25k_active": {
+    "status": "ESTIMATED",
+    "n_obs": 25000,
+    "n_eff": 24997,
+    "p_lags": 2,
+    "tau_hat_bps": 44.36136535344557,
+    "n_in_band": 21247,
+    "n_out_band": 3750,
+    "pct_in_band": 85.0,
+    "rho_in": -0.08034430920999532,
+    "rho_out": -0.302238231664774,
+    "root_out": 0.697761768335226,
+    "half_life_out_bars": 1.9260640145187444,
+    "sup_wald": 202.38093351195832,
+    "boot_replications": 299,
+    "sup_wald_boot_pval": 0.0033333333333333335,
     "threshold_statistically_significant_5pct": true
   },
   "tar_5m_recent_25k_active": {
