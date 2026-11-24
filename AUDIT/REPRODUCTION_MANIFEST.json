@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-11-24T12:48:41.423358+00:00",
+  "generated_at_utc": "2026-11-24T14:58:13.366848+00:00",
   "git_commit_sha_baseline": "2fcaefd",
-  "git_commit_sha_post_correction": "9462ca0cfd7bb23daeac2095019605485cbde325",
+  "git_commit_sha_post_correction": "9f2d26bad7c3318302e07a83ca7d74d3ebbe1d4c",
   "python_version": "3.11.13",
   "os_platform": "macOS-27.2.1-arm64-arm-64bit",
   "dependencies": {
@@ -15,6 +15,7 @@
     "pytest": "9.2.0"
   },
   "master_seed": 20261113,
+  "test_suite_count": 22,
   "source_checksums": {
     "src/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/acquisition/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -26,26 +27,26 @@
     "src/acquisition/orderbook_snapshot.py": "83afd5ba455fbea4c816dffccf44787deb5be05990cb8ce3b852c09f9ec1aa57",
     "src/acquisition/run_acquisition.py": "6e23c056a9b34fba224ed1ab16475bdd0fd146af6acccb5b97739164b693c91f",
     "src/econometrics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "src/econometrics/bootstrap.py": "e5c28a86ec92e20bde0bd12658598ab2eba753b5525be59b3f3854e1dcdf9eaa",
+    "src/econometrics/bootstrap.py": "17612636b25b41b9fc7914e7feba2b76c6f458de70372cf2654c5af11ae6ab2f",
     "src/econometrics/cointegration.py": "dac1ace7f8ea404979f38b1ae7c916ec7d1d32583908a39e87607b5eeebade3a",
     "src/econometrics/ecm.py": "f51e1b3b1475c969b54b01ba3917d8f2f4ca6c8aa65f75fa93e88ee52f29bea7",
     "src/econometrics/nonlinear_tar.py": "338695e33ad6716e91675f4cb22c6327362851f6f842afbf50b3cb841b88a266",
-    "src/econometrics/structural_breaks.py": "bbe051667fa21a56794e8a034890f4357865cd430d909ca8f11310a21337c386",
+    "src/econometrics/structural_breaks.py": "4ede6f139c18f2027835fa96e7cb7ac732d1f395482dd9cf49a82ed474cae7bb",
     "src/econometrics/unit_root.py": "9370f34fa490dc8912fffb6b07c40ace28b80144234c56f16101c5908cfb2f74",
-    "src/experiments_runner.py": "0c4b7e5d5f789b133695944c85b56e642045053e9208269c585ebd8708b9e91a",
+    "src/experiments_runner.py": "2817cd23db058ce6477c34f5f43c49039aedd254f0393aabd0e057a95f2d3286",
     "src/fees/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/fees/fee_schedule.py": "994b7b3588995fd5d9a200072c25771552fa1be41a7c6195c73525cbb156aeb4",
     "src/fees/orderbook_economics.py": "ae0ee2b959c5316aa58ca55575654cc297940c8d9f84c3a6845c3bb7680d13b4",
     "src/manuscript/__init__.py": "05913c27c5f0e482d088ff298e9e3cf0df4e71f11336fe99f6d180fe5be46f4a",
     "src/manuscript/latex_tables.py": "00937c9b3a677d63715f8f4e0471e98fbc6f1e69bb2f8bd34b83d90b14c33ded",
-    "src/pipeline.py": "87b6e6a41278b72ee94e066d169334da66a98882cf56aa42c94ce9577c6b8cce",
+    "src/pipeline.py": "cb7299c3973080f7b2d56e339999fcb95b945d2264823e6e1ee022655165eed4",
     "src/processing/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/processing/jisdor_calendar.py": "9a49a9b87b67b4aa59a090b659b5e239bef7fe19be16c45927c9ee38641a6244",
     "src/robustness/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/robustness/jisdor_window_and_holm_events.py": "76ea0725268ca567c46718bc007578e68940a7351445b0f8618518ec97f74917",
     "src/robustness/runner.py": "2225772b45682da6b94f8a595e33cd3fe45033fed1d248b257ce412dc3387076",
     "src/synchronization/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "src/synchronization/aligner.py": "9a2a49397195e4bdded31087f50ae0feac71aba76a9fe8b4ca51d18cc9ca4354",
+    "src/synchronization/aligner.py": "50d3189b8d6f6a017e2dfb2694dcf5d5b2eba5dfa09aaa561be35c7e72756aae",
     "src/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/variables/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "src/variables/basis.py": "712cfb23d35e479da6d794c8665b4bf886dbc5a3e0cbdfef48fe9c16812b4c71",
@@ -53,16 +54,16 @@
     "src/visualizations/figures.py": "32ed588074ebdd59a908b2bde1defbe8fc99502092ebae6fb3714d05a2814ac1"
   },
   "test_checksums": {
-    "tests/test_core_methodology.py": "1e66b75c85af0b1b078003d94f1e205ba3a2b3f8d4d4eece3b6f3c131fbba4ee",
-    "tests/test_econometrics.py": "2dd86e68b5c49670b1334faa6fa77b83c7bc21ea9d69fdf4653d6b7ad4eb78db",
+    "tests/test_core_methodology.py": "efd45bc70f9c53bccbb4de92444f0ec5cb6ba8a85898e662b3d7276502f20364",
+    "tests/test_econometrics.py": "d6220276bd0e19f430385c1ed3610c572ffaeb875ca5fce0e42a702c5b53db8e",
     "tests/test_manuscript_consistency.py": "226620f989ac21e0d076bfad6706c9defbf3b8e99f5800b3714eab6429495933",
-    "tests/test_pipeline_and_manuscript.py": "4182c3b545a61b30a4a1984066a16432c7820e19ce854a4915cec37689b7a56e"
+    "tests/test_pipeline_and_manuscript.py": "9f742cdcf4231ee8331398e825b4ff5ec59d34ae7ca8a19df7f1b20d175554ea"
   },
   "config_checksums": {
     "config/acquisition.yaml": "b6732a71ff594d526846f6a713cde9b3898ec3da96fe558f129fd2a593962b16",
     "config/econometrics.yaml": "274fc6d7b03176c6131de71ed243015522eed676159f0df1bc79e3af46624f14",
     "config/full_research.yaml": "bc3a75b2eb244c9ac4bf484a3152d7d64e18830f778988eb92313150589fa0b4",
-    "config/sampling.yaml": "a200b96d42326df6528254a0be21c332cf3337a2235feb3e91e40c9214f6b73f"
+    "config/sampling.yaml": "e18b57ad486b24745efc14694b74d13c60604dd3c9e7d93d93d40bbbaa53ce19"
   },
   "processed_data_checksums": {
     "data/processed/binance_vs_indodax_idr_5m.csv.gz": "adf1bf53db50ad9e584ca494f80619de5ae9cb090883e181beb73f5b8b34418d",
@@ -95,11 +96,12 @@
   },
   "output_model_checksums": {
     "results/models/binance_vs_indodax_idr_summary.json": "c8b621e4f0cdadb632b286e64cf6f096a45174883bbf640261aeb879450f7166",
-    "results/models/intraday_and_tar_results.json": "26f8b26d4725c90970003141495b562112b8e32d1dd33258097d26b1642f443a",
+    "results/models/intraday_and_tar_results.json": "a9d1e975029c826c15dde529aa4cd587de6f741d9584717c5a752c24bbd90c62",
     "results/models/jisdor_window_vwap.json": "6d8cbb26c6f2b55a39339880c60553f9987bb9f32b59f3f23c098914cc686537",
     "results/models/variance_decomposition.json": "da5f7b4487fb7eaa6a3dbb7c14cca64b55d19b3c7cbdad4845c04f05f370eafe"
   },
   "output_diagnostic_checksums": {
+    "results/diagnostics/bootstrap_5m_block_sensitivity.csv": "179df029ddd95f3bf3bca76ed14e289cbcd50d189e85a84f19934440d8b77c93",
     "results/diagnostics/bootstrap_monte_carlo.csv": "67ce6daa336d2780dbdf67360287ac9b9ce622d215ba256578e9d35e81b734c7",
     "results/diagnostics/bootstrap_rank_sequential.csv": "8920734fc1dc8d39df87371516ae84f4bac16d30866b5973be1bb44be8c11043",
     "results/diagnostics/cfx_event_robustness.csv": "044f48502e8da146aa27a2ac3dc7d1773c3755df9bf239c67371cca18d88fd9c",
@@ -108,21 +110,21 @@
     "results/diagnostics/jisdor_schedule_audit.csv": "da9df20e0d5142a8cd491c0b8738de50a8ed51080a2ed1ee3fe15f1b39980249",
     "results/diagnostics/residual_diagnostics_multilag.csv": "96a609d97d682d8ea2d4beed670a5be1b249bd70834830401a4acf6b075b3269",
     "results/diagnostics/stale_price_sensitivity_5m.csv": "ab435e5324b50168d57f42ae2640522c261d5963e4cdc8e788b02da461b8691c",
-    "results/diagnostics/structural_stability_regimes.csv": "2ff624980694804e99c5b929f3618a6ca9f671b988332262bceaba5a77527778",
-    "results/diagnostics/structural_stability_wald.json": "5b682e79983f09c77ae5126d98530f10b517f341a8d26f8e934956e2532fe0d2",
+    "results/diagnostics/structural_stability_regimes.csv": "42865b4bf2a61d55f3bc19034cf7f267a73f87e54f952ca0979e45a19d90847f",
+    "results/diagnostics/structural_stability_wald.json": "180e3434061d0c5f05033a91e8ab26fb2528e4b847a176200d00b2406f3a5767",
     "results/diagnostics/timestamp_alignment.csv": "82106e90353bc2fdcbe2c362e269a808df9442d019797d793d952f684f57d61a",
     "results/diagnostics/timestamp_alignment_summary.json": "da6ed915a559da2e55b0881dece4c9ad157c135d34eae2980eba53e39d2b7cc1"
   },
   "audit_report_checksums": {
-    "AUDIT/BOOTSTRAP_VALIDATION.md": "05bd59c9c986c92d85f4cb4df0ec8eecbe8af3f4ab807bee54c68a28a403dfcd",
+    "AUDIT/BOOTSTRAP_VALIDATION.md": "c4078472f832b824585a0d8ecab8efaaa64db98f8ecd0750eaa5a568c35e3872",
     "AUDIT/CFX_EVENT_STUDY.md": "b9bf385ea2367f4ce58fc69f454a3516189bd1c416052107319f8a14745b7b48",
     "AUDIT/CITATION_VERIFICATION.csv": "bb9ff89937028be763dadc07c3a2839b2b765e69240f9adbc9c7417515554610",
     "AUDIT/CLAIM_SCOPE_AND_ARBITRAGE.md": "cebdc807a1b58a23330d28409d78c973ed44b1763cfbdfd6ea597f3d91c75450",
-    "AUDIT/CLAIM_TO_CODE_MAP.csv": "48b5caef9514cf3dc56e6c2eabed6572318b4f9ca19ae2dbc45168a950f951c9",
+    "AUDIT/CLAIM_TO_CODE_MAP.csv": "46b73c33cae54a3c104a87146447739f9c1cbcfd139b00cd60944a8ff34e2202",
     "AUDIT/DETERMINISTIC_SPECIFICATION_AUDIT.md": "c1e09599e4714d4cbebc9219074b38e55fd1389c2f56e0e2d83e8af6b9ab095d",
     "AUDIT/EDITORIAL_DECISION.md": "e2944fe850ba3048cbaeb7e73ff2fcb3b2d497b78e845dfae73e4332d02f3b91",
-    "AUDIT/FINAL_EXECUTION_SUMMARY.md": "c2b478fee5eab95ed3cfce1690b484ecd4f422426083c843728d10d92cc28024",
-    "AUDIT/FINAL_VALIDATION_REPORT.md": "404712b0f005d90ea8acc8e2aae3f68c61ee7334a18100f8e401803e02e65baf",
+    "AUDIT/FINAL_EXECUTION_SUMMARY.md": "026301d08522864c4eb17e630f4609ece2367a54f5f1476823c9e1661bf1a4c5",
+    "AUDIT/FINAL_VALIDATION_REPORT.md": "50aa97099414fd0a401d35c71ad9380922d3c716bdfe5451c52f984b2f2a1e51",
     "AUDIT/HAC_AND_RESIDUAL_DIAGNOSTICS.md": "add8c25552abe0aabbb72070a6268b626449a7d29777384f18a862e37949c442",
     "AUDIT/HALF_LIFE_INTERPRETATION.md": "b4b44a54171bd7737f3b758d379781a06bdf0f236a5985e0ca9ea0f29918192e",
     "AUDIT/INITIAL_REPOSITORY_INVENTORY.md": "72642229719d36ff60d5b82588d39cc08aa310f0901a6a46cad347c88a0dbdef",
@@ -135,10 +137,10 @@
     "AUDIT/ROBUSTNESS_CLAIM_VERIFICATION.csv": "aa10a65e3b4b52d44eb541622217ed83f9f941e3746e9caf20112ca256bbde82",
     "AUDIT/SOURCE_EVIDENCE_REGISTER.csv": "d25496a4219b8b0ce5436a70ccaa525aaecd07f6203f9b97d5272c38b2f63f78",
     "AUDIT/STALE_PRICE_AND_ZERO_VOLUME.md": "379173ba9848c2b2a6321d2b13520d9b644e3a72f3daf69857727af4d3a78d8c",
-    "AUDIT/STRUCTURAL_STABILITY.md": "6e40b62b61642e3f0307ee1924d2dbcb9218699c5ed45485545d8c7a9da6eb8d",
+    "AUDIT/STRUCTURAL_STABILITY.md": "a966256e2de9a1f2ec151c67d5c08d89694edbe8b8e2c636955c9c13222fe437",
     "AUDIT/TEST_COVERAGE.md": "e6da86a9e43ba0e532f3b6bd55aee7f83d4a052acae8f18ef1fe96b90cc4361d",
     "AUDIT/TIMESTAMP_AUDIT.md": "a0c9ca544c0b4d17e61db16ab1e96472c412eb99b8f91d582de07a93fc78d181"
   },
-  "manuscript_pdf_sha256": "c1da03b3357762785d264edac79dcf6de986914adfec85edef78f5f7849eeb8f",
-  "manuscript_pdf_bytes": 994712
+  "manuscript_pdf_sha256": "8b91ffa828f58946e9ee3beceb00c7b47c81606b6e879325c9a4033065b3354d",
+  "manuscript_pdf_bytes": 995327
 }
