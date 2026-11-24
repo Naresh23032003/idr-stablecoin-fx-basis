@@ -28,7 +28,10 @@ from src.econometrics.ecm import (
 import statsmodels.api as sm
 from statsmodels.stats.multitest import multipletests
 from src.econometrics.nonlinear_tar import estimate_band_tar
-from src.econometrics.structural_breaks import evaluate_event_windows
+from src.econometrics.structural_breaks import (
+    estimate_regime_stability_and_wald,
+    evaluate_event_windows,
+)
 from src.econometrics.unit_root import run_unit_root_suite
 from src.fees.fee_schedule import build_historical_fee_table, lookup_costs_for_dates
 from src.fees.orderbook_economics import analyze_saved_orderbook_snapshots
@@ -84,13 +87,15 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
 
     raw_dir = root / "data" / "raw"
     ob_csv = tables_dir / "orderbook_microstructure_snapshot.csv"
-    if raw_dir.exists():
+    if raw_dir.exists() and (raw_dir / "indodax" / "orderbook_snapshots").exists():
         ob_df = analyze_saved_orderbook_snapshots(raw_dir, fx_idr_per_usd=float(btc["jisdor_idr_usd"].iloc[-1]))
         ob_df.to_csv(ob_csv, index=False)
     elif ob_csv.exists():
         ob_df = pd.read_csv(ob_csv)
     else:
-        ob_df = pd.DataFrame()
+        raise FileNotFoundError(
+            f"Missing order-book snapshot inputs: neither {raw_dir / 'indodax' / 'orderbook_snapshots'} nor {ob_csv} exists."
+        )
 
     # Route-specific execution costs across regimes + USD notional slippage
     r6 = fee_df.iloc[-1]
@@ -289,13 +294,26 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
         names=["Indodax_BTCIDR", "Binance_BTCUSDT", "Indodax_USDTIDR"],
         k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
     )
-    # Dependence-preserving sequential block-wild bootstrap on the primary 3-variable 5-minute system
+    # Dependence-preserving sequential block-wild bootstrap on the primary 3-variable 5-minute system (B=499 for all ranks)
     hf_3var_boot = null_imposed_vecm_residual_bootstrap(
         Y3_all, det_order=0, k_ar_diff=5, n_boot=499, seed=seed + 99, block_len=28
     )
     hf_3var_boot_seq = sequential_vecm_block_wild_bootstrap(
-        Y3_all, det_order=0, k_ar_diff=5, n_boot=99, seed=seed + 199, block_len=28, ranks=[1, 2]
+        Y3_all, det_order=0, k_ar_diff=5, n_boot=499, seed=seed + 199, block_len=28, ranks=[1, 2]
     )
+    # High-frequency block-length sensitivity (b in {14, 28, 56, 112}, B=499)
+    diag_dir = root / "results" / "diagnostics"
+    diag_dir.mkdir(parents=True, exist_ok=True)
+    hf_blk_rows = [
+        {"block_len_label": f"b={x['block_len']}", **x}
+        for x in [hf_3var_boot, *hf_3var_boot_seq]
+    ]
+    for b_alt in (14, 56, 112):
+        for r_item in sequential_vecm_block_wild_bootstrap(
+            Y3_all, det_order=0, k_ar_diff=5, n_boot=499, seed=seed + 300 + b_alt, block_len=b_alt, ranks=[0, 1]
+        ):
+            hf_blk_rows.append({"block_len_label": f"b={b_alt}", **r_item})
+    pd.DataFrame(hf_blk_rows).to_csv(diag_dir / "bootstrap_5m_block_sensitivity.csv", index=False)
     hf_vecm_3var_act = estimate_trivariate_vecm(
         np.log(p5_act["indodax_btcidr"].values),
         np.log(p5_act["binance_btcusdt"].values),
@@ -403,6 +421,11 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
     _, j15_holm, _, _ = multipletests(j15_p, method="holm")
     ev_all["joint15_p_holm"] = np.round(j15_holm, 4)
     ev_all.to_csv(tables_dir / "table7_regulatory_event_windows.csv", index=False)
+
+    # 7b. Six-regime subsample stability and pooled HAC interaction Wald test (alpha_local equality)
+    stab_df, wald_info = estimate_regime_stability_and_wald(btc, k_ar_diff=1, det_order="co", hac_lags=5)
+    stab_df.to_csv(diag_dir / "structural_stability_regimes.csv", index=False)
+    (diag_dir / "structural_stability_wald.json").write_text(json.dumps(wald_info, indent=2))
 
     # 8. Robustness & Falsification (H11, H12)
     sync_sens = run_synchronization_sensitivity(btc)

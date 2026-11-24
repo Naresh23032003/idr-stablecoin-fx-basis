@@ -57,3 +57,41 @@ def test_generated_tables_figures_and_manuscript():
     pdf_path = ROOT / "manuscript" / "main.pdf"
     if pdf_path.exists():
         assert pdf_path.stat().st_size > 50_000
+
+
+def test_processed_reproduction_mode_without_raw_dir(tmp_path):
+    """Integration test: processed-data reproduction validates inputs without data/raw/ and fails early on missing files."""
+    import shutil
+    import pytest
+    from src.pipeline import validate_processed_inputs, validate_raw_inputs
+    from src.manuscript.latex_tables import generate_all_latex_tables
+
+    # Build a clean workspace copy with NO data/raw/
+    for rel in [
+        "data/processed",
+        "data/source_coverage_matrix.csv",
+        "results/tables",
+        "results/models",
+    ]:
+        src_p = ROOT / rel
+        dst_p = tmp_path / rel
+        if src_p.is_dir():
+            shutil.copytree(src_p, dst_p)
+        else:
+            dst_p.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_p, dst_p)
+
+    assert not (tmp_path / "data" / "raw").exists()
+    # Full-raw validation must fail early when data/raw/ is absent
+    with pytest.raises(FileNotFoundError, match="Raw data directory not found"):
+        validate_raw_inputs(tmp_path)
+
+    # Processed-data validation must succeed without data/raw/
+    validate_processed_inputs(tmp_path)
+    tabs = generate_all_latex_tables(tmp_path)
+    assert len(tabs) == 8
+
+    # Removing a required processed file must fail early (never silently skip)
+    (tmp_path / "data/processed/btc_jisdor_sync_primary.csv").unlink()
+    with pytest.raises(FileNotFoundError, match="btc_jisdor_sync_primary.csv"):
+        validate_processed_inputs(tmp_path)

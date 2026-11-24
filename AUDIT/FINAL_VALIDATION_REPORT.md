@@ -11,6 +11,6 @@
 4. **No placeholder text / TODO / FIXME:** YES (`test_no_todo_or_missing_inputs_in_manuscript`).
 5. **No stale numerical results or stale audit maps:** YES (`AUDIT/CLAIM_TO_CODE_MAP.csv`, `AUDIT/BOOTSTRAP_VALIDATION.md`, `AUDIT/TIMESTAMP_AUDIT.md`, and `manuscript/` are 100% synchronized to the final run).
 6. **All random seeds recorded:** YES (`seed = 20261113` in `config/econometrics.yaml` and `AUDIT/REPRODUCTION_MANIFEST.json`).
-7. **All automated tests pass:** YES (`19 passed` in `pytest -v`, including eigenmode spectral reconstruction and sequential bootstrap tests).
+7. **All automated tests pass:** YES (`22 passed` in `pytest -v`, including processed-data reproduction without `data/raw/`, no-look-ahead regression, eigenmode spectral reconstruction, sequential bootstrap, and 6-regime pooled HAC Wald reconstruction).
 8. **Final PDF compiles cleanly:** YES (`manuscript/main.pdf` compiled with zero errors).
 9. **All known limitations disclosed:** YES (Indodax pre-2025 venue scope, 4-regime JISDOR schedule + 1h transition sensitivity, 2022–2024 partial fee archive, JISDOR non-executability, Nov 13, 2026 snapshot depth, descriptive-only adjustment shares/half-lives, and non-causal CFX event association).

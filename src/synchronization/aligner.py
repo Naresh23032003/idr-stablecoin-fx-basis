@@ -175,7 +175,7 @@ def build_all_datasets(root: Path) -> Dict[str, Any]:
 
     for asset, indo_5m, bin_5m, out_name in asset_specs:
         base = pub_days.copy()
-        # Primary 0m (first valid 5m bar at/after JISDOR fixing, tol <= 5m)
+        # Primary 0m (most recent completed 5m candle available at or before JISDOR fixing, tol <= 5m)
         m_indo = _asof_window_match(base, indo_5m, "pub_ts_utc", "indodax", offset_minutes=0, tolerance_minutes=5)
         m_usdt = _asof_window_match(base, indo_usdt_5m, "pub_ts_utc", "usdtidr", offset_minutes=0, tolerance_minutes=5)
         m_bin = _asof_window_match(base, bin_5m, "pub_ts_utc", "binance", offset_minutes=0, tolerance_minutes=5)

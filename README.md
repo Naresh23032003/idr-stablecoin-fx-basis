@@ -6,19 +6,30 @@ The study covers January 4, 2021 through November 12, 2026 (`n = 1,414` Bank Ind
 
 ## Reproduction
 
+Two explicit pipeline modes are supported:
+
+1. **Processed-data reproduction (clean checkout, no `data/raw/` required):** Uses tracked `data/processed/` panels and `results/tables/orderbook_microstructure_snapshot.csv`, fails early if any required file is missing, and runs all experiments, JISDOR monitoring-window VWAP checks, figures, LaTeX tables, and PDF compilation:
+
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.lock
 
-# Run full empirical pipeline (master PRNG seed: 20261113)
-MPLCONFIGDIR=/tmp/matplotlib python -m src.pipeline run-all --config config/full_research.yaml
+# Clean-checkout reproduction from tracked processed panels (master seed: 20261113)
+MPLCONFIGDIR=/tmp/matplotlib python -m src.pipeline reproduce-processed --config config/full_research.yaml
 
-# Run JISDOR monitoring-window VWAP/TWAP check and Holm-adjusted event-window tests
-python src/robustness/jisdor_window_and_holm_events.py
-
-# Run unit tests
+# Run automated verification suite
 pytest -v
+```
+
+2. **Full raw rebuild (requires `data/raw/` or live acquisition):**
+
+```bash
+# Acquire raw archives from public APIs (optional if data/raw/ already present)
+python -m src.pipeline acquire --config config/full_research.yaml
+
+# Validate raw inputs, rebuild processed panels, and run the complete pipeline
+MPLCONFIGDIR=/tmp/matplotlib python -m src.pipeline run-all --mode full-raw --config config/full_research.yaml
 ```
 
 ## Directory layout

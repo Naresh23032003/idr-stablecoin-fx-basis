@@ -1,5 +1,5 @@
 sampling:
-  primary_rule: "first_valid_at_or_after_jisdor_pub"
+  primary_rule: "last_completed_candle_at_or_before_jisdor_pub_via_observation_available_time_utc"
   tolerance_minutes: 5
   jisdor_schedule:
     - regime: "R1_PRE_APRIL_2021"

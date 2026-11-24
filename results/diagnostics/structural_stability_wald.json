@@ -1,5 +1,12 @@
 {
   "test": "Pooled_HAC_Wald_Equality_of_alpha_local_across_6_regimes",
+  "scope_note": "Tests equality of local adjustment coefficient alpha_local across 6 regimes conditional on full-sample beta_hat; does not test full-VECM stability.",
+  "T_eff": 1412,
+  "k_ar_diff": 1,
+  "deterministic_spec": "co",
+  "cov_type": "HAC",
+  "hac_maxlags": 5,
+  "n_regimes": 6,
   "df": 5,
   "wald_chi2": 2.356,
   "pvalue": 0.798,

@@ -113,3 +113,55 @@ def test_eigenmode_decomposition_spectral_identity():
     assert np.isclose(ed["sum_shares_local"], 1.0, atol=1e-10)
     assert np.isclose(ed["sum_shares_gen"], 1.0, atol=1e-10)
     assert ed["max_irf_reconstruction_err"] < 1e-11
+
+
+def test_regime_stability_wald_independent_reconstruction():
+    """Independently reconstruct the 6-regime pooled HAC interaction Wald test from processed data."""
+    import json
+    from pathlib import Path
+    import pandas as pd
+    import statsmodels.api as sm
+    from statsmodels.tsa.vector_ar.vecm import VECM
+    from src.econometrics.structural_breaks import (
+        DEFAULT_INSTITUTIONAL_REGIMES,
+        estimate_regime_stability_and_wald,
+    )
+
+    root = Path(__file__).resolve().parents[1]
+    btc = pd.read_csv(root / "data/processed/btc_jisdor_sync_primary.csv")
+    stab_df, wald_fn = estimate_regime_stability_and_wald(btc, k_ar_diff=1, det_order="co", hac_lags=5)
+    assert len(stab_df) == 6
+
+    # Independent reconstruction
+    Y = np.column_stack([btc["ln_p_idr"].values, btc["ln_p_global_fx"].values])
+    v = VECM(Y, k_ar_diff=1, coint_rank=1, deterministic="co").fit()
+    ect = Y @ v.beta[:, 0]
+    dY = np.diff(Y, axis=0)
+    dates = btc["date"].values[2:]
+    X_dict = {
+        "const": np.ones(len(dates)),
+        "ect_lag": ect[1:-1],
+        "dl_lag1": dY[:-1, 0],
+        "dg_lag1": dY[:-1, 1],
+    }
+    inter = []
+    for i, (_, d0, d1) in enumerate(DEFAULT_INSTITUTIONAL_REGIMES[1:], start=1):
+        m = ((dates >= d0) & (dates <= d1)).astype(float)
+        X_dict[f"d_{i}"] = m
+        X_dict[f"ect_x_{i}"] = ect[1:-1] * m
+        inter.append(f"ect_x_{i}")
+    X_df = pd.DataFrame(X_dict)
+    ols = sm.OLS(dY[1:, 0], X_df).fit(cov_type="HAC", cov_kwds={"maxlags": 5})
+    R = np.zeros((len(inter), len(ols.params)))
+    for i, nm in enumerate(inter):
+        R[i, ols.params.index.get_loc(nm)] = 1.0
+    wt = ols.wald_test(R, scalar=True)
+
+    assert wald_fn["df"] == 5
+    assert np.isclose(wald_fn["wald_chi2"], float(wt.statistic), atol=1e-3)
+    assert np.isclose(wald_fn["pvalue"], float(wt.pvalue), atol=1e-4)
+    saved_path = root / "results/diagnostics/structural_stability_wald.json"
+    if saved_path.exists():
+        saved = json.loads(saved_path.read_text())
+        assert np.isclose(saved["wald_chi2"], wald_fn["wald_chi2"], atol=1e-3)
+        assert np.isclose(saved["pvalue"], wald_fn["pvalue"], atol=1e-4)

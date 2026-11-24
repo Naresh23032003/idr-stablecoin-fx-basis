@@ -94,6 +94,23 @@ def test_asof_window_matching_and_tolerance():
     assert pd.isna(m.loc[1, "test_close"])
 
 
+def test_rejects_forward_open_time_lookahead_matching():
+    """Explicit regression test: fails if old forward/open-time matching returns."""
+    targets = pd.DataFrame({"pub_ts_utc": pd.to_datetime(["2026-10-12T08:15:00Z"], utc=True)})
+    # Only a candle that OPENS at 08:15:00Z and CLOSES at 08:20:00Z exists.
+    # Old buggy forward matching on timestamp_utc (open_time) matched this candle at 08:15:00Z (5m look-ahead).
+    # Correct backward matching on observation_available_time_utc MUST return NaN.
+    future_only = pd.DataFrame({
+        "timestamp_utc": pd.to_datetime(["2026-10-12T08:15:00Z"], utc=True),
+        "candle_open_time_utc": pd.to_datetime(["2026-10-12T08:15:00Z"], utc=True),
+        "observation_available_time_utc": pd.to_datetime(["2026-10-12T08:20:00Z"], utc=True),
+        "close": [999.0],
+        "volume": [10.0],
+    })
+    m_future = _asof_window_match(targets, future_only, "pub_ts_utc", "test", offset_minutes=0, tolerance_minutes=5)
+    assert pd.isna(m_future.loc[0, "test_close"]), "Look-ahead defect: matched unclosed candle opening at pub_ts_utc"
+
+
 def test_fee_arithmetic_oct_2026_matches_published_indodax_pro():
     r6 = [r for r in HISTORICAL_REGIMES if r.regime_id == "R6_CFX_CUT_OCT2026"][0]
     c = compute_regime_costs(r6)

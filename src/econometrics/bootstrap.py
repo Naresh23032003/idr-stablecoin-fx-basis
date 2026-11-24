@@ -2,9 +2,66 @@
 from __future__ import annotations
 
 import math
+import os
+from concurrent.futures import ProcessPoolExecutor
 from typing import Dict, Any, List, Sequence
 import numpy as np
 from statsmodels.tsa.vector_ar.vecm import VECM, coint_johansen
+
+
+def _run_boot_chunk(args: tuple) -> tuple[List[float], List[float], int]:
+    """Deterministic worker for parallel large-sample block-wild bootstrap chunks."""
+    (
+        child_seeds, resid_centered, mu_hat, Pi_T, G_T,
+        init_Y0, init_dY, init_Yk, N, n, p, k, T_eff,
+        n_blocks, b_len, null_rank, det_order,
+    ) = args
+    tr_list: List[float] = []
+    mx_list: List[float] = []
+    n_fail = 0
+    for s in child_seeds:
+        rng = np.random.default_rng(s)
+        w_blocks = rng.choice(np.array([-1.0, 1.0]), size=n_blocks)
+        w = np.repeat(w_blocks, b_len)[:T_eff]
+        u_star = resid_centered * w[:, None]
+        rhs = mu_hat[None, :] + u_star
+
+        dY_star = np.empty((N - 1, n), dtype=float)
+        if p > 0:
+            dY_star[:p, :] = init_dY
+        dY_star[p:, :] = rhs
+
+        if null_rank == 0:
+            for t in range(p, N - 1):
+                acc = dY_star[t].copy()
+                for i in range(p):
+                    acc += dY_star[t - 1 - i] @ G_T[i]
+                dY_star[t] = acc
+            Y_star = np.empty((N, n), dtype=float)
+            Y_star[0, :] = init_Y0
+            Y_star[1:, :] = init_Y0 + np.cumsum(dY_star, axis=0)
+        else:
+            Y_star = np.empty((N, n), dtype=float)
+            Y_star[:k, :] = init_Yk
+            for t in range(k, N):
+                dy_t = rhs[t - k] + Y_star[t - 1] @ Pi_T
+                for i in range(p):
+                    dy_t += dY_star[t - 2 - i] @ G_T[i]
+                dY_star[t - 1] = dy_t
+                Y_star[t] = Y_star[t - 1] + dy_t
+
+        try:
+            tr_b_all, mx_b_all = _fast_johansen_stats(Y_star, det_order=det_order, k_ar_diff=p)
+            tr_b = float(tr_b_all[null_rank])
+            mx_b = float(mx_b_all[null_rank])
+            if np.isfinite(tr_b) and np.isfinite(mx_b):
+                tr_list.append(tr_b)
+                mx_list.append(mx_b)
+            else:
+                n_fail += 1
+        except Exception:
+            n_fail += 1
+    return tr_list, mx_list, n_fail
 
 
 def _fast_johansen_stats(Y: np.ndarray, det_order: int = 0, k_ar_diff: int = 1) -> tuple[np.ndarray, np.ndarray]:
@@ -86,54 +143,80 @@ def bootstrap_single_rank(
 
     init_Y0 = Y[0, :]
     init_dY = dY[:p, :]
+    init_Yk = Y[:k, :]
     Pi_T = Pi_hat.T
     G_T = [g.T for g in gammas]
 
-    for _ in range(n_boot):
-        w_blocks = rng.choice(np.array([-1.0, 1.0]), size=n_blocks)
-        w = np.repeat(w_blocks, b_len)[:T_eff]
-        u_star = resid_centered * w[:, None]
-        rhs = mu_hat[None, :] + u_star
+    # Use deterministic parallel workers for large high-frequency panels (N >= 50,000)
+    n_workers = min(8, os.cpu_count() or 1)
+    if N >= 50_000 and n_workers > 1 and n_boot >= 20:
+        child_seeds = np.random.SeedSequence(seed).spawn(n_boot)
+        chunk_size = int(math.ceil(n_boot / n_workers))
+        chunks = [
+            (
+                child_seeds[i : i + chunk_size],
+                resid_centered, mu_hat, Pi_T, G_T,
+                init_Y0, init_dY, init_Yk, N, n, p, k, T_eff,
+                n_blocks, b_len, null_rank, det_order,
+            )
+            for i in range(0, n_boot, chunk_size)
+        ]
+        tr_all_list: List[float] = []
+        mx_all_list: List[float] = []
+        with ProcessPoolExecutor(max_workers=n_workers) as ex:
+            for tr_c, mx_c, nf_c in ex.map(_run_boot_chunk, chunks):
+                tr_all_list.extend(tr_c)
+                mx_all_list.extend(mx_c)
+                n_failed += nf_c
+        valid_count = len(tr_all_list)
+        tr_arr = np.asarray(tr_all_list, dtype=float)
+        mx_arr = np.asarray(mx_all_list, dtype=float)
+    else:
+        for _ in range(n_boot):
+            w_blocks = rng.choice(np.array([-1.0, 1.0]), size=n_blocks)
+            w = np.repeat(w_blocks, b_len)[:T_eff]
+            u_star = resid_centered * w[:, None]
+            rhs = mu_hat[None, :] + u_star
 
-        dY_star = np.empty((N - 1, n), dtype=float)
-        if p > 0:
-            dY_star[:p, :] = init_dY
-        dY_star[p:, :] = rhs
+            dY_star = np.empty((N - 1, n), dtype=float)
+            if p > 0:
+                dY_star[:p, :] = init_dY
+            dY_star[p:, :] = rhs
 
-        if null_rank == 0:
-            for t in range(p, N - 1):
-                acc = dY_star[t].copy()
-                for i in range(p):
-                    acc += dY_star[t - 1 - i] @ G_T[i]
-                dY_star[t] = acc
-            Y_star = np.empty((N, n), dtype=float)
-            Y_star[0, :] = init_Y0
-            Y_star[1:, :] = init_Y0 + np.cumsum(dY_star, axis=0)
-        else:
-            Y_star = np.empty((N, n), dtype=float)
-            Y_star[:k, :] = Y[:k, :]
-            for t in range(k, N):
-                dy_t = rhs[t - k] + Y_star[t - 1] @ Pi_T
-                for i in range(p):
-                    dy_t += dY_star[t - 2 - i] @ G_T[i]
-                dY_star[t - 1] = dy_t
-                Y_star[t] = Y_star[t - 1] + dy_t
-
-        try:
-            tr_b_all, mx_b_all = _fast_johansen_stats(Y_star, det_order=det_order, k_ar_diff=p)
-            tr_b = float(tr_b_all[null_rank])
-            mx_b = float(mx_b_all[null_rank])
-            if np.isfinite(tr_b) and np.isfinite(mx_b):
-                trace_boot[valid_count] = tr_b
-                max_boot[valid_count] = mx_b
-                valid_count += 1
+            if null_rank == 0:
+                for t in range(p, N - 1):
+                    acc = dY_star[t].copy()
+                    for i in range(p):
+                        acc += dY_star[t - 1 - i] @ G_T[i]
+                    dY_star[t] = acc
+                Y_star = np.empty((N, n), dtype=float)
+                Y_star[0, :] = init_Y0
+                Y_star[1:, :] = init_Y0 + np.cumsum(dY_star, axis=0)
             else:
-                n_failed += 1
-        except Exception:
-            n_failed += 1
+                Y_star = np.empty((N, n), dtype=float)
+                Y_star[:k, :] = init_Yk
+                for t in range(k, N):
+                    dy_t = rhs[t - k] + Y_star[t - 1] @ Pi_T
+                    for i in range(p):
+                        dy_t += dY_star[t - 2 - i] @ G_T[i]
+                    dY_star[t - 1] = dy_t
+                    Y_star[t] = Y_star[t - 1] + dy_t
 
-    tr_arr = trace_boot[:valid_count]
-    mx_arr = max_boot[:valid_count]
+            try:
+                tr_b_all, mx_b_all = _fast_johansen_stats(Y_star, det_order=det_order, k_ar_diff=p)
+                tr_b = float(tr_b_all[null_rank])
+                mx_b = float(mx_b_all[null_rank])
+                if np.isfinite(tr_b) and np.isfinite(mx_b):
+                    trace_boot[valid_count] = tr_b
+                    max_boot[valid_count] = mx_b
+                    valid_count += 1
+                else:
+                    n_failed += 1
+            except Exception:
+                n_failed += 1
+
+        tr_arr = trace_boot[:valid_count]
+        mx_arr = max_boot[:valid_count]
 
     p_trace = (1.0 + float(np.sum(tr_arr >= trace_obs))) / (valid_count + 1.0)
     p_max = (1.0 + float(np.sum(mx_arr >= max_obs))) / (valid_count + 1.0)

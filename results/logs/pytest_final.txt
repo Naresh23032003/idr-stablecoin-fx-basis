@@ -5,27 +5,30 @@ rootdir: /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis
 configfile: pyproject.toml
 testpaths: tests
 plugins: anyio-4.16.0
-collecting ... collected 19 items
+collecting ... collected 22 items
 
-tests/test_core_methodology.py::test_unit_inversion_rejected PASSED      [  5%]
-tests/test_core_methodology.py::test_non_positive_price_rejected PASSED  [ 10%]
-tests/test_core_methodology.py::test_basis_identity_and_variance_identity PASSED [ 15%]
-tests/test_core_methodology.py::test_jisdor_historical_schedule_transitions PASSED [ 21%]
-tests/test_core_methodology.py::test_asof_window_matching_and_tolerance PASSED [ 26%]
+tests/test_core_methodology.py::test_unit_inversion_rejected PASSED      [  4%]
+tests/test_core_methodology.py::test_non_positive_price_rejected PASSED  [  9%]
+tests/test_core_methodology.py::test_basis_identity_and_variance_identity PASSED [ 13%]
+tests/test_core_methodology.py::test_jisdor_historical_schedule_transitions PASSED [ 18%]
+tests/test_core_methodology.py::test_asof_window_matching_and_tolerance PASSED [ 22%]
+tests/test_core_methodology.py::test_rejects_forward_open_time_lookahead_matching PASSED [ 27%]
 tests/test_core_methodology.py::test_fee_arithmetic_oct_2026_matches_published_indodax_pro PASSED [ 31%]
 tests/test_core_methodology.py::test_fee_regime_date_lookup_no_gaps PASSED [ 36%]
-tests/test_econometrics.py::test_johansen_reinsel_ahn_and_cheung_lai_scaling PASSED [ 42%]
-tests/test_econometrics.py::test_engle_granger_vs_fixed_vector PASSED    [ 47%]
-tests/test_econometrics.py::test_bootstrap_reproducibility_and_controlled_dgp PASSED [ 52%]
-tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk PASSED [ 57%]
-tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs PASSED [ 63%]
-tests/test_econometrics.py::test_eigenmode_decomposition_spectral_identity PASSED [ 68%]
-tests/test_manuscript_consistency.py::test_no_em_dashes_or_ai_buzzwords_in_manuscript PASSED [ 73%]
-tests/test_manuscript_consistency.py::test_manuscript_headline_numbers_match_results PASSED [ 78%]
-tests/test_manuscript_consistency.py::test_no_todo_or_missing_inputs_in_manuscript PASSED [ 84%]
-tests/test_pipeline_and_manuscript.py::test_source_coverage_and_zero_synthetic_fill PASSED [ 89%]
-tests/test_pipeline_and_manuscript.py::test_processed_primary_panel_integrity PASSED [ 94%]
-tests/test_pipeline_and_manuscript.py::test_generated_tables_figures_and_manuscript PASSED [100%]
+tests/test_econometrics.py::test_johansen_reinsel_ahn_and_cheung_lai_scaling PASSED [ 40%]
+tests/test_econometrics.py::test_engle_granger_vs_fixed_vector PASSED    [ 45%]
+tests/test_econometrics.py::test_bootstrap_reproducibility_and_controlled_dgp PASSED [ 50%]
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk PASSED [ 54%]
+tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs PASSED [ 59%]
+tests/test_econometrics.py::test_eigenmode_decomposition_spectral_identity PASSED [ 63%]
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction PASSED [ 68%]
+tests/test_manuscript_consistency.py::test_no_em_dashes_or_ai_buzzwords_in_manuscript PASSED [ 72%]
+tests/test_manuscript_consistency.py::test_manuscript_headline_numbers_match_results PASSED [ 77%]
+tests/test_manuscript_consistency.py::test_no_todo_or_missing_inputs_in_manuscript PASSED [ 81%]
+tests/test_pipeline_and_manuscript.py::test_source_coverage_and_zero_synthetic_fill PASSED [ 86%]
+tests/test_pipeline_and_manuscript.py::test_processed_primary_panel_integrity PASSED [ 90%]
+tests/test_pipeline_and_manuscript.py::test_generated_tables_figures_and_manuscript PASSED [ 95%]
+tests/test_pipeline_and_manuscript.py::test_processed_reproduction_mode_without_raw_dir PASSED [100%]
 
 =============================== warnings summary ===============================
 tests/test_econometrics.py::test_engle_granger_vs_fixed_vector
@@ -78,8 +81,14 @@ tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
 
 tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs
 tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
+tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
   /Users/naresh/Desktop/Finance/indonesian_crypto_research_final/.venv/lib/python3.11/site-packages/statsmodels/stats/diagnostic.py:997: FutureWarning: acorr_lm currently returns a plain tuple whose length depends on the store argument. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an LMTestResult NamedTuple. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
     return acorr_lm(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 19 passed, 17 warnings in 14.91s =======================
+======================= 22 passed, 23 warnings in 15.32s =======================
