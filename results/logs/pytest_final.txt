@@ -1,0 +1,85 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.11.13, pytest-9.2.0, pluggy-1.7.0 -- /Users/naresh/Desktop/Finance/indonesian_crypto_research_final/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.16.0
+collecting ... collected 19 items
+
+tests/test_core_methodology.py::test_unit_inversion_rejected PASSED      [  5%]
+tests/test_core_methodology.py::test_non_positive_price_rejected PASSED  [ 10%]
+tests/test_core_methodology.py::test_basis_identity_and_variance_identity PASSED [ 15%]
+tests/test_core_methodology.py::test_jisdor_historical_schedule_transitions PASSED [ 21%]
+tests/test_core_methodology.py::test_asof_window_matching_and_tolerance PASSED [ 26%]
+tests/test_core_methodology.py::test_fee_arithmetic_oct_2026_matches_published_indodax_pro PASSED [ 31%]
+tests/test_core_methodology.py::test_fee_regime_date_lookup_no_gaps PASSED [ 36%]
+tests/test_econometrics.py::test_johansen_reinsel_ahn_and_cheung_lai_scaling PASSED [ 42%]
+tests/test_econometrics.py::test_engle_granger_vs_fixed_vector PASSED    [ 47%]
+tests/test_econometrics.py::test_bootstrap_reproducibility_and_controlled_dgp PASSED [ 52%]
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk PASSED [ 57%]
+tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs PASSED [ 63%]
+tests/test_econometrics.py::test_eigenmode_decomposition_spectral_identity PASSED [ 68%]
+tests/test_manuscript_consistency.py::test_no_em_dashes_or_ai_buzzwords_in_manuscript PASSED [ 73%]
+tests/test_manuscript_consistency.py::test_manuscript_headline_numbers_match_results PASSED [ 78%]
+tests/test_manuscript_consistency.py::test_no_todo_or_missing_inputs_in_manuscript PASSED [ 84%]
+tests/test_pipeline_and_manuscript.py::test_source_coverage_and_zero_synthetic_fill PASSED [ 89%]
+tests/test_pipeline_and_manuscript.py::test_processed_primary_panel_integrity PASSED [ 94%]
+tests/test_pipeline_and_manuscript.py::test_generated_tables_figures_and_manuscript PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_econometrics.py::test_engle_granger_vs_fixed_vector
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/cointegration.py:38: FutureWarning: adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    adf = adfuller(spread, maxlag=min(maxlag, max(1, len(spread) // 4)), regression="c", autolag="AIC")
+
+tests/test_econometrics.py::test_engle_granger_vs_fixed_vector
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/cointegration.py:39: InterpolationWarning: The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.
+    kp = kpss(spread, regression="c", nlags="auto")
+
+tests/test_econometrics.py::test_engle_granger_vs_fixed_vector
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/cointegration.py:39: FutureWarning: kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    kp = kpss(spread, regression="c", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:17: FutureWarning: adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    adf_c = adfuller(y, maxlag=max_lag_eff, regression="c", autolag="AIC")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:18: FutureWarning: adfuller currently returns a plain tuple whose length depends on the store and autolag arguments. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an ADFullerResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    adf_ct = adfuller(y, maxlag=max_lag_eff, regression="ct", autolag="AIC")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:20: InterpolationWarning: The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.
+    kpss_c = kpss(y, regression="c", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:20: FutureWarning: kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    kpss_c = kpss(y, regression="c", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:21: InterpolationWarning: The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.
+    kpss_ct = kpss(y, regression="ct", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:21: FutureWarning: kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    kpss_ct = kpss(y, regression="ct", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:20: InterpolationWarning: The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.
+    kpss_c = kpss(y, regression="c", nlags="auto")
+
+tests/test_econometrics.py::test_unit_root_suite_stationary_vs_random_walk
+  /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis/src/econometrics/unit_root.py:21: InterpolationWarning: The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.
+    kpss_ct = kpss(y, regression="ct", nlags="auto")
+
+tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs
+tests/test_econometrics.py::test_sequential_bootstrap_and_deterministic_specs
+  /Users/naresh/Desktop/Finance/indonesian_crypto_research_final/.venv/lib/python3.11/site-packages/statsmodels/stats/diagnostic.py:997: FutureWarning: acorr_lm currently returns a plain tuple whose length depends on the store argument. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an LMTestResult NamedTuple. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+    return acorr_lm(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 19 passed, 17 warnings in 14.91s =======================
