@@ -1,16 +1,16 @@
 sample,series,n_obs,mean_bps,ci95_low_bps,ci95_high_bps,sd_bps,var_bps2,median_bps,iqr_bps,min_bps,max_bps,pct_positive,pct_within_maker_band,pct_within_taker_band
-BTC Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,29.94,25.73,34.15,80.8,6529.03,17.09,57.44,-212.72,698.86,66.27,46.25,82.25
-BTC Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,-0.83,-2.26,0.6,27.44,752.98,-0.79,27.29,-247.03,288.08,48.59,79.14,97.81
-BTC Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.77,26.93,34.61,73.66,5425.67,18.77,38.43,-181.17,731.47,75.04,55.66,88.19
-BTC Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.13,-1.57,-0.69,8.17,66.72,0.0,6.6,-171.46,53.95,48.84,99.32,99.92
-ETH Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,30.22,25.87,34.57,83.52,6975.32,16.85,55.55,-273.07,737.66,67.19,46.46,82.67
-ETH Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,-0.55,-2.02,0.92,28.16,792.96,-1.26,27.26,-252.37,326.35,47.24,78.5,97.95
-ETH Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.77,26.93,34.61,73.66,5425.67,18.77,38.43,-181.17,731.47,75.04,55.66,88.19
-ETH Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.13,-1.57,-0.69,8.17,66.72,0.0,6.6,-171.46,53.95,48.84,99.32,99.92
-XRP Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,34.96,30.49,39.43,85.76,7354.46,21.22,56.65,-543.84,773.0,70.58,45.54,81.47
-XRP Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,4.19,2.34,6.05,35.6,1267.27,2.78,27.72,-602.09,422.73,55.87,76.17,96.96
-XRP Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.77,26.93,34.61,73.66,5425.67,18.77,38.43,-181.17,731.47,75.04,55.66,88.19
-XRP Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.13,-1.57,-0.69,8.17,66.72,0.0,6.6,-171.46,53.95,48.84,99.32,99.92
-BTC All Calendar Days (Sensitivity),B_total (Carry-Forward JISDOR),2136,33.11,29.52,36.69,84.62,7161.12,20.83,62.25,-212.72,698.86,67.23,59.36,76.08
-BTC Weekends Only (FX Closed),B_total (Weekend Carry-Forward),608,34.47,27.61,41.33,86.25,7439.8,26.35,71.29,-172.59,487.67,67.27,50.99,69.24
-BTC Weekends Only (FX Closed),B_crypto (Weekends Only),608,-1.7,-3.92,0.51,27.84,775.27,-0.5,25.03,-256.0,137.84,49.18,91.61,98.36
+BTC Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,29.73,25.52,33.94,80.81,6529.72,18.82,56.42,-206.07,656.24,65.84,46.53,82.96
+BTC Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,-0.92,-2.33,0.49,27.11,735.1,0.22,26.53,-250.72,257.99,50.42,78.36,98.23
+BTC Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.65,26.8,34.51,73.96,5470.12,18.79,37.94,-167.39,730.19,75.25,56.22,88.33
+BTC Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.12,-1.55,-0.69,8.05,64.83,0.0,6.6,-161.29,57.73,49.89,99.25,99.92
+ETH Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,29.37,24.96,33.77,84.56,7150.46,15.63,55.28,-273.13,737.03,65.77,48.94,83.03
+ETH Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,-1.28,-2.75,0.18,28.18,794.17,-1.65,28.13,-252.44,289.21,47.31,78.64,97.45
+ETH Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.65,26.8,34.51,73.96,5470.12,18.79,37.94,-167.39,730.19,75.25,56.22,88.33
+ETH Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.12,-1.55,-0.69,8.05,64.83,0.0,6.6,-161.29,57.73,49.89,99.25,99.92
+XRP Primary (JISDOR Bus. Days),B_total (vs JISDOR),1414,35.23,30.72,39.74,86.47,7476.7,20.85,56.52,-545.61,785.19,70.44,47.1,81.47
+XRP Primary (JISDOR Bus. Days),B_crypto (vs Indodax USDT),1414,4.58,2.71,6.45,35.91,1289.74,2.68,28.59,-603.86,554.75,55.09,77.09,96.96
+XRP Primary (JISDOR Bus. Days),B_stablecoin_FX (USDT/IDR - JISDOR),1414,30.65,26.8,34.51,73.96,5470.12,18.79,37.94,-167.39,730.19,75.25,56.22,88.33
+XRP Primary (JISDOR Bus. Days),W_USD_USDT (Coinbase),1331,-1.12,-1.55,-0.69,8.05,64.83,0.0,6.6,-161.29,57.73,49.89,99.25,99.92
+BTC All Calendar Days (Sensitivity),B_total (Carry-Forward JISDOR),2136,33.1,29.47,36.73,85.65,7335.96,20.64,63.25,-245.12,686.06,67.23,60.11,75.42
+BTC Weekends Only (FX Closed),B_total (Weekend Carry-Forward),608,34.78,27.66,41.89,89.54,8018.12,23.82,75.0,-245.12,577.66,68.59,50.99,66.28
+BTC Weekends Only (FX Closed),B_crypto (Weekends Only),608,-1.54,-3.8,0.73,28.5,812.24,-1.43,25.46,-296.27,185.53,47.37,91.12,97.37

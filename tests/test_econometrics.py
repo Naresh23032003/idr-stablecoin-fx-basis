@@ -6,7 +6,12 @@ import pytest
 
 from src.econometrics.unit_root import run_unit_root_suite
 from src.econometrics.cointegration import engle_granger_test, fixed_vector_basis_test, johansen_with_finite_sample
-from src.econometrics.bootstrap import null_imposed_vecm_residual_bootstrap, evaluate_bootstrap_size_and_power
+from src.econometrics.bootstrap import (
+    null_imposed_vecm_residual_bootstrap,
+    sequential_vecm_block_wild_bootstrap,
+    evaluate_bootstrap_size_and_power,
+)
+from src.econometrics.ecm import estimate_bivariate_vecm, compute_vecm_eigenmode_decomposition
 
 
 def test_johansen_reinsel_ahn_and_cheung_lai_scaling():
@@ -70,3 +75,41 @@ def test_unit_root_suite_stationary_vs_random_walk():
     assert u_s["adf_c_pval"] < 0.01
     assert u_r["adf_c_pval"] > 0.10
     assert u_r["kpss_c_pval"] < 0.05
+
+
+def test_sequential_bootstrap_and_deterministic_specs():
+    rng = np.random.default_rng(20261113)
+    N = 150
+    x = np.cumsum(rng.normal(0, 0.01, N))
+    y = x + 0.05 + rng.normal(0, 0.005, N)
+    Y = np.column_stack([y, x])
+
+    seq = sequential_vecm_block_wild_bootstrap(Y, det_order=0, k_ar_diff=1, n_boot=99, seed=11)
+    assert len(seq) == 2
+    assert seq[0]["null_rank"] == 0 and seq[0]["trace_boot_pval"] <= 0.05
+    assert seq[1]["null_rank"] == 1 and seq[1]["trace_boot_pval"] > 0.05
+
+    j_co = johansen_with_finite_sample(Y, det_order=0, k_ar_diff=1, deterministic="co")
+    j_ci = johansen_with_finite_sample(Y, det_order=0, k_ar_diff=1, deterministic="ci")
+    assert j_co["deterministic_spec"] == "co"
+    assert j_ci["deterministic_spec"] == "ci"
+    assert j_co["reject_r0_5pct_ra"] and j_ci["reject_r0_5pct_ra"]
+
+    v_co = estimate_bivariate_vecm(y, x, k_ar_diff=1, det_order="co")
+    v_ci = estimate_bivariate_vecm(y, x, k_ar_diff=1, det_order="ci")
+    assert v_co["deterministic_spec"] == "co" and v_ci["deterministic_spec"] == "ci"
+    assert v_co["half_life_native_units"] > 0 and v_co["half_life_irf_local_units"] >= 0
+
+
+def test_eigenmode_decomposition_spectral_identity():
+    from statsmodels.tsa.vector_ar.vecm import VECM
+    rng = np.random.default_rng(20261113)
+    N = 200
+    x = np.cumsum(rng.normal(0, 0.01, N))
+    y = x + 0.02 + rng.normal(0, 0.005, N)
+    Y = np.column_stack([y, x])
+    res = VECM(Y, k_ar_diff=2, coint_rank=1, deterministic="co").fit()
+    ed = compute_vecm_eigenmode_decomposition(res, res.beta[:, 0], check_h=25)
+    assert np.isclose(ed["sum_shares_local"], 1.0, atol=1e-10)
+    assert np.isclose(ed["sum_shares_gen"], 1.0, atol=1e-10)
+    assert ed["max_irf_reconstruction_err"] < 1e-11

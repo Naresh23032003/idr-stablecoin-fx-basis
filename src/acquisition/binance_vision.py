@@ -163,6 +163,16 @@ def download_binance_klines(
     return summary
 
 
+def _interval_to_timedelta(interval: str) -> pd.Timedelta:
+    if interval.endswith("m"):
+        return pd.Timedelta(minutes=int(interval[:-1]))
+    if interval.endswith("h"):
+        return pd.Timedelta(hours=int(interval[:-1]))
+    if interval.endswith("d"):
+        return pd.Timedelta(days=int(interval[:-1]))
+    raise ValueError(f"Unsupported Binance interval: {interval}")
+
+
 def load_binance_klines_df(raw_dir: Path, symbol: str, interval: str) -> pd.DataFrame:
     """Parse all downloaded Binance Vision zips for symbol/interval into a clean UTC DataFrame."""
     sym_dir = raw_dir / symbol / interval
@@ -192,7 +202,13 @@ def load_binance_klines_df(raw_dir: Path, symbol: str, interval: str) -> pd.Data
     if not frames:
         return pd.DataFrame()
     full = pd.concat(frames, ignore_index=True)
-    full["timestamp_utc"] = _normalize_binance_ts(full["open_time_raw"])
+    bar_td = _interval_to_timedelta(interval)
+    full["candle_open_time_utc"] = _normalize_binance_ts(full["open_time_raw"])
+    full["candle_close_time_utc"] = _normalize_binance_ts(full["close_time_raw"])
+    full["observation_available_time_utc"] = full["candle_open_time_utc"] + bar_td
+    full["source_timestamp_utc"] = full["candle_open_time_utc"]
+    full["timestamp_utc"] = full["candle_open_time_utc"]
+    full["source"] = f"binance_spot_{symbol}_{interval}"
     for col in ["open", "high", "low", "close", "volume", "quote_asset_volume"]:
         full[col] = pd.to_numeric(full[col], errors="coerce")
     full["num_trades"] = pd.to_numeric(full["num_trades"], errors="coerce")
@@ -202,4 +218,8 @@ def load_binance_klines_df(raw_dir: Path, symbol: str, interval: str) -> pd.Data
         .sort_values("timestamp_utc")
         .reset_index(drop=True)
     )
-    return full[["timestamp_utc", "open", "high", "low", "close", "volume", "quote_asset_volume", "num_trades"]]
+    return full[[
+        "timestamp_utc", "candle_open_time_utc", "candle_close_time_utc",
+        "observation_available_time_utc", "source_timestamp_utc", "source",
+        "open", "high", "low", "close", "volume", "quote_asset_volume", "num_trades"
+    ]]

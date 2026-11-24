@@ -49,30 +49,44 @@ def _asof_window_match(
     offset_minutes: int = 0,
     tolerance_minutes: int = 5,
 ) -> pd.DataFrame:
-    """Match each target timestamp + offset to first valid observation at or after target within tolerance."""
+    """Match each target timestamp + offset to the most recent completed candle available at or before query time.
+
+    Uses `observation_available_time_utc` (candle_open_time_utc + bar_duration) with
+    `direction="backward"` so that a candle's close price is never matched before the
+    candle has actually closed (eliminating look-ahead bias).
+    """
     t_df = targets[[target_ts_col]].copy()
     t_df["_query_ts"] = pd.to_datetime(t_df[target_ts_col], utc=True) + pd.Timedelta(minutes=offset_minutes)
     t_df = t_df.sort_values("_query_ts")
 
-    m_df = market[["timestamp_utc", "close", "volume"]].copy().sort_values("timestamp_utc")
-    m_df = m_df.rename(
-        columns={
-            "timestamp_utc": f"{prefix}_obs_ts_utc",
-            "close": f"{prefix}_close",
-            "volume": f"{prefix}_volume",
-        }
-    )
+    avail_col = "observation_available_time_utc" if "observation_available_time_utc" in market.columns else "timestamp_utc"
+    m_cols = [avail_col, "close", "volume"]
+    if "candle_open_time_utc" in market.columns:
+        m_cols.append("candle_open_time_utc")
+    if "candle_close_time_utc" in market.columns:
+        m_cols.append("candle_close_time_utc")
+    m_df = market[m_cols].copy().sort_values(avail_col)
+    rename_map = {
+        avail_col: f"{prefix}_obs_ts_utc",
+        "close": f"{prefix}_close",
+        "volume": f"{prefix}_volume",
+    }
+    if "candle_open_time_utc" in m_df.columns:
+        rename_map["candle_open_time_utc"] = f"{prefix}_candle_open_utc"
+    if "candle_close_time_utc" in m_df.columns:
+        rename_map["candle_close_time_utc"] = f"{prefix}_candle_close_utc"
+    m_df = m_df.rename(columns=rename_map)
 
     merged = pd.merge_asof(
         t_df,
         m_df,
         left_on="_query_ts",
         right_on=f"{prefix}_obs_ts_utc",
-        direction="forward",
+        direction="backward",
         tolerance=pd.Timedelta(minutes=tolerance_minutes),
     )
     merged[f"{prefix}_lag_sec"] = (
-        merged[f"{prefix}_obs_ts_utc"] - pd.to_datetime(merged[target_ts_col], utc=True)
+        merged["_query_ts"] - merged[f"{prefix}_obs_ts_utc"]
     ).dt.total_seconds()
     return merged.sort_index()
 
@@ -165,7 +179,7 @@ def build_all_datasets(root: Path) -> Dict[str, Any]:
         m_indo = _asof_window_match(base, indo_5m, "pub_ts_utc", "indodax", offset_minutes=0, tolerance_minutes=5)
         m_usdt = _asof_window_match(base, indo_usdt_5m, "pub_ts_utc", "usdtidr", offset_minutes=0, tolerance_minutes=5)
         m_bin = _asof_window_match(base, bin_5m, "pub_ts_utc", "binance", offset_minutes=0, tolerance_minutes=5)
-        m_cb = _asof_window_match(base, cb_usdt_1h, "pub_ts_utc", "cb_usdtusd", offset_minutes=-60, tolerance_minutes=120)
+        m_cb = _asof_window_match(base, cb_usdt_1h, "pub_ts_utc", "cb_usdtusd", offset_minutes=0, tolerance_minutes=120)
 
         for m, cols in [
             (m_indo, ["indodax_obs_ts_utc", "indodax_close", "indodax_volume", "indodax_lag_sec"]),
@@ -318,4 +332,43 @@ def build_all_datasets(root: Path) -> Dict[str, Any]:
         diag["btc_1m_2026_rows"] = int(len(p1))
 
     (proc_dir / "data_quality_diagnostics.json").write_text(json.dumps(diag, indent=2))
+
+    # Timestamp alignment diagnostics (Section 3.3)
+    diag_dir = root / "results" / "diagnostics"
+    diag_dir.mkdir(parents=True, exist_ok=True)
+    btc_primary = pd.read_csv(proc_dir / "btc_jisdor_sync_primary.csv")
+    align_rows = []
+    align_summary: Dict[str, Any] = {
+        "rule": "backward_on_observation_available_time_utc",
+        "tolerance_minutes": 5,
+        "total_jisdor_published_days": int(len(pub_days)),
+        "btc_valid_matches": int(len(btc_primary)),
+        "btc_dropped_matches": int(len(pub_days) - len(btc_primary)),
+        "calendar_days_forward_filled_jisdor": int((~cal_valid["is_jisdor_published"]).sum()),
+        "legs": {},
+    }
+    for leg, lag_col, vol_col in [
+        ("indodax_btcidr", "indodax_lag_sec", "indodax_volume"),
+        ("indodax_usdtidr", "usdtidr_lag_sec", "usdtidr_volume"),
+        ("binance_btcusdt", "binance_lag_sec", "binance_volume"),
+    ]:
+        lags = pd.to_numeric(btc_primary[lag_col], errors="coerce").dropna()
+        vols = pd.to_numeric(btc_primary[vol_col], errors="coerce").fillna(0.0)
+        leg_info = {
+            "n_valid": int(len(lags)),
+            "min_lag_sec": float(lags.min()),
+            "median_lag_sec": float(lags.median()),
+            "mean_lag_sec": round(float(lags.mean()), 3),
+            "max_lag_sec": float(lags.max()),
+            "pct_within_5m": round(100.0 * float((lags <= 300).mean()), 2),
+            "pct_within_15m": round(100.0 * float((lags <= 900).mean()), 2),
+            "pct_within_30m": round(100.0 * float((lags <= 1800).mean()), 2),
+            "pct_within_60m": round(100.0 * float((lags <= 3600).mean()), 2),
+            "n_stale_zero_vol": int((vols == 0).sum()),
+            "pct_stale_zero_vol": round(100.0 * float((vols == 0).mean()), 2),
+        }
+        align_summary["legs"][leg] = leg_info
+        align_rows.append({"leg": leg, **leg_info})
+    pd.DataFrame(align_rows).to_csv(diag_dir / "timestamp_alignment.csv", index=False)
+    (diag_dir / "timestamp_alignment_summary.json").write_text(json.dumps(align_summary, indent=2))
     return diag

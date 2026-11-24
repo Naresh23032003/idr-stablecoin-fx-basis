@@ -51,3 +51,17 @@ def test_manuscript_headline_numbers_match_results():
     assert f"{vd['BTC']['gross_share_sf_pct']:.2f}" in all_prose
     assert f"{vd['BTC']['gross_share_crypto_pct']:.2f}" in all_prose
     assert f"{vd['BTC_pct_crypto_inside_dynamic_2leg_taker_band']:.2f}" in all_prose
+
+
+def test_no_todo_or_missing_inputs_in_manuscript():
+    ms_dir = ROOT / "manuscript"
+    tex_files = list(ms_dir.glob("*.tex"))
+    for tf in tex_files:
+        txt = tf.read_text()
+        assert "TODO" not in txt and "FIXME" not in txt, f"TODO/FIXME found in {tf.name}"
+        for m in re.finditer(r"\\input\{([^}]+)\}", txt):
+            inc = ms_dir / (m.group(1) if m.group(1).endswith(".tex") else m.group(1) + ".tex")
+            assert inc.exists(), f"Missing \\input file {inc} referenced in {tf.name}"
+        for m in re.finditer(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}", txt):
+            fig = ms_dir / m.group(1)
+            assert fig.exists(), f"Missing figure {fig} referenced in {tf.name}"

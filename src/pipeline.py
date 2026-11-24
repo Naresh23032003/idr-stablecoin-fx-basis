@@ -16,12 +16,15 @@ from src.visualizations.figures import generate_all_figures
 
 
 def compile_manuscript(root: Path, latex_bin: str, bibtex_bin: str) -> None:
+    import shutil
     ms_dir = root / "manuscript"
+    ltx = shutil.which(latex_bin) or str(Path.home() / "Library/TinyTeX/bin/universal-darwin/pdflatex")
+    bib = shutil.which(bibtex_bin) or str(Path.home() / "Library/TinyTeX/bin/universal-darwin/bibtex")
     for cmd in [
-        [latex_bin, "-interaction=nonstopmode", "main.tex"],
-        [bibtex_bin, "main"],
-        [latex_bin, "-interaction=nonstopmode", "main.tex"],
-        [latex_bin, "-interaction=nonstopmode", "main.tex"],
+        [ltx, "-interaction=nonstopmode", "main.tex"],
+        [bib, "main"],
+        [ltx, "-interaction=nonstopmode", "main.tex"],
+        [ltx, "-interaction=nonstopmode", "main.tex"],
     ]:
         proc = subprocess.run(cmd, cwd=ms_dir, capture_output=True, text=True)
         if proc.returncode != 0:

@@ -1,39 +1,39 @@
 {
   "BTC": {
-    "var_total": 6529.032081245065,
-    "var_crypto": 752.9815132508506,
-    "var_stablecoin_fx": 5425.673481191792,
-    "cov_crypto_sf": 175.18854340121146,
-    "corr_crypto_sf": 0.0866735765071885,
+    "var_total": 6529.71632143179,
+    "var_crypto": 735.1010441538368,
+    "var_stablecoin_fx": 5470.11913321775,
+    "cov_crypto_sf": 162.24807203010158,
+    "corr_crypto_sf": 0.08091101188967387,
     "variance_identity_abs_diff": 9.094947017729282e-13,
-    "gross_share_crypto_pct": 11.532819932280983,
-    "gross_share_sf_pct": 83.10073244665594
+    "gross_share_crypto_pct": 11.25777917397565,
+    "gross_share_sf_pct": 83.77269185896732
   },
   "ETH": {
-    "var_total": 6975.324741453263,
-    "var_crypto": 792.9582267928785,
-    "var_stablecoin_fx": 5425.673481191792,
-    "cov_crypto_sf": 378.34651673429596,
-    "corr_crypto_sf": 0.18240542816241087,
-    "variance_identity_abs_diff": 9.094947017729282e-13,
-    "gross_share_crypto_pct": 11.36804745563245,
-    "gross_share_sf_pct": 77.78381197004154
+    "var_total": 7150.464006296126,
+    "var_crypto": 794.1721276021914,
+    "var_stablecoin_fx": 5470.11913321775,
+    "cov_crypto_sf": 443.0863727380927,
+    "corr_crypto_sf": 0.21258503084703037,
+    "variance_identity_abs_diff": 0.0,
+    "gross_share_crypto_pct": 11.106581711381343,
+    "gross_share_sf_pct": 76.5001981465986
   },
   "XRP": {
-    "var_total": 7354.461304576287,
-    "var_crypto": 1267.274174306196,
-    "var_stablecoin_fx": 5425.673481191792,
-    "cov_crypto_sf": 330.7568245391493,
-    "corr_crypto_sf": 0.12613821891869523,
-    "variance_identity_abs_diff": 0.0,
-    "gross_share_crypto_pct": 17.231366402290256,
-    "gross_share_sf_pct": 73.77390751672984
+    "var_total": 7476.700079279938,
+    "var_crypto": 1289.7364925909333,
+    "var_stablecoin_fx": 5470.11913321775,
+    "cov_crypto_sf": 358.42222673562804,
+    "corr_crypto_sf": 0.13494165959025337,
+    "variance_identity_abs_diff": 9.094947017729282e-13,
+    "gross_share_crypto_pct": 17.25007662357836,
+    "gross_share_sf_pct": 73.16221160692275
   },
-  "BTC_pct_crypto_inside_dynamic_2leg_taker_band": 98.44,
-  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_low": 97.52,
-  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_high": 98.51,
-  "BTC_pct_crypto_inside_fixed_mean_2leg_taker_band": 97.81,
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_band": 98.3,
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_low": 97.24,
+  "BTC_pct_crypto_inside_dynamic_2leg_taker_r2_high": 98.59,
+  "BTC_pct_crypto_inside_fixed_mean_2leg_taker_band": 98.23,
   "BTC_mean_2leg_taker_band_bps": 66.45,
-  "BTC_pct_crypto_inside_dynamic_2leg_maker_band": 64.57,
-  "BTC_pct_crypto_inside_dynamic_3leg_taker_band": 98.94
+  "BTC_pct_crypto_inside_dynamic_2leg_maker_band": 64.36,
+  "BTC_pct_crypto_inside_dynamic_3leg_taker_band": 99.01
 }

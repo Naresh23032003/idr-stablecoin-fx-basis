@@ -1,0 +1,41 @@
+{
+  "usdt_vwap_only": {
+    "label": "VWAP USDT/IDR + snapshot B_crypto",
+    "n_obs": 1414,
+    "mean_b_total_bps": 26.97,
+    "sd_b_total_bps": 82.73,
+    "mean_b_crypto_bps": -0.92,
+    "sd_b_crypto_bps": 27.11,
+    "mean_b_sfx_bps": 27.89,
+    "sd_b_sfx_bps": 75.22,
+    "var_sfx_ratio_pct": 103.44,
+    "var_share_sfx_pct": 82.67,
+    "var_share_crypto_pct": 10.74
+  },
+  "usdt_twap_only": {
+    "label": "TWAP USDT/IDR + snapshot B_crypto",
+    "n_obs": 1414,
+    "mean_b_total_bps": 27.26,
+    "sd_b_total_bps": 82.94,
+    "mean_b_crypto_bps": -0.92,
+    "sd_b_crypto_bps": 27.11,
+    "mean_b_sfx_bps": 28.18,
+    "sd_b_sfx_bps": 75.47,
+    "var_sfx_ratio_pct": 104.12,
+    "var_share_sfx_pct": 82.78,
+    "var_share_crypto_pct": 10.68
+  },
+  "all_3_legs_vwap": {
+    "label": "Full-window VWAP all legs",
+    "n_obs": 1414,
+    "mean_b_total_bps": 29.65,
+    "sd_b_total_bps": 82.65,
+    "mean_b_crypto_bps": 1.75,
+    "sd_b_crypto_bps": 26.65,
+    "mean_b_sfx_bps": 27.89,
+    "sd_b_sfx_bps": 75.22,
+    "var_sfx_ratio_pct": 103.44,
+    "var_share_sfx_pct": 82.83,
+    "var_share_crypto_pct": 10.39
+  }
+}

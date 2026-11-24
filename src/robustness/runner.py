@@ -167,17 +167,19 @@ def run_falsification_tests(btc_df: pd.DataFrame, xrp_df: pd.DataFrame | None = 
 
 
 def run_lag_and_deterministic_sensitivity(btc_df: pd.DataFrame) -> pd.DataFrame:
-    """Test Johansen & VECM stability across VAR lag orders k=2..6 and det_order in (-1, 0, 1)."""
+    """Test Johansen & VECM stability across VAR lag orders k=2..6 and deterministic specs ('ci', 'co', 'lo')."""
     ln_i = np.log(btc_df["indodax_close"].values)
     ln_g = np.log(btc_df["binance_close"].values) + np.log(btc_df["jisdor_idr_usd"].values)
     Y = np.column_stack([ln_i, ln_g])
     rows = []
-    for det in (0, 1):
+    for det_label, det_order in [("ci", 0), ("co", 0), ("lo", 1)]:
         for k_diff in (1, 2, 3, 4, 5):
-            j = johansen_with_finite_sample(Y, det_order=det, k_ar_diff=k_diff)
-            v = estimate_bivariate_vecm(ln_i, ln_g, k_ar_diff=k_diff, det_order="co" if det == 0 else "ci", sampling_unit="days")
+            j = johansen_with_finite_sample(Y, det_order=det_order, k_ar_diff=k_diff, deterministic=det_label)
+            vecm_det = "ci" if det_label == "ci" else ("co" if det_label == "co" else "lo")
+            v = estimate_bivariate_vecm(ln_i, ln_g, k_ar_diff=k_diff, det_order=vecm_det, sampling_unit="days")
             rows.append({
-                "det_order": det,
+                "deterministic_spec": det_label,
+                "det_order": det_order,
                 "k_ar_diff": k_diff,
                 "var_lag_k": k_diff + 1,
                 "T_eff": j["T_eff"],

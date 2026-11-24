@@ -6,32 +6,32 @@
 \begingroup
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.35cm}rrrrrrr@{}}
 \toprule
-\multicolumn{8}{@{}l}{\textbf{Panel A: Daily bivariate VECM estimates (native business-day units, HAC $L=5$)}} \\
+\multicolumn{8}{@{}l}{\textbf{Panel A: Daily bivariate VECM estimates (native business-day units, \texttt{co}, HAC $L=5$)}} \\
 System & $T_{eff}$ & $\hat{\alpha}_{local}$ (SE) & $p_{loc}$ & $\hat{\alpha}_{glob}$ (SE) & $p_{glob}$ & HL (d) & $|\lambda_{\max}|$ \\
 \midrule
-BTC vs.\ JISDOR-Global & 1,412 & -0.398 (0.165) & 0.0158 & -0.213 (0.195) & 0.2728 & 3.66 & 0.8275 \\
-BTC vs.\ USDT-Global & 1,412 & -0.884 (0.389) & 0.0231 & -0.105 (0.399) & 0.7921 & 0.56 & 0.2885 \\
-USDT/IDR vs.\ BI JISDOR & 1,412 & -0.142 (0.033) & $<$0.0001 & 0.016 (0.013) & 0.2050 & 4.28 & 0.8506 \\
-ETH vs.\ JISDOR-Global & 1,412 & -0.193 (0.230) & 0.4016 & -0.003 (0.248) & 0.9892 & 3.80 & 0.8331 \\
-ETH vs.\ USDT-Global & 1,412 & -0.775 (0.536) & 0.1484 & 0.000 (0.558) & 0.9994 & 0.67 & 0.3557 \\
-XRP vs.\ JISDOR-Global & 1,412 & -0.361 (0.287) & 0.2087 & -0.159 (0.310) & 0.6073 & 3.73 & 0.8303 \\
-XRP vs.\ USDT-Global & 1,412 & -0.530 (0.574) & 0.3556 & 0.284 (0.590) & 0.6302 & 0.51 & 0.2554 \\
+BTC vs.\ JISDOR-Global & 1,412 & -0.396 (0.170) & 0.0197 & -0.212 (0.198) & 0.2847 & 3.63 & 0.8262 \\
+BTC vs.\ USDT-Global & 1,412 & -0.880 (0.409) & 0.0316 & -0.106 (0.423) & 0.8016 & 0.58 & 0.3027 \\
+USDT/IDR vs.\ BI JISDOR & 1,412 & -0.148 (0.033) & $<$0.0001 & 0.016 (0.013) & 0.2180 & 3.98 & 0.8403 \\
+ETH vs.\ JISDOR-Global & 1,412 & -0.196 (0.227) & 0.3894 & -0.003 (0.243) & 0.9911 & 3.61 & 0.8253 \\
+ETH vs.\ USDT-Global & 1,412 & -0.720 (0.530) & 0.1743 & 0.049 (0.550) & 0.9287 & 0.62 & 0.3275 \\
+XRP vs.\ JISDOR-Global & 1,412 & -0.383 (0.282) & 0.1744 & -0.161 (0.303) & 0.5946 & 3.26 & 0.8084 \\
+XRP vs.\ USDT-Global & 1,412 & -0.777 (0.545) & 0.1536 & 0.106 (0.554) & 0.8482 & 0.31 & 0.1056 \\
 \midrule
-\multicolumn{8}{@{}l}{\textbf{Panel B: Five-minute three-variable VECM ($Y_t = [\ln P^{IDR}_{BTC}, \ln P^{USDT}_{BTC}, \ln U^{IDR/USDT}]'$, 5 lags, HAC $L=12$)}} \\
+\multicolumn{8}{@{}l}{\textbf{Panel B: Five-minute three-variable VECM ($Y_t = [\ln P^{IDR}_{BTC}, \ln P^{USDT}_{BTC}, \ln U^{IDR/USDT}]'$, 5 lags, \texttt{co}, HAC $L=12$)}} \\
 Sample / Equation & $T_{eff}$ & $\hat{\alpha}_i$ (HAC SE) & $p_{\text{HAC}}$ & Adj.\ Share & IS Low & IS High & HL (bars) \\
 \midrule
 Primary (All 5m): Indodax BTC/IDR & 616,677 & -0.0445 (0.0023) & $<$0.0001 & 80.0\% & 1.0\% & 54.8\% & 25.08 \\
-Primary (All 5m): Binance BTC/USDT & 616,677 & 0.0011 (0.0014) & 0.4179 & 2.0\% & 42.6\% & 99.0\% & (sc: 12.09) \\
-Primary (All 5m): Indodax USDT/IDR & 616,677 & 0.0100 (0.0007) & $<$0.0001 & 18.0\% & 0.0\% & 3.0\% & $|\lambda|$=.9728 \\
+Primary (All 5m): Binance BTC/USDT & 616,677 & 0.0011 (0.0014) & 0.4179 & 2.0\% & 42.6\% & 99.0\% & (IRF: 1.13) \\
+Primary (All 5m): Indodax USDT/IDR & 616,677 & 0.0100 (0.0007) & $<$0.0001 & 18.0\% & 0.0\% & 3.0\% & (sc: 12.09) \\
 Active Subsample: Indodax BTC/IDR & 605,150 & -0.0579 (0.0019) & $<$0.0001 & 80.3\% & 0.9\% & 55.2\% & 19.42 \\
-Active Subsample: Binance BTC/USDT & 605,150 & 0.0010 (0.0018) & 0.5850 & 1.3\% & 42.2\% & 99.1\% & (sc: 9.25) \\
-Active Subsample: Indodax USDT/IDR & 605,150 & 0.0133 (0.0007) & $<$0.0001 & 18.4\% & 0.0\% & 3.1\% & $|\lambda|$=.9649 \\
+Active Subsample: Binance BTC/USDT & 605,150 & 0.0010 (0.0018) & 0.5850 & 1.3\% & 42.2\% & 99.1\% & (IRF: 0.99) \\
+Active Subsample: Indodax USDT/IDR & 605,150 & 0.0133 (0.0007) & $<$0.0001 & 18.4\% & 0.0\% & 3.0\% & (sc: 9.25) \\
 349d Indep-FX: Indodax BTC/IDR & 100,356 & -0.0164 (0.0042) & 0.0001 & 48.0\% & 5.3\% & 73.7\% & 22.17 \\
-349d Indep-FX: Binance BTC/USDT & 100,356 & 0.0002 (0.0012) & 0.8580 & 0.6\% & 25.0\% & 93.8\% & (sc: 19.92) \\
-349d Indep-FX: Binance USDT/IDR & 100,356 & 0.0175 (0.0132) & 0.1833 & 51.3\% & 0.9\% & 1.7\% & $|\lambda|$=.9692 \\
+349d Indep-FX: Binance BTC/USDT & 100,356 & 0.0002 (0.0012) & 0.8580 & 0.6\% & 25.0\% & 93.8\% & (IRF: 0.87) \\
+349d Indep-FX: Binance USDT/IDR & 100,356 & 0.0175 (0.0132) & 0.1833 & 51.3\% & 0.9\% & 1.7\% & (sc: 19.92) \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} Half-lives (HL) are computed from the full VECM companion matrix as $-\ln(2)/\ln|\lambda_{\max}|$ using the largest non-unit eigenvalue modulus; Panel~B also notes the scalar $1+\beta'\alpha$ benchmark (sc) and $|\lambda_{\max}|$ in the final column. In the primary regular all-bars 5-minute system ($T_{eff}=616,677$), Johansen trace is $9,125.5$ for $r=0$ (block-wild bootstrap $p=0.0020$, $B=499$, $b=28$, 95\% boot CV $56.19$) and $11.10$ for $r\le 1$ (5\% CV $15.49$), with $\hat{\beta} = [1.0000, -0.9994, -1.0045]'$ and top-3 non-unit companion moduli $\{0.9728, 0.5786, 0.5786\}$. Adj.\ Share is $|\hat{\alpha}_i|/\sum_j|\hat{\alpha}_j|$; IS Low/High are 6-permutation Cholesky Hasbrouck Information Share bounds for the permanent component of $\ln P^{IDR}_{BTC}$ from $\Psi(1)$. The active subsample removes 11,533 zero-volume bars (irregular time spacing) as a sensitivity check; the 349-day Independent-FX check replaces Indodax \texttt{USDT/IDR} with Binance \texttt{USDT/IDR} (Nov 29, 2025--Nov 12, 2026).
+\emph{Notes:} Panel~B reports the companion-matrix slowest-mode half-life ($-\ln 2/\ln|\lambda_{\max}| = 25.08$ bars, carrying $47.0\%$ of a local shock), the local-shock ECT impulse-response half-life (IRF: 1.13 bars; generalized 0.95 bars), and the scalar $1+\beta'\alpha$ benchmark (sc: 12.09 bars). In the primary 5-minute system ($T_{eff}=616,677$), Johansen trace is $9,125.5$ for $r=0$ (block-wild $p=0.0020$, $B=499$, $b=28$, 95\% boot CV $56.19$), $11.10$ for $r\le 1$ (block-wild $p=0.6100$), and $1.38$ for $r\le 2$ (block-wild $p=0.6900$), with $\hat{\beta} = [1.0000, -0.9994, -1.0045]'$ and top-3 non-unit companion moduli $\{0.9728, 0.5786, 0.5786\}$. The active subsample removes 11,527 zero-volume bars (irregular event-time sensitivity); the 349-day Independent-FX check replaces Indodax \texttt{USDT/IDR} with Binance \texttt{USDT/IDR} (Nov 29, 2025--Nov 12, 2026).
 \end{minipage}
 \end{table}

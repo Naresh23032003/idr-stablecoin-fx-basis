@@ -9,28 +9,28 @@
 \multicolumn{8}{@{}l}{\textbf{Panel A: Timestamp offset, JISDOR-window averaging, and FX benchmark sensitivity}} \\
 Specification & $N$ & Mean $B^{tot}$ & SD $B^{tot}$ & Mean $B^{cry}$ & SD $B^{cry}$ & EG $t$ & Trace / Share \\
 \midrule
-Primary 0m JISDOR & 1,414 & 29.94 & 80.80 & -0.83 & 27.44 & -4.424 & 151.72 \\
-Ex-ante $-15\text{m}$ JISDOR & 1,414 & 29.48 & 80.14 & -1.10 & 27.13 & -4.320 & 153.96 \\
-Post $+5\text{m}$ JISDOR & 1,414 & 29.96 & 80.43 & -0.95 & 26.69 & -4.419 & 150.13 \\
-Post $+15\text{m}$ JISDOR & 1,414 & 29.85 & 79.48 & -1.39 & 26.86 & -4.197 & 150.57 \\
-Next-day JISDOR lead & 1,084 & 29.40 & 84.75 & -0.23 & 27.22 & -4.023 & 148.50 \\
+Primary 0m JISDOR & 1,414 & 29.73 & 80.81 & -0.92 & 27.11 & -4.267 & 150.06 \\
+Ex-ante $-15\text{m}$ JISDOR & 1,414 & 28.97 & 78.97 & -1.48 & 25.63 & -4.261 & 158.84 \\
+Post $+5\text{m}$ JISDOR & 1,414 & 29.94 & 80.80 & -0.83 & 27.44 & -4.424 & 151.72 \\
+Post $+15\text{m}$ JISDOR & 1,414 & 29.88 & 79.88 & -1.25 & 26.38 & -4.275 & 148.96 \\
+Next-day JISDOR lead & 1,084 & 28.91 & 84.71 & -0.77 & 27.03 & -4.176 & 149.79 \\
 23:59 UTC close mismatch & 1,414 & 31.65 & 92.03 & 2.37 & 35.97 & -4.124 & 225.32 \\
-Spot FX (Yahoo) 0m & 1,251 & 40.21 & 91.20 & -0.16 & 27.01 & -4.806 & 151.09 \\
-ECB FX (Frankfurter) 0m & 1,407 & 30.53 & 81.93 & -0.86 & 27.49 & -4.481 & 158.49 \\
-JISDOR-win.\ VWAP (USDT only)$^\dagger$ & 1,414 & 27.06 & 82.87 & -0.83 & 27.44 & -- & 82.4\%$^\dagger$ \\
-JISDOR-win.\ VWAP (all 3 legs)$^\dagger$ & 1,414 & 29.64 & 82.65 & 1.75 & 26.65 & -- & 82.8\%$^\dagger$ \\
+Spot FX (Yahoo) 0m & 1,251 & 39.76 & 91.35 & -0.50 & 26.91 & -5.120 & 149.08 \\
+ECB FX (Frankfurter) 0m & 1,407 & 30.31 & 82.00 & -0.94 & 27.13 & -4.468 & 157.97 \\
+JISDOR-win.\ VWAP (USDT only)$^\dagger$ & 1,414 & 26.97 & 82.73 & -0.92 & 27.11 & -- & 82.7\%$^\dagger$ \\
+JISDOR-win.\ VWAP (all 3 legs)$^\dagger$ & 1,414 & 29.65 & 82.65 & 1.75 & 26.65 & -- & 82.8\%$^\dagger$ \\
 \midrule
 \multicolumn{8}{@{}l}{\textbf{Panel B: Negative controls and falsification tests}} \\
 Falsification Test & $N$ & SD (bps) & EG $t$ / $F$ & $p$-val & Trace & Rej.\ 5\% & Expected Outcome \\
 \midrule
-Omitted FX (BTC/IDR vs.\ USDT) & 1,251 & 669.0 & -1.439 & 0.7839 & 5.81 & No & Fail cointegration \\
-Wrong-FX placebo (EUR/USD) & 1,251 & 828.3 & -1.859 & 0.6006 & 6.74 & No & Fail cointegration \\
-Cross-asset (BTC/IDR vs.\ XRP$\times$JISDOR) & 1,251 & 3563.3 & -2.467 & 0.2938 & 15.77 & Yes & Mixed (EG fail) \\
-30-day time mismatch (BTC) & 1,221 & 2221.1 & -6.451 & $<$0.0001 & 41.87 & Yes & SD explodes \\
-Calm-period break (2023-06-15) & 211 & 23.9 & 0.764 & 0.4671 & -- & No & No Chow break \\
+Omitted FX (BTC/IDR vs.\ USDT) & 1,251 & 669.2 & -1.426 & 0.7884 & 5.72 & No & Fail cointegration \\
+Wrong-FX placebo (EUR/USD) & 1,251 & 828.2 & -1.897 & 0.5814 & 6.67 & No & Fail cointegration \\
+Cross-asset (BTC/IDR vs.\ XRP$\times$JISDOR) & 1,251 & 3564.4 & -2.471 & 0.2918 & 15.75 & Yes & Mixed (EG fail) \\
+30-day time mismatch (BTC) & 1,221 & 2221.5 & -6.456 & $<$0.0001 & 41.88 & Yes & SD explodes \\
+Calm-period break (2023-06-15) & 211 & 25.5 & 2.332 & 0.0997 & -- & No & No Chow break \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} $^\dagger$For the two JISDOR monitoring-window VWAP rows, the final column reports the resulting $\mathrm{Var}(B^{s\text{-}FX})/\mathrm{Var}(B^{total})$ share (baseline snapshot share: 83.10\%). The USDT-only VWAP row averages \texttt{USDT/IDR} over each day's exact JISDOR monitoring window while retaining snapshot BTC legs; the all-3-legs VWAP row averages \texttt{BTC/IDR}, \texttt{BTC/USDT}, and \texttt{USDT/IDR} over the monitoring window. In Panel~B, the 30-day mismatch retains algebraic cointegration because a fixed lag of an $I(1)$ price differs by a stationary 30-day return, while destroying tight parity (SD $2,221.1$ vs.\ $80.8\text{ bps}$); the cross-asset placebo fails EG ($p=0.294$) while Trace ($15.77$) marginally exceeds the $15.49$ 5\% CV.
+\emph{Notes:} $^\dagger$For the two JISDOR monitoring-window VWAP rows, the final column reports the resulting $\mathrm{Var}(B^{s\text{-}FX})/\mathrm{Var}(B^{total})$ share (baseline snapshot share: 83.77\%). In Panel~B, the 30-day mismatch retains algebraic cointegration because a fixed lag of an $I(1)$ price differs by a stationary 30-day return, while inflating dispersion $27.5\times$.
 \end{minipage}
 \end{table}

@@ -1,0 +1,49 @@
+{
+  "rule": "backward_on_observation_available_time_utc",
+  "tolerance_minutes": 5,
+  "total_jisdor_published_days": 1415,
+  "btc_valid_matches": 1414,
+  "btc_dropped_matches": 1,
+  "calendar_days_forward_filled_jisdor": 722,
+  "legs": {
+    "indodax_btcidr": {
+      "n_valid": 1414,
+      "min_lag_sec": 0.0,
+      "median_lag_sec": 0.0,
+      "mean_lag_sec": 0.0,
+      "max_lag_sec": 0.0,
+      "pct_within_5m": 100.0,
+      "pct_within_15m": 100.0,
+      "pct_within_30m": 100.0,
+      "pct_within_60m": 100.0,
+      "n_stale_zero_vol": 10,
+      "pct_stale_zero_vol": 0.71
+    },
+    "indodax_usdtidr": {
+      "n_valid": 1414,
+      "min_lag_sec": 0.0,
+      "median_lag_sec": 0.0,
+      "mean_lag_sec": 0.0,
+      "max_lag_sec": 0.0,
+      "pct_within_5m": 100.0,
+      "pct_within_15m": 100.0,
+      "pct_within_30m": 100.0,
+      "pct_within_60m": 100.0,
+      "n_stale_zero_vol": 5,
+      "pct_stale_zero_vol": 0.35
+    },
+    "binance_btcusdt": {
+      "n_valid": 1414,
+      "min_lag_sec": 0.0,
+      "median_lag_sec": 0.0,
+      "mean_lag_sec": 0.0,
+      "max_lag_sec": 0.0,
+      "pct_within_5m": 100.0,
+      "pct_within_15m": 100.0,
+      "pct_within_30m": 100.0,
+      "pct_within_60m": 100.0,
+      "n_stale_zero_vol": 1,
+      "pct_stale_zero_vol": 0.07
+    }
+  }
+}

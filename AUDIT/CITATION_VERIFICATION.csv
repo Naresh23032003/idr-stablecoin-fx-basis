@@ -1,0 +1,36 @@
+Key,Author(s),Year,Journal/Publisher,DOI/URL,Claim supported,Verification status
+engle1987cointegration,"Engle, R. F. & Granger, C. W. J.",1987,Econometrica,10.2307/1913236,Two-step cointegration residual test,VERIFIED
+newey1987simple,"Newey, W. K. & West, K. D.",1987,Econometrica,10.2307/1913610,HAC covariance matrix estimator,VERIFIED
+phillips1988testing,"Phillips, P. C. B. & Perron, P.",1988,Biometrika,10.1093/biomet/75.2.335,Nonparametric unit-root test,VERIFIED
+johansen1991estimation,"Johansen, S.",1991,Econometrica,10.2307/2938278,ML cointegration rank & VECM estimation,VERIFIED
+kwiatkowski1992testing,"Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., & Shin, Y.",1992,Journal of Econometrics,10.1016/0304-4076(92)90104-y,KPSS stationarity test,VERIFIED
+reinsel1992vector,"Reinsel, G. C. & Ahn, S. K.",1992,Journal of Time Series Analysis,10.1111/j.1467-9892.1992.tb00113.x,Finite-sample trace scaling,VERIFIED
+zivot1992further,"Zivot, E. & Andrews, D. W. K.",1992,JBES,10.1080/07350015.1992.10509904,Single-break unit-root test,VERIFIED
+cheung1993finite,"Cheung, Y.-W. & Lai, K. S.",1993,Oxford Bulletin of Economics and Statistics,10.1111/j.1468-0084.1993.mp55003003.x,Finite-sample critical-value scaling,VERIFIED
+hasbrouck1995one,"Hasbrouck, J.",1995,The Journal of Finance,10.1111/j.1540-6261.1995.tb04054.x,Information shares in cointegrated systems,VERIFIED
+gonzalo1995estimation,"Gonzalo, J. & Granger, C. W. J.",1995,JBES,10.1080/07350015.1995.10524576,Common long-memory components,VERIFIED
+mackinnon1996numerical,"MacKinnon, J. G.",1996,Journal of Applied Econometrics,10.1002/(SICI)1099-1255(199611)11:6<601::AID-JAE417>3.0.CO;2-T,Response-surface cointegration critical values,VERIFIED
+hansen2002testing,"Hansen, B. E. & Seo, B.",2002,Journal of Econometrics,10.1016/S0304-4076(02)00097-0,Threshold cointegration sup-Wald bootstrap,VERIFIED
+paparoditis2003residual,"Paparoditis, E. & Politis, D. N.",2003,Econometrica,10.1111/1468-0262.00427,Residual-based block bootstrap for unit roots,VERIFIED
+swensen2006bootstrap,"Swensen, A. R.",2006,Econometrica,10.1111/j.1468-0262.2006.00723.x,Bootstrap algorithms for cointegration rank,VERIFIED
+cavaliere2010testing,"Cavaliere, G., Rahbek, A., & Taylor, A. M. R.",2010,Journal of Econometrics,10.1016/j.jeconom.2010.03.001,Wild bootstrap cointegration under non-stationary volatility,VERIFIED
+cavaliere2012bootstrap,"Cavaliere, G., Rahbek, A., & Taylor, A. M. R.",2012,Econometrica,10.3982/ECTA9099,Bootstrap determination of cointegration rank,VERIFIED
+choi2018kimchi,"Choi, K. J., Lehar, A., & Stauffer, R.",2022,SSRN Working Paper 4163270,10.2139/ssrn.4163270,Kimchi premium 4.7%-54% under capital controls,VERIFIED
+makarov2020trading,"Makarov, I. & Schoar, A.",2020,Journal of Financial Economics,10.1016/j.jfineco.2019.07.001,Cross-country crypto arbitrage & fiat-leg framework,VERIFIED
+borri2020regulation,"Borri, N. & Shakhnov, K.",2020,Finance Research Letters,10.1016/j.frl.2019.101333,Regulation spillovers across crypto markets,VERIFIED
+pieters2017financial,"Pieters, G. & Vivanco, S.",2017,Information Economics and Policy,10.1016/j.infoecopol.2017.02.002,Financial regulations & Bitcoin price inconsistencies,VERIFIED
+grafvonluckner2023crypto,"von Luckner, C. G., Reinhart, C. M., & Rogoff, K.",2023,Journal of Monetary Economics,10.1016/j.jmoneco.2023.05.015,Crypto capital flows in emerging markets,VERIFIED
+hautsch2024building,"Hautsch, N., Scheuch, C., & Voigt, S.",2024,Review of Finance,10.1093/rof/rfae004,Settlement limits to crypto arbitrage,VERIFIED
+lee2022kimchi,"Lee, H. & Oh, H.",2022,Finance Research Letters,10.1016/j.frl.2022.103200,Kimchi premium & stablecoin/cashing outlets,VERIFIED
+lyons2023stablecoins,"Lyons, R. K. & Viswanath-Natraj, G.",2023,Journal of International Money and Finance,10.1016/j.jimonfin.2022.102777,Stablecoin peg & arbitrage mechanics,VERIFIED
+maulana2026segmentasi,"Maulana, I. & Gitayuda, M. B. S.",2026,JERPS,10.53088/jerps.v6i2.3115,Prior Indonesian daily crypto spillover study,VERIFIED
+pmk68_2022,"Ministry of Finance (Indonesia)",2022,PMK No. 68/PMK.03/2022,https://jdih.kemenkeu.go.id,0.11% VAT + 0.10% PPh 22 crypto tax,VERIFIED_PRIMARY
+pmk50_2025,"Ministry of Finance (Indonesia)",2025,PMK No. 50 Tahun 2025,https://jdih.kemenkeu.go.id,0% VAT + 0.21% domestic / 1.00% foreign PPh 22,VERIFIED_PRIMARY
+bi_sp233021,"Bank Indonesia",2021,Siaran Pers No. 23/30/DKom,https://www.bi.go.id,JISDOR window & 16:15 WIB shift,VERIFIED_PRIMARY
+bi_padg072026,"Bank Indonesia",2026,PADG No. 7 Tahun 2026,https://www.bi.go.id,JISDOR 15:15 WIB shift effective Apr 1 2026,VERIFIED_PRIMARY
+perba9_2024,"BAPPEBTI",2024,PERBA No. 9 Tahun 2024,https://bappebti.go.id,CFX/KKI bourse & clearing framework,VERIFIED_PRIMARY
+pojk27_2024,"OJK",2024,POJK No. 27 Tahun 2024,https://www.ojk.go.id,OJK supervisory transfer Jan 10 2025,VERIFIED_PRIMARY
+cfx_seb001_2026,"CFX & KKI",2026,SEB No. 001/SEB/CFX-KKI/SPOT/II/2026,https://www.cfx.co.id,March 1 2026 50% CFX/KKI fee cut,VERIFIED_PRIMARY
+indodax_fees_2026,"Indodax",2026,Help Center Art. 39505059756569,https://help.indodax.com,Oct 2026 Pro rates & CFX pass-through,VERIFIED_PRIMARY
+indodax_events_2026,"Indodax",2026,Indodax Official Blog,https://blog.indodax.com,Sep 2024 incident & Oct 2026 maintenance,VERIFIED_PRIMARY
+binance_bidr_2024,"Binance",2025,Binance Support Announcements,https://www.binance.com/en/support/announcement,BIDR delisting May 2024 & IDR launch Nov 2025,VERIFIED_PRIMARY

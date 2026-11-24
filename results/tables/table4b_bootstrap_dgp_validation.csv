@@ -1,7 +1,7 @@
-T,true_rank,dgp,metric,n_mc,n_boot,rej_rate_asymptotic_5pct,rej_rate_reinsel_ahn_5pct,rej_rate_bootstrap_5pct
-25,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.228,0.109,0.059
-25,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,0.302,0.137,0.087
-100,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.182,0.157,0.071
-100,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,0.916,0.895,0.728
-500,0,"GARCH(1,1)+AR(1)",empirical_size,1000,299,0.133,0.13,0.047
-500,1,"GARCH(1,1)+AR(1)",empirical_power,1000,299,1.0,1.0,1.0
+T,true_rank,dgp,block_len,metric,n_mc,n_ok,n_failed,n_boot,rej_rate_asymptotic_5pct,mc_se_asymptotic,rej_rate_reinsel_ahn_5pct,mc_se_reinsel_ahn,rej_rate_bootstrap_5pct,mc_se_bootstrap
+25,0,"GARCH(1,1)+AR(1)(phi=0.2,normal)",2,empirical_size,1000,1000,0,299,0.228,0.0133,0.109,0.0099,0.059,0.0075
+25,1,"GARCH(1,1)+AR(1)(phi=0.2,normal)",2,empirical_power,1000,1000,0,299,0.302,0.0145,0.137,0.0109,0.087,0.0089
+100,0,"GARCH(1,1)+AR(1)(phi=0.2,normal)",3,empirical_size,1000,1000,0,299,0.182,0.0122,0.157,0.0115,0.071,0.0081
+100,1,"GARCH(1,1)+AR(1)(phi=0.2,normal)",3,empirical_power,1000,1000,0,299,0.916,0.0088,0.895,0.0097,0.728,0.0141
+500,0,"GARCH(1,1)+AR(1)(phi=0.2,normal)",5,empirical_size,1000,1000,0,299,0.133,0.0107,0.13,0.0106,0.047,0.0067
+500,1,"GARCH(1,1)+AR(1)(phi=0.2,normal)",5,empirical_power,1000,1000,0,299,1.0,0.0,1.0,0.0,1.0,0.0

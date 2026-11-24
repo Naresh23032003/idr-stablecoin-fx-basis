@@ -1,0 +1,7 @@
+{
+  "test": "Pooled_HAC_Wald_Equality_of_alpha_local_across_6_regimes",
+  "df": 5,
+  "wald_chi2": 2.356,
+  "pvalue": 0.798,
+  "reject_stability_5pct": false
+}

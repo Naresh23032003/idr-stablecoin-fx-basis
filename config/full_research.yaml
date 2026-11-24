@@ -7,6 +7,6 @@ project:
 acquisition_config: "config/acquisition.yaml"
 sampling_config: "config/sampling.yaml"
 econometrics_config: "config/econometrics.yaml"
-latex_binary: "/Users/naresh/Library/TinyTeX/bin/universal-darwin/pdflatex"
-bibtex_binary: "/Users/naresh/Library/TinyTeX/bin/universal-darwin/bibtex"
+latex_binary: "pdflatex"
+bibtex_binary: "bibtex"
 run_acquisition: false  # set true when forcing fresh downloads; pipeline validates existing raw files when false

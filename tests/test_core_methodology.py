@@ -79,15 +79,18 @@ def test_jisdor_historical_schedule_transitions():
 
 def test_asof_window_matching_and_tolerance():
     targets = pd.DataFrame({"pub_ts_utc": pd.to_datetime(["2026-10-12T08:15:00Z", "2026-10-13T08:15:00Z"], utc=True)})
+    # Candle 0 opens 08:10, closes 08:15 (available at 08:15:00Z -> valid for 08:15:00Z target, lag=0)
+    # Candle 1 opens 08:15, closes 08:20 (available at 08:20:00Z -> future look-ahead, must NOT match 08:15:00Z)
+    # Candle 2 opens 08:00, closes 08:05 (available at 08:05:00Z -> 10m before 08:15:00Z -> exceeds 5m tolerance -> NaN)
     market = pd.DataFrame({
-        "timestamp_utc": pd.to_datetime(["2026-10-12T08:15:00Z", "2026-10-12T08:20:00Z", "2026-10-13T08:25:00Z"], utc=True),
+        "observation_available_time_utc": pd.to_datetime(["2026-10-12T08:15:00Z", "2026-10-12T08:20:00Z", "2026-10-13T08:05:00Z"], utc=True),
         "close": [100.0, 101.0, 102.0],
         "volume": [1.0, 1.0, 1.0],
     })
     m = _asof_window_match(targets, market, "pub_ts_utc", "test", offset_minutes=0, tolerance_minutes=5)
     assert m.loc[0, "test_close"] == 100.0
     assert m.loc[0, "test_lag_sec"] == 0.0
-    # 08:25 is 10m after 08:15 -> exceeds 5m tolerance -> NaN
+    # 08:05 is 10m before 08:15 -> exceeds 5m tolerance -> NaN
     assert pd.isna(m.loc[1, "test_close"])
 
 

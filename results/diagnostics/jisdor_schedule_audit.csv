@@ -1,0 +1,4 @@
+scenario,n_days,n_shifted_days,mean_b_total,sd_b_total,mean_b_crypto,sd_b_crypto,sfx_var_share_pct,joh_trace_ra,alpha_local_hac,p_local,p_global
+Baseline_4Regime_Schedule,1414,0,29.73,80.81,-0.92,27.11,83.77,150.06,-0.396,0.0197,0.2847
+R2_Pandemic_Shifted_to_0915UTC,1414,280,30.2,80.2,-0.5,26.73,82.76,150.5,-0.386,0.0222,0.3147
+All_2021_2022_At_0815UTC,1414,151,29.93,80.68,-0.65,26.96,84.09,150.49,-0.409,0.0153,0.2516

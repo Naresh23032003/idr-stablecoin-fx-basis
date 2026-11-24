@@ -13,6 +13,7 @@ import yaml
 from src.econometrics.bootstrap import (
     evaluate_bootstrap_size_and_power,
     null_imposed_vecm_residual_bootstrap,
+    sequential_vecm_block_wild_bootstrap,
 )
 from src.econometrics.cointegration import (
     engle_granger_test,
@@ -225,9 +226,20 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
         fv = fixed_vector_basis_test(y_c, x_c)
         Y_mat = np.column_stack([y_c, x_c])
         joh = johansen_with_finite_sample(Y_mat, det_order=0, k_ar_diff=1)
-        boot = null_imposed_vecm_residual_bootstrap(Y_mat, det_order=0, k_ar_diff=1, n_boot=9999, seed=seed + idx_s)
-        coint_rows.append({"specification": spec_name, **eg, **fv, **joh, "boot_trace_pval": boot["trace_boot_pval"], "boot_maxeig_pval": boot["maxeig_boot_pval"]})
-        boot_rows.append({"specification": spec_name, **boot})
+        seq_boot = sequential_vecm_block_wild_bootstrap(Y_mat, det_order=0, k_ar_diff=1, n_boot=9999, seed=seed + idx_s)
+        boot_r0, boot_r1 = seq_boot[0], seq_boot[1]
+        coint_rows.append({
+            "specification": spec_name,
+            **eg,
+            **fv,
+            **joh,
+            "boot_trace_pval": boot_r0["trace_boot_pval"],
+            "boot_maxeig_pval": boot_r0["maxeig_boot_pval"],
+            "boot_r1_trace_pval": boot_r1["trace_boot_pval"],
+            "boot_r1_maxeig_pval": boot_r1["maxeig_boot_pval"],
+        })
+        for b_item in seq_boot:
+            boot_rows.append({"specification": spec_name, **b_item})
 
     pd.DataFrame(coint_rows).to_csv(tables_dir / "table3_cointegration_and_reconciliation.csv", index=False)
     pd.DataFrame(boot_rows).to_csv(tables_dir / "table4_bootstrap_rank_tests.csv", index=False)
@@ -277,9 +289,12 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
         names=["Indodax_BTCIDR", "Binance_BTCUSDT", "Indodax_USDTIDR"],
         k_ar_diff=5, det_order="co", hac_lags=12, sampling_unit="5m_bars",
     )
-    # Dependence-preserving block-wild bootstrap on the primary 3-variable 5-minute system
+    # Dependence-preserving sequential block-wild bootstrap on the primary 3-variable 5-minute system
     hf_3var_boot = null_imposed_vecm_residual_bootstrap(
         Y3_all, det_order=0, k_ar_diff=5, n_boot=499, seed=seed + 99, block_len=28
+    )
+    hf_3var_boot_seq = sequential_vecm_block_wild_bootstrap(
+        Y3_all, det_order=0, k_ar_diff=5, n_boot=99, seed=seed + 199, block_len=28, ranks=[1, 2]
     )
     hf_vecm_3var_act = estimate_trivariate_vecm(
         np.log(p5_act["indodax_btcidr"].values),
@@ -319,6 +334,7 @@ def run_all_experiments(root: Path, econ_cfg_path: Path) -> Dict[str, Any]:
     tar_summary = {
         "hf_vecm_3var_all_5m": hf_vecm_3var_all,
         "hf_vecm_3var_all_5m_bootstrap": hf_3var_boot,
+        "hf_vecm_3var_all_5m_bootstrap_seq": [hf_3var_boot, *hf_3var_boot_seq],
         "hf_vecm_3var_active_5m": hf_vecm_3var_act,
         "hf_vecm_indep_fx_349d_2var": hf_vecm_indep_2var,
         "hf_vecm_indep_fx_349d_3var": hf_vecm_indep_3var,

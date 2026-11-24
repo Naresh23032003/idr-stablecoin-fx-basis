@@ -1,0 +1,4 @@
+leg,n_valid,min_lag_sec,median_lag_sec,mean_lag_sec,max_lag_sec,pct_within_5m,pct_within_15m,pct_within_30m,pct_within_60m,n_stale_zero_vol,pct_stale_zero_vol
+indodax_btcidr,1414,0.0,0.0,0.0,0.0,100.0,100.0,100.0,100.0,10,0.71
+indodax_usdtidr,1414,0.0,0.0,0.0,0.0,100.0,100.0,100.0,100.0,5,0.35
+binance_btcusdt,1414,0.0,0.0,0.0,0.0,100.0,100.0,100.0,100.0,1,0.07

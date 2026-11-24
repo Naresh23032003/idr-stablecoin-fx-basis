@@ -117,6 +117,12 @@ def download_indodax_history(
     return summary
 
 
+def _indodax_tf_to_timedelta(timeframe: str) -> pd.Timedelta:
+    if timeframe == "1D":
+        return pd.Timedelta(days=1)
+    return pd.Timedelta(minutes=int(timeframe))
+
+
 def load_indodax_df(raw_dir: Path, symbol: str, timeframe: str) -> pd.DataFrame:
     """Assemble and deduplicate all raw Indodax JSON chunks into a UTC DataFrame."""
     chunks_dir = raw_dir / symbol / f"tf_{timeframe}" / "chunks"
@@ -129,7 +135,13 @@ def load_indodax_df(raw_dir: Path, symbol: str, timeframe: str) -> pd.DataFrame:
     if not rows:
         return pd.DataFrame()
     df = pd.DataFrame(rows)
-    df["timestamp_utc"] = pd.to_datetime(pd.to_numeric(df["Time"], errors="coerce"), unit="s", utc=True)
+    bar_td = _indodax_tf_to_timedelta(timeframe)
+    df["candle_open_time_utc"] = pd.to_datetime(pd.to_numeric(df["Time"], errors="coerce"), unit="s", utc=True)
+    df["candle_close_time_utc"] = df["candle_open_time_utc"] + bar_td - pd.Timedelta(milliseconds=1)
+    df["observation_available_time_utc"] = df["candle_open_time_utc"] + bar_td
+    df["source_timestamp_utc"] = df["candle_open_time_utc"]
+    df["timestamp_utc"] = df["candle_open_time_utc"]
+    df["source"] = f"indodax_tv_{symbol}_{timeframe}"
     for col in ["Open", "High", "Low", "Close", "Volume"]:
         df[col.lower()] = pd.to_numeric(df[col], errors="coerce")
     df = (
@@ -138,4 +150,8 @@ def load_indodax_df(raw_dir: Path, symbol: str, timeframe: str) -> pd.DataFrame:
         .sort_values("timestamp_utc")
         .reset_index(drop=True)
     )
-    return df[["timestamp_utc", "open", "high", "low", "close", "volume"]]
+    return df[[
+        "timestamp_utc", "candle_open_time_utc", "candle_close_time_utc",
+        "observation_available_time_utc", "source_timestamp_utc", "source",
+        "open", "high", "low", "close", "volume"
+    ]]

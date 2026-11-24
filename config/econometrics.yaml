@@ -6,13 +6,14 @@ econometrics:
     lag_criterion: "AIC"
     kpss_nlags: "auto"
   cointegration:
+    deterministic_spec: "co"
     johansen_det_order: 0
     johansen_k_ar_diff_daily: 1
     johansen_k_ar_diff_5m: 5
     apply_reinsel_ahn: true
     apply_cheung_lai: true
   bootstrap:
-    method: "null_imposed_vecm_iid_residual_bootstrap"
+    method: "null_imposed_restricted_vecm_block_wild_bootstrap"
     n_replications: 9999
     n_replications_power_eval: 1000
     dgp_validation_T: [25, 100, 500]

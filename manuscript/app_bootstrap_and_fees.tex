@@ -5,7 +5,7 @@
 Under PMK No.\ 50 Tahun 2025 (effective August 1, 2025) \citep{pmk50_2025}, PERBA No.\ 9/2024 \citep{perba9_2024}, and the two-stage CFX/KKI fee halvings under SEB No.\ 001/SEB/CFX-KKI/SPOT/II/2026 (March 1, 2026) and the October 1, 2026 Stage-2 cut \citep{cfx_seb001_2026}, base bourse-plus-clearing levies fell from $2.00\text{ bps}$ (IDR) and $4.00\text{ bps}$ (USDT) in Regime R3 to $1.00/2.00\text{ bps}$ in R5 and $0.50/1.00\text{ bps}$ in R6. Applying $11\%$ service VAT ($\times 1.11$) yields exact VAT-inclusive CFX/KKI pass-through charges of $2.22/4.44\text{ bps}$ (R3--R4), $1.11/2.22\text{ bps}$ (R5), and $0.555/1.11\text{ bps}$ (R6). Published October 2026 Indodax Pro rates \citep{indodax_fees_2026} therefore equal $10.555\text{ bps}$ ($0.10555\%$) maker and $20.555\text{ bps}$ ($0.20555\%$) taker on IDR buy orders ($10.0/20.0\text{ bps}$ VAT-inclusive platform commission plus $0\text{ bps}$ buyer VAT plus $0.555\text{ bps}$ CFX/KKI levy), and $31.555\text{ bps}$ ($0.31555\%$) maker and $41.555\text{ bps}$ ($0.41555\%$) taker on IDR sell orders ($10.0/20.0 + 21.0 + 0.555$). Route A domestic two-leg round-trip costs therefore equal $42.110\text{ bps}$ maker ($10.555 + 31.555$) and $62.110\text{ bps}$ taker ($20.555 + 41.555$). On Indodax USDT-quoted pairs, base $3.0/6.0\text{ bps}$ plus $1.11\text{ bps}$ CFX/KKI USDT levy plus $21.0\text{ bps}$ seller PPh 22 equals $25.11\text{ bps}$ ($0.2511\%$) maker and $28.11\text{ bps}$ ($0.2811\%$) taker on sell orders, matching live exchange disclosures exactly.
 
 \subsection{VAR lag order and deterministic specification sensitivity}
-Table~\ref{tab:lag_sens} reports Reinsel--Ahn Johansen trace statistics and HAC VECM error-correction speeds for the synchronized BTC vs.\ JISDOR-converted global BTC system across VAR lag orders $k \in \{2,\dots,6\}$ ($1$--$5$ lagged differences) and both restricted-constant ($H_1^*(r)$) and unrestricted-constant ($H_1(r)$) deterministic specifications. Cointegration rank $r=1$ holds at the $5\%$ level across all ten specifications ($\text{Trace}_{RA} = 51.53$ to $201.64$ versus $15.49$ and $18.40$ critical values), while global prices remain consistent with weak exogeneity ($p_{global} \in [0.191, 0.345]$) and local error-correction speeds stay between $-0.3176$ and $-0.4166$.
+Table~\ref{tab:lag_sens} reports Reinsel--Ahn Johansen trace statistics and HAC VECM error-correction speeds for the synchronized BTC vs.\ JISDOR-converted global BTC system across VAR lag orders $k \in \{2,\dots,6\}$ ($1$--$5$ lagged differences) and three deterministic specifications: restricted constant (\texttt{ci}, $H_1^*(r)$), unrestricted constant (\texttt{co}, $H_1(r)$, baseline), and linear trend (\texttt{lo}). Cointegration rank $r=1$ holds at the $5\%$ level across all fifteen specifications ($\text{Trace}_{RA} = 49.43$ to $198.76$ versus $20.26$, $15.49$, and $18.40$ critical values), while global prices remain consistent with weak exogeneity ($p_{global} \in [0.124, 0.328]$) and local error-correction speeds stay between $-0.4163$ and $-0.2446$.
 
 \begin{table}[htbp]
 \centering
@@ -13,26 +13,31 @@ Table~\ref{tab:lag_sens} reports Reinsel--Ahn Johansen trace statistics and HAC 
 \label{tab:lag_sens}
 \fontsize{6.5}{8}\selectfont\setlength{\tabcolsep}{2pt}
 \begingroup
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.6cm}rrrrrrrr@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.7cm}rrrrrrrr@{}}
 \toprule
 Deterministic Term & Lag Diffs & VAR Lag $k$ & $T_{eff}$ & Trace (RA) & 5\% CV & Reject $r=0$ & $\hat{\alpha}_{local}$ & $p_{global}$ \\
 \midrule
-Restricted constant & 1 & 2 & 1,412 & 151.72 & 15.49 & Yes & $-0.3983$ & 0.2728 \\
-Restricted constant & 2 & 3 & 1,411 & 106.70 & 15.49 & Yes & $-0.4166$ & 0.1910 \\
-Restricted constant & 3 & 4 & 1,410 & 75.74 & 15.49 & Yes & $-0.3176$ & 0.3446 \\
-Restricted constant & 4 & 5 & 1,409 & 64.39 & 15.49 & Yes & $-0.3421$ & 0.2954 \\
-Restricted constant & 5 & 6 & 1,408 & 51.53 & 15.49 & Yes & $-0.3215$ & 0.2932 \\
-Unrestricted constant & 1 & 2 & 1,412 & 201.64 & 18.40 & Yes & $-0.3984$ & 0.2727 \\
-Unrestricted constant & 2 & 3 & 1,411 & 144.35 & 18.40 & Yes & $-0.4166$ & 0.1910 \\
-Unrestricted constant & 3 & 4 & 1,410 & 106.17 & 18.40 & Yes & $-0.3176$ & 0.3446 \\
-Unrestricted constant & 4 & 5 & 1,409 & 91.75 & 18.40 & Yes & $-0.3421$ & 0.2953 \\
-Unrestricted constant & 5 & 6 & 1,408 & 74.01 & 18.40 & Yes & $-0.3215$ & 0.2932 \\
+Restricted constant (\texttt{ci}) & 1 & 2 & 1,412 & 150.77 & 20.26 & Yes & $-0.3979$ & 0.2731 \\
+Restricted constant (\texttt{ci}) & 2 & 3 & 1,411 & 103.46 & 20.26 & Yes & $-0.4163$ & 0.1862 \\
+Restricted constant (\texttt{ci}) & 3 & 4 & 1,410 & 72.44 & 20.26 & Yes & $-0.3230$ & 0.3203 \\
+Restricted constant (\texttt{ci}) & 4 & 5 & 1,409 & 62.73 & 20.26 & Yes & $-0.3538$ & 0.2645 \\
+Restricted constant (\texttt{ci}) & 5 & 6 & 1,408 & 49.94 & 20.26 & Yes & $-0.3347$ & 0.2631 \\
+Unrestricted constant (\texttt{co}) & 1 & 2 & 1,412 & 150.06 & 15.49 & Yes & $-0.3958$ & 0.2847 \\
+Unrestricted constant (\texttt{co}) & 2 & 3 & 1,411 & 102.83 & 15.49 & Yes & $-0.4144$ & 0.1943 \\
+Unrestricted constant (\texttt{co}) & 3 & 4 & 1,410 & 71.93 & 15.49 & Yes & $-0.3218$ & 0.3281 \\
+Unrestricted constant (\texttt{co}) & 4 & 5 & 1,409 & 62.21 & 15.49 & Yes & $-0.3528$ & 0.2703 \\
+Unrestricted constant (\texttt{co}) & 5 & 6 & 1,408 & 49.43 & 15.49 & Yes & $-0.3351$ & 0.2643 \\
+Linear trend (\texttt{lo}) & 1 & 2 & 1,412 & 198.76 & 18.40 & Yes & $-0.3081$ & 0.1727 \\
+Linear trend (\texttt{lo}) & 2 & 3 & 1,411 & 139.19 & 18.40 & Yes & $-0.3130$ & 0.1239 \\
+Linear trend (\texttt{lo}) & 3 & 4 & 1,410 & 100.49 & 18.40 & Yes & $-0.2459$ & 0.2186 \\
+Linear trend (\texttt{lo}) & 4 & 5 & 1,409 & 87.68 & 18.40 & Yes & $-0.2614$ & 0.1806 \\
+Linear trend (\texttt{lo}) & 5 & 6 & 1,408 & 69.68 & 18.40 & Yes & $-0.2446$ & 0.1831 \\
 \bottomrule
 \end{tabular}\endgroup
 \end{table}
 
 \subsection{Monte Carlo size and power validation of the block-wild bootstrap}
-Table~\ref{tab:boot_mc} reports $n_{MC} = 1,000$ Monte Carlo replications ($B = 299$ bootstrap draws per trial) under a controlled DGP with GARCH(1,1) conditional heteroskedasticity and AR(1) serial correlation ($\phi = 0.20$, contemporaneous innovation correlation $0.944$). Asymptotic and Reinsel--Ahn trace tests over-reject true $r=0$ series across all sample sizes ($13.3\%$ and $13.0\%$ even at $T = 500$), whereas the block-wild bootstrap controls empirical size near the $5\%$ nominal level ($5.9\%$ at $T=25$, $7.1\%$ at $T=100$, $4.7\%$ at $T=500$) while reaching $72.8\%$ power at $T=100$ and $100.0\%$ power at $T=500$.
+Table~\ref{tab:boot_mc} reports $n_{MC} = 1,000$ Monte Carlo replications ($B = 299$ bootstrap draws per trial, zero failed replications) under a controlled DGP with GARCH(1,1) conditional heteroskedasticity and AR(1) serial correlation ($\phi = 0.20$, contemporaneous innovation correlation $0.944$). Asymptotic and Reinsel--Ahn trace tests over-reject true $r=0$ series across all sample sizes ($13.3\%$ and $13.0\%$ even at $T = 500$), whereas the block-wild bootstrap controls empirical size near the $5\%$ nominal level ($5.9\% \pm 0.8\%$ at $T=25$, $7.1\% \pm 0.8\%$ at $T=100$, $4.7\% \pm 0.7\%$ at $T=500$) while reaching $72.8\%$ power at $T=100$ and $100.0\%$ power at $T=500$. Additional sensitivity runs ($n_{MC}=200$) across $\phi \in \{0.0, 0.50\}$, Student-$t_5$ innovations, and block length $b=1$ confirm empirical size within $[4.5\%, 7.5\%]$ and $100.0\%$ power at $T=500$.
 
 \begin{table}[htbp]
 \centering

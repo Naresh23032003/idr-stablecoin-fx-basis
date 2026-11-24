@@ -52,13 +52,29 @@ def main() -> None:
     b_cry_vwap = 1e4 * (np.log(np.array(vwap_bi)) - np.log(np.array(vwap_bn)) - np.log(np.array(vwap_u)))
 
     v_sfx0 = btc["b_stablecoin_fx_bps"].var(ddof=1)
-    for label, bsfx, bcry, btot in [
-        ("VWAP USDT/IDR + snapshot B_crypto", b_sfx_vwap, btc["b_crypto_bps"].values, btc["b_crypto_bps"].values + b_sfx_vwap),
-        ("TWAP USDT/IDR + snapshot B_crypto", b_sfx_twap, btc["b_crypto_bps"].values, btc["b_crypto_bps"].values + b_sfx_twap),
-        ("Full-window VWAP all legs", b_sfx_vwap, b_cry_vwap, b_tot_vwap),
+    vwap_summary = {}
+    for key, label, bsfx, bcry, btot in [
+        ("usdt_vwap_only", "VWAP USDT/IDR + snapshot B_crypto", b_sfx_vwap, btc["b_crypto_bps"].values, btc["b_crypto_bps"].values + b_sfx_vwap),
+        ("usdt_twap_only", "TWAP USDT/IDR + snapshot B_crypto", b_sfx_twap, btc["b_crypto_bps"].values, btc["b_crypto_bps"].values + b_sfx_twap),
+        ("all_3_legs_vwap", "Full-window VWAP all legs", b_sfx_vwap, b_cry_vwap, b_tot_vwap),
     ]:
-        vs, vc, vt = np.var(bsfx, ddof=1), np.var(bcry, ddof=1), np.var(btot, ddof=1)
+        vs, vc, vt = float(np.var(bsfx, ddof=1)), float(np.var(bcry, ddof=1)), float(np.var(btot, ddof=1))
+        vwap_summary[key] = {
+            "label": label,
+            "n_obs": int(len(bsfx)),
+            "mean_b_total_bps": round(float(np.mean(btot)), 2),
+            "sd_b_total_bps": round(float(np.std(btot, ddof=1)), 2),
+            "mean_b_crypto_bps": round(float(np.mean(bcry)), 2),
+            "sd_b_crypto_bps": round(float(np.std(bcry, ddof=1)), 2),
+            "mean_b_sfx_bps": round(float(np.mean(bsfx)), 2),
+            "sd_b_sfx_bps": round(float(np.std(bsfx, ddof=1)), 2),
+            "var_sfx_ratio_pct": round(100.0 * vs / v_sfx0, 2),
+            "var_share_sfx_pct": round(100.0 * vs / vt, 2),
+            "var_share_crypto_pct": round(100.0 * vc / vt, 2),
+        }
         print(f"{label}: B_sFX mean={np.mean(bsfx):.2f}, sd={np.std(bsfx, ddof=1):.2f}, var_ratio={100*vs/v_sfx0:.2f}%, share={100*vs/vt:.2f}%")
+    import json
+    (root / "results/models/jisdor_window_vwap.json").write_text(json.dumps(vwap_summary, indent=2))
 
     btc["_dt"] = pd.to_datetime(btc["date"])
     btc["dln_btc"] = btc["ln_p_usdt"].diff()

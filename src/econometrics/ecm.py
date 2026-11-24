@@ -11,6 +11,83 @@ from statsmodels.stats.diagnostic import acorr_ljungbox, het_arch
 from statsmodels.tsa.vector_ar.vecm import VECM, coint_johansen
 
 
+def compute_vecm_eigenmode_decomposition(res, beta_vec: np.ndarray, check_h: int = 30) -> Dict[str, Any]:
+    """Decompose ECT impulse responses z_h = beta' (F^h s_0)_{[:n]} into companion eigenmodes.
+
+    Uses F = V Lambda V^{-1} so that c_j = (beta' v_{j,[:n]}) * (w_j' s_0) / z_0 is strictly
+    invariant to eigenvector normalization (v_j -> gamma v_j, w_j -> gamma^{-1} w_j).
+    Complex conjugate pairs are summed so reported shares are real and sum exactly to 1.0.
+    """
+    A = res.var_rep
+    k_ar, n, _ = A.shape
+    dim = n * k_ar
+    F = np.zeros((dim, dim), dtype=float)
+    for i in range(k_ar):
+        F[:n, i * n : (i + 1) * n] = A[i]
+    if k_ar > 1:
+        F[n:, :-n] = np.eye(n * (k_ar - 1))
+
+    eigvals, V = np.linalg.eig(F)
+    W_inv = np.linalg.inv(V)
+
+    Sigma = np.cov(res.resid, rowvar=False)
+    e1 = np.zeros(n, dtype=float)
+    e1[0] = 1.0
+    denom_gen = float(beta_vec @ Sigma @ beta_vec)
+    d_gen = (Sigma @ beta_vec) / denom_gen if denom_gen > 0 else e1
+
+    s0_loc = np.zeros(dim, dtype=float)
+    s0_loc[:n] = e1
+    s0_gen = np.zeros(dim, dtype=float)
+    s0_gen[:n] = d_gen
+    z0_loc = float(beta_vec @ e1)
+    z0_gen = float(beta_vec @ d_gen)
+
+    c_loc = np.array([(beta_vec @ V[:n, j]) * (W_inv[j, :] @ s0_loc) / z0_loc for j in range(dim)])
+    c_gen = np.array([(beta_vec @ V[:n, j]) * (W_inv[j, :] @ s0_gen) / z0_gen for j in range(dim)])
+
+    # Verify exact spectral reconstruction against direct companion iteration
+    state = s0_loc.copy()
+    max_recon_err = 0.0
+    for h in range(check_h + 1):
+        z_direct = float(beta_vec @ state[:n]) / z0_loc
+        z_spec = float(np.real(np.sum(c_loc * (eigvals ** h))))
+        max_recon_err = max(max_recon_err, abs(z_direct - z_spec))
+        state = F @ state
+
+    modes = []
+    for j in range(dim):
+        lam = eigvals[j]
+        mod = float(abs(lam))
+        is_unit = bool(abs(lam - 1.0) < 1e-4)
+        hl = float(-math.log(2.0) / math.log(mod)) if (not is_unit and 0.0 < mod < 1.0) else None
+        modes.append({
+            "mode_idx": int(j),
+            "eig_real": float(lam.real),
+            "eig_imag": float(lam.imag),
+            "modulus": mod,
+            "half_life_bars": hl,
+            "is_unit_root": is_unit,
+            "share_z0_local": float(np.real(c_loc[j])),
+            "share_z0_gen": float(np.real(c_gen[j])),
+        })
+    modes.sort(key=lambda d: d["modulus"], reverse=True)
+    non_unit = [m for m in modes if not m["is_unit_root"]]
+    slowest = non_unit[0] if non_unit else None
+    return {
+        "modes": modes,
+        "sum_shares_local": float(np.real(np.sum(c_loc))),
+        "sum_shares_gen": float(np.real(np.sum(c_gen))),
+        "max_irf_reconstruction_err": float(max_recon_err),
+        "slowest_mode_modulus": slowest["modulus"] if slowest else float("nan"),
+        "slowest_mode_half_life": slowest["half_life_bars"] if slowest else float("nan"),
+        "slowest_mode_share_local": slowest["share_z0_local"] if slowest else float("nan"),
+        "slowest_mode_share_gen": slowest["share_z0_gen"] if slowest else float("nan"),
+        "fast_modes_share_local": float(1.0 - slowest["share_z0_local"]) if slowest else float("nan"),
+        "fast_modes_share_gen": float(1.0 - slowest["share_z0_gen"]) if slowest else float("nan"),
+    }
+
+
 def compute_vecm_system_half_life(res, beta_vec: np.ndarray, max_h: int = 200) -> Dict[str, Any]:
     """Compute persistence and half-life from the full estimated VECM dynamics.
 
@@ -119,13 +196,16 @@ def estimate_bivariate_vecm(
 
     # Error-correction OLS with HAC SE on estimated cointegrating error ect_{t-1}
     beta_vec = res.beta[:, 0]  # normalized with beta[0] = 1
-    ect = Y @ beta_vec
+    c_coint = float(res.const_coint[0, 0]) if det_order == "ci" else 0.0
+    ect = Y @ beta_vec + c_coint
     dY = np.diff(Y, axis=0)
     p = k_ar_diff
     dep_l = dY[p:, 0]
     dep_g = dY[p:, 1]
     ect_lag = ect[p:-1]
-    cols = [ect_lag, np.ones(len(dep_l))]
+    cols = [ect_lag]
+    if det_order == "co":
+        cols.append(np.ones(len(dep_l)))
     for j in range(1, p + 1):
         cols.append(dY[p - j : len(dY) - j, 0])
         cols.append(dY[p - j : len(dY) - j, 1])
@@ -176,6 +256,7 @@ def estimate_bivariate_vecm(
         "n_levels": int(len(Y)),
         "T_eff": int(len(dep_l)),
         "k_ar_diff": int(k_ar_diff),
+        "deterministic_spec": det_order,
         "sampling_unit": sampling_unit,
         "beta_normalized": float(-beta_vec[1]),
         "alpha_local_ml": alpha_local,
@@ -247,11 +328,14 @@ def estimate_trivariate_vecm(
     se_ml = res.stderr_alpha[:, 0]
     pval_ml = res.pvalues_alpha[:, 0]
 
-    ect = Y @ beta
+    c_coint = float(res.const_coint[0, 0]) if det_order == "ci" else 0.0
+    ect = Y @ beta + c_coint
     dY = np.diff(Y, axis=0)
     p = k_ar_diff
     ect_lag = ect[p:-1]
-    cols = [ect_lag, np.ones(len(ect_lag))]
+    cols = [ect_lag]
+    if det_order == "co":
+        cols.append(np.ones(len(ect_lag)))
     for j in range(1, p + 1):
         for m in range(n):
             cols.append(dY[p - j : len(dY) - j, m])
@@ -307,6 +391,7 @@ def estimate_trivariate_vecm(
         "n_levels": int(len(Y)),
         "T_eff": int(len(ect_lag)),
         "k_ar_diff": int(k_ar_diff),
+        "deterministic_spec": det_order,
         "sampling_unit": sampling_unit,
         "joh_trace": [float(x) for x in joh.lr1],
         "joh_cvt95": [float(x) for x in joh.cvt[:, 1]],

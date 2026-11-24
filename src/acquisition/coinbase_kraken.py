@@ -113,16 +113,26 @@ def load_coinbase_df(raw_dir: Path, product: str, granularity_sec: int) -> pd.Da
             rows.extend(d)
     if not rows:
         return pd.DataFrame()
-    # Coinbase candle schema: [time, low, high, open, close, volume]
+    # Coinbase candle schema: [time, low, high, open, close, volume] where time is bucket open time
+    bar_td = pd.Timedelta(seconds=int(granularity_sec))
     df = pd.DataFrame(rows, columns=["time_unix", "low", "high", "open", "close", "volume"])
-    df["timestamp_utc"] = pd.to_datetime(pd.to_numeric(df["time_unix"], errors="coerce"), unit="s", utc=True)
+    df["candle_open_time_utc"] = pd.to_datetime(pd.to_numeric(df["time_unix"], errors="coerce"), unit="s", utc=True)
+    df["candle_close_time_utc"] = df["candle_open_time_utc"] + bar_td - pd.Timedelta(milliseconds=1)
+    df["observation_available_time_utc"] = df["candle_open_time_utc"] + bar_td
+    df["source_timestamp_utc"] = df["candle_open_time_utc"]
+    df["timestamp_utc"] = df["candle_open_time_utc"]
+    df["source"] = f"coinbase_{product}_{granularity_sec}s"
     for c in ["open", "high", "low", "close", "volume"]:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     return (
         df.dropna(subset=["timestamp_utc", "close"])
         .drop_duplicates(subset=["timestamp_utc"])
         .sort_values("timestamp_utc")
-        .reset_index(drop=True)[["timestamp_utc", "open", "high", "low", "close", "volume"]]
+        .reset_index(drop=True)[[
+            "timestamp_utc", "candle_open_time_utc", "candle_close_time_utc",
+            "observation_available_time_utc", "source_timestamp_utc", "source",
+            "open", "high", "low", "close", "volume"
+        ]]
     )
 
 

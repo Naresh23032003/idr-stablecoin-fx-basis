@@ -1,29 +1,29 @@
 \begin{table}[htbp]
 \centering
-\caption{Data Provenance and Historical Coverage Summary (2021--2026)}
+\caption{Data provenance and historical coverage summary (2021--2026)}
 \label{tab:coverage}
-\fontsize{6.3}{7.5}\selectfont\setlength{\tabcolsep}{2pt}
+\fontsize{6.6}{7.8}\selectfont\setlength{\tabcolsep}{1.8pt}
 \begingroup
-\begin{tabular}{@{}llccrr>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.9cm}llrrl>{\raggedright\arraybackslash}p{2.3cm}@{}}
 \toprule
-Provider / Venue & Instrument & Freq. & Start--End (UTC) & Rows & Zero-Vol & Role / Limitations \\
+Venue & Inst. & Freq. & Start--End & Rows & Zero-Vol & Role / Limits \\
 \midrule
-Bank Indonesia & JISDOR & 1d & 2021-01-04 to 2026-11-12 & 1,415 & -- & Official FX benchmark; bus.\ days \\
-Indodax & BTCIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 1.73\% & Primary local BTC; 1.73\% stale \\
-Indodax & USDTIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 0.61\% & Local stablecoin; 0.61\% stale \\
-Indodax & ETHIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 5.97\% & Secondary ETH; 5.97\% stale \\
-Indodax & XRPIDR & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 6.64\% & Auxiliary XRP; 6.64\% stale \\
-Indodax & BTCUSDT & 5m & 2021-01-01 to 2026-11-12 & 616,896 & 78.57\% & Route C venue; 78.57\% zero-vol \\
-Binance Spot & BTCUSDT & 5m & 2021-01-01 to 2026-11-12 & 616,683 & -- & Global USDT ref.; SHA-256 \\
-Binance Spot & ETHUSDT & 5m & 2021-01-01 to 2026-11-12 & 616,683 & -- & Global ETH ref.; SHA-256 \\
-Binance Spot & XRPUSDT & 5m & 2021-01-01 to 2026-11-12 & 616,683 & -- & Global XRP ref.; SHA-256 \\
-Binance Spot & BTCBIDR & 5m & 2021-01-01 to 2024-05-17 & 354,645 & -- & Delisted 2024-05-17 \\
-Binance Spot & BTCIDR & 5m & 2025-11-29 to 2026-11-12 & 100,362 & -- & Launched 2025-11-29 \\
-Coinbase & USDT-USD & 1h & 2021-05-04 to 2026-11-13 & 48,441 & -- & Listed 2021-05-04 (peg wedge) \\
-Kraken & USDTUSD & 1d & 2024-11-23 to 2026-11-13 & 721 & -- & 720-bar cap + current day \\
+Bank Indonesia & \texttt{JISDOR} & 1d & 2021-01--2026-11 & 1,415 & -- & Official FX; bus. days \\
+Indodax & \texttt{BTCIDR} & 5m & 2021-01--2026-11 & 616,896 & 1.73\% & Primary BTC; 1.73\% stale \\
+Indodax & \texttt{USDTIDR} & 5m & 2021-01--2026-11 & 616,896 & 0.61\% & Local USDT; 0.61\% stale \\
+Indodax & \texttt{ETHIDR} & 5m & 2021-01--2026-11 & 616,896 & 5.97\% & Secondary ETH; 5.97\% stale \\
+Indodax & \texttt{XRPIDR} & 5m & 2021-01--2026-11 & 616,896 & 6.64\% & Auxiliary XRP; 6.64\% stale \\
+Indodax & \texttt{BTCUSDT} & 5m & 2021-01--2026-11 & 616,896 & 78.57\% & Route C; 78.57\% zero-vol \\
+Binance Spot & \texttt{BTCUSDT} & 5m & 2021-01--2026-11 & 616,683 & -- & Global BTC; SHA-256 \\
+Binance Spot & \texttt{ETHUSDT} & 5m & 2021-01--2026-11 & 616,683 & -- & Global ETH; SHA-256 \\
+Binance Spot & \texttt{XRPUSDT} & 5m & 2021-01--2026-11 & 616,683 & -- & Global XRP; SHA-256 \\
+Binance Spot & \texttt{BTCBIDR} & 5m & 2021-01--2024-05 & 354,645 & -- & Delisted 2024-05-17 \\
+Binance Spot & \texttt{BTCIDR} & 5m & 2025-11--2026-11 & 100,362 & -- & Launched 2025-11-29 \\
+Coinbase & \texttt{USDT-USD} & 1h & 2021-05--2026-11 & 48,441 & -- & Listed 2021-05-04 \\
+Kraken & \texttt{USDTUSD} & 1d & 2024-11--2026-11 & 721 & -- & 720-bar API cap \\
 \bottomrule
 \end{tabular}\endgroup
 \begin{minipage}{\textwidth}\footnotesize\vspace{3pt}
-\emph{Notes:} All series retrieved directly from official endpoints or public historical archives with SHA-256 manifests. Inner-joining raw Indodax ($616,896$) and Binance ($616,683$) five-minute bars on UTC timestamps yields $616,683$ paired observations ($605,150$ active-volume bars). Kraken's OHLC API returns $720$ completed daily bars plus the in-progress retrieval-day bar ($721$ rows). BI JISDOR excludes weekends and Indonesian holidays; Coinbase USDT-USD commenced trading May 4, 2021; Binance BIDR delisted May 17, 2024; Binance direct IDR pairs launched November 29, 2025.
+\emph{Notes:} All series retrieved directly from official endpoints or public historical archives on November 13, 2026 with SHA-256 manifests. BI JISDOR excludes weekends and Indonesian holidays; Coinbase \texttt{USDT-USD} commenced trading May 4, 2021; Binance \texttt{BIDR} delisted May 17, 2024; Binance direct \texttt{IDR} pairs launched November 29, 2025.
 \end{minipage}
 \end{table}
