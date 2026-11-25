@@ -1,7 +1,7 @@
 {
-  "generated_at_utc": "2026-11-25T19:09:43.174566+00:00",
+  "generated_at_utc": "2026-11-25T19:11:35.453143+00:00",
   "git_commit_sha_baseline": "2fcaefd",
-  "git_commit_sha_final_release": "471a3ee0bc073afac812685884d9fca404827a18",
+  "git_commit_sha_final_release": "05c290fb40001483c2765173939076c1f7ee1a5b",
   "python_version": "3.11.13",
   "os_platform": "macOS-27.2.1-arm64-arm-64bit",
   "dependencies": {
@@ -128,8 +128,8 @@
     "manuscript/sec2_institutional_setting.tex": "c17aa1d6c17b9aac26b2cddc27fc11d058a8b6c82b4fdd2d03c43a59eb941a50",
     "manuscript/sec3_data_and_synchronization.tex": "470d24e74923843ed496ad312c74332fade87c7d5edce6597b67fec5a8cb5e82",
     "manuscript/sec4_econometric_methodology.tex": "3d12552da13baa2f1bac5d4489770ab49d52fc243261d7748f6199296b57b452",
-    "manuscript/sec5_empirical_results.tex": "d9a7d6bc21b45e39a8e1f16ddc961f8d706ba3f1a49b269c484e22c0b8a9404a",
-    "manuscript/sec6_robustness_and_falsification.tex": "89f5405ad842985159b1a282f9859bb7ffddfcc9a5951b4860ddb73f27114fca",
+    "manuscript/sec5_empirical_results.tex": "e30f95753d7591c5a79c1628bb683238a64910de53940222e15c193e9f8a511e",
+    "manuscript/sec6_robustness_and_falsification.tex": "065934f2ec657136533016243a20cb1039885e58c41c2e16b0c5b919821626f2",
     "manuscript/sec7_discussion_and_limitations.tex": "a6091254b63225d220d95915bc8ca0c0847f0999af0b4d75ca5caa7767cddd05",
     "manuscript/sec8_conclusion.tex": "bb04780d70da9fca72fa573605711af8a30081578e95d08c78c4589bd91e8b7f",
     "manuscript/tab_cointegration.tex": "3ab8c156ba50ee4dfe4e8a78bd8748bd8f6581607688be8df69894068baa886e",
@@ -171,6 +171,6 @@
     "AUDIT/TIMESTAMP_AUDIT.md": "a0c9ca544c0b4d17e61db16ab1e96472c412eb99b8f91d582de07a93fc78d181",
     "AUDIT/manuscript_humanizer.diff": "1fecfb66e26e97303bb7ea213f0faf34b8cce5641f06de7a1a1ceb64752b5867"
   },
-  "manuscript_pdf_sha256": "f35e02a2b604132dab31f5c9410f70fe34aa410ad20c28842c6eec36a9c4a1c1",
-  "manuscript_pdf_bytes": 985264
+  "manuscript_pdf_sha256": "fdaa54275bffcd553db4598ca3a8eb53f0d40d6316752f37ec6a4e1d4cef8b7e",
+  "manuscript_pdf_bytes": 985229
 }
