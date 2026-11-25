@@ -374,7 +374,7 @@ def generate_all_latex_tables(root: Path) -> List[str]:
         lbl = ev_short.get(rc_i["label"], _tex_escape(rc_i["label"]))
         star_s = "$^*$" if rs_i["ctrl_p_holm"] < 0.05 else ""
         ev_lines.append(
-            f"{rc_i['event_date']} & {lbl} & {rc_i['ctrl_diff_bps']:.2f} ({rc_i['ctrl_se_hac']:.2f}) & {rc_i['ctrl_p_hac']:.3f} ({rc_i['ctrl_p_holm']:.2f}) & {rc_i['joint15_diff_bps']:.2f} ({rc_i['joint15_p_holm']:.3f}) & {rs_i['ctrl_diff_bps']:.2f}{star_s} ({rs_i['ctrl_se_hac']:.2f}) & {rs_i['ctrl_p_hac']:.3f} ({rs_i['ctrl_p_holm']:.3f}{star_s}) & {rs_i['joint15_diff_bps']:.2f} ({rs_i['joint15_p_holm']:.2f}) \\\\"
+            f"{rc_i['event_date']} & {lbl} & {rc_i['ctrl_diff_bps']:.2f} ({rc_i['ctrl_se_hac']:.2f}) & {rc_i['ctrl_p_hac']:.3f} ({rc_i['ctrl_p_holm']:.3f}) & {rc_i['joint15_diff_bps']:.2f} ({rc_i['joint15_p_holm']:.3f}) & {rs_i['ctrl_diff_bps']:.2f}{star_s} ({rs_i['ctrl_se_hac']:.2f}) & {rs_i['ctrl_p_hac']:.3f} ({rs_i['ctrl_p_holm']:.3f}{star_s}) & {rs_i['joint15_diff_bps']:.2f} ({rs_i['joint15_p_holm']:.3f}) \\\\"
         )
     ev_lines += [
         "\\bottomrule",
