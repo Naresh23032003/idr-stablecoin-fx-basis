@@ -2,8 +2,10 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+*.egg-info/
 .DS_Store
 data/raw/
+release/
 *.aux
 *.bbl
 *.blg

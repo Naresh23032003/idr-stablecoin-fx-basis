@@ -1,5 +1,5 @@
 ============================= test session starts ==============================
-platform darwin -- Python 3.11.13, pytest-9.2.0, pluggy-1.7.0 -- /Users/naresh/Desktop/Finance/indonesian_crypto_research_final/.venv/bin/python
+platform darwin -- Python 3.11.13, pytest-9.2.0, pluggy-1.7.0 -- /private/tmp/apfm_fresh_venv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/naresh/Desktop/Finance/idr-stablecoin-fx-basis
 configfile: pyproject.toml
@@ -87,8 +87,8 @@ tests/test_econometrics.py::test_regime_stability_wald_independent_reconstructio
 tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
 tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
 tests/test_econometrics.py::test_regime_stability_wald_independent_reconstruction
-  /Users/naresh/Desktop/Finance/indonesian_crypto_research_final/.venv/lib/python3.11/site-packages/statsmodels/stats/diagnostic.py:997: FutureWarning: acorr_lm currently returns a plain tuple whose length depends on the store argument. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an LMTestResult NamedTuple. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
+  /private/tmp/apfm_fresh_venv/lib/python3.11/site-packages/statsmodels/stats/diagnostic.py:997: FutureWarning: acorr_lm currently returns a plain tuple whose length depends on the store argument. In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning an LMTestResult NamedTuple. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.
     return acorr_lm(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-======================= 22 passed, 23 warnings in 15.32s =======================
+======================= 22 passed, 23 warnings in 7.80s ========================

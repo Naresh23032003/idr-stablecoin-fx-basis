@@ -229,7 +229,7 @@ def generate_all_latex_tables(root: Path) -> List[str]:
 
     t5_lines += [
         "\\midrule",
-        "\\multicolumn{8}{@{}l}{\\textbf{Panel B: Five-minute three-variable VECM ($Y_t = [\\ln P^{IDR}_{BTC}, \\ln P^{USDT}_{BTC}, \\ln U^{IDR/USDT}]'$, 5 lags, \\texttt{co}, HAC $L=12$)}} \\\\",
+        "\\multicolumn{8}{@{}l}{\\textbf{Panel B: 5m 3-var VECM ($[\\ln P^{IDR}_{BTC}, \\ln P^{USDT}_{BTC}, \\ln U^{IDR/USDT}]'$, 5 lags, \\texttt{co}, $L=12$)}} \\\\",
         "Sample / Equation & $T_{eff}$ & $\\hat{\\alpha}_i$ (HAC SE) & $p_{\\text{HAC}}$ & Adj.\\ Share & IS Low & IS High & HL (bars) \\\\",
         "\\midrule",
     ]
